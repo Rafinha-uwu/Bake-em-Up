@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class EnemyNavigation : MonoBehaviour
 {
-    public Transform player;
+    private LevelManager levelManager;
     private NavMeshAgent agent;
 
 
@@ -12,11 +12,13 @@ public class EnemyNavigation : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        levelManager = GetComponent<LevelManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        agent.SetDestination(player.position);
+        Debug.Log(LevelManager.Instance.roulote.position);
+        agent.SetDestination(LevelManager.Instance.roulote.position);
     }
 }
