@@ -18,7 +18,6 @@ public class EnemyNavigation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(LevelManager.Instance.roulote.position);
         agent.SetDestination(LevelManager.Instance.roulote.position);
     }
 }

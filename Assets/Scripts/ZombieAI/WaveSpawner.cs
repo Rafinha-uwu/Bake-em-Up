@@ -8,7 +8,7 @@ public class WaveSpawner : MonoBehaviour
     public int enemyCount;
 
     public GameObject enemyPrefab;
-    public Transform spawnPoint;
+    public Transform[] spawnPoints;
     public int waveSize = 5;
     public float timeBetweenWaves = 3.0f;
     public float waveSpawnSpeed = 1.0f;
@@ -39,15 +39,16 @@ public class WaveSpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+        var element = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+
+        GameObject enemy = Instantiate(enemyPrefab, element.position, Quaternion.identity);
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
         if (agent != null)
         {
             if (LevelManager.Instance != null)
             {
                 agent.SetDestination(LevelManager.Instance.roulote.position);
-
-                Debug.Log("Posição da roulote: " + LevelManager.Instance.roulote.position);
             }
             
         }
