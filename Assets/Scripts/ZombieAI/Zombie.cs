@@ -3,7 +3,6 @@ using UnityEngine;
 public class Zombie : MonoBehaviour
 {
     [SerializeField] private int hp = 1;
-    [SerializeField] private int hitDamage = 1;
 
     private void OnEnable()
     {

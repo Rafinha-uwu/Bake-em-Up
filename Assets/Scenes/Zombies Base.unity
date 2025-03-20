@@ -715,11 +715,6 @@ Transform:
   - {fileID: 233562400}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &486548915 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4609276206104750785, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
-  m_PrefabInstance: {fileID: 1198806192427116331}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &515590827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1425,7 +1420,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 1
-  hitDamage: 1
 --- !u!54 &1075843969
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2095,6 +2089,7 @@ GameObject:
   - component: {fileID: 1521385384}
   - component: {fileID: 1521385383}
   - component: {fileID: 1521385382}
+  - component: {fileID: 1521385386}
   m_Layer: 6
   m_Name: Roulote
   m_TagString: Untagged
@@ -2191,6 +2186,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 382115099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1521385386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521385381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d0264d8f01863409b6cabdb5475685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 300
 --- !u!1 &1608691765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2732,6 +2740,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1348631837}
     m_Modifications:
+    - target: {fileID: 1023627931745595120, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4609276206104750785, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
       propertyPath: m_Name
       value: Normal Zombie
@@ -2788,33 +2800,20 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1363724406}
+    - target: {fileID: 7650430046849019640, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
+      propertyPath: attackRange
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4609276206104750785, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7980588750002795122}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
 --- !u!4 &7980588750002795116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5781502871959401065, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
   m_PrefabInstance: {fileID: 1198806192427116331}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7980588750002795122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 486548915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75119a234697a80459aabdbaf527792b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 1
-  hitDamage: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

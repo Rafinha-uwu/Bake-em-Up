@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5811571232819400459}
   - component: {fileID: 1594644689835897145}
   - component: {fileID: 6148674821850191667}
+  - component: {fileID: 7650430046849019640}
   m_Layer: 0
   m_Name: Normal Zombie
   m_TagString: Zombie
@@ -124,11 +125,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.49999997
-  m_Speed: 3.5
+  m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -161,7 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 1
-  hitDamage: 1
 --- !u!54 &6148674821850191667
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -189,3 +189,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7650430046849019640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609276206104750785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200363939e115604bbc406ed33d8ee1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetweenAttacks: 5
+  attackRange: 1
+  roulotteInAttackRange: 0
+  whatIsRoulotte:
+    serializedVersion: 2
+    m_Bits: 64
+  attackDamage: 5
