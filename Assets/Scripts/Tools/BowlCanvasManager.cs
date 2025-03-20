@@ -1,8 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BowlCanvasManager : MonoBehaviour
 {
+	[SerializeField]
+	private Image _recipeImage;
+
 	[SerializeField]
 	private GameObject _ingredientCanvasElement;
 
@@ -25,5 +29,10 @@ public class BowlCanvasManager : MonoBehaviour
 	public void UpdateIngredient(IngredientName name, int value)
 	{
 		_ingredientsInCanvas[name].UpdateCount(value);
+	}
+
+	public void UpdateRecipe(Sprite recipeSprite)
+	{
+		_recipeImage.sprite = recipeSprite;
 	}
 }

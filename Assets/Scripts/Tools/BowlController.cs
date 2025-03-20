@@ -15,6 +15,7 @@ public class BowlController : MonoBehaviour
 	private Transform _transformForCanvasToFollow;
 
 	private BowlCanvasManager _bowlCanvasManager;
+	private RecipeData _recipeData;
 
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
 
@@ -64,6 +65,11 @@ public class BowlController : MonoBehaviour
 		{
 			_ingredientsInside.Add(name, 1);
 			_bowlCanvasManager.AddIngredient(ingredient);
+			
+			if (RecipesManager.Instance.GetCompleteRecipe(_ingredientsInside, out RecipeData recipe)){
+				_recipeData = recipe;
+				_bowlCanvasManager.UpdateRecipe(_recipeData.recipeSprite);
+			}
 		}
 	}
 
