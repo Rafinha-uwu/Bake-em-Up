@@ -8,9 +8,24 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class BowlController : MonoBehaviour
 {
 	[SerializeField]
+	private GameObject _bowlCanvas;
+	[SerializeField]
 	private GameObject _container;
+	[SerializeField]
+	private Transform _transformForCanvasToFollow;
+
+	private BowlCanvasManager _bowlCanvasManager;
 
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
+
+	private void Awake()
+	{
+		GameObject bowlCanvas = Instantiate(_bowlCanvas, transform.position, transform.rotation);
+
+		bowlCanvas.GetComponent<ToolCanvas>().AddTransformToFollow(_transformForCanvasToFollow);
+
+		_bowlCanvasManager = bowlCanvas.GetComponent<BowlCanvasManager>();
+	}
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -43,10 +58,12 @@ public class BowlController : MonoBehaviour
 		if(_ingredientsInside.TryGetValue(name, out int value))
 		{
 			_ingredientsInside[name] += 1;
+			_bowlCanvasManager.UpdateIngredient(name, _ingredientsInside[name]);
 		}
 		else
 		{
 			_ingredientsInside.Add(name, 1);
+			_bowlCanvasManager.AddIngredient(ingredient);
 		}
 	}
 

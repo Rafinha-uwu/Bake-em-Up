@@ -6,7 +6,12 @@ public class IngredientController : MonoBehaviour
 {
     [SerializeField]
     private IngredientName _ingredientName;
-    public IngredientName IngredientName => _ingredientName;
+
+	[SerializeField]
+	private Sprite _ingredientIcon;
+
+	public Sprite IngredientIcon => _ingredientIcon;
+	public IngredientName IngredientName => _ingredientName;
 
 	private void OnCollisionEnter(Collision collision)
 	{

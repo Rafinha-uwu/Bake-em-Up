@@ -1,12 +1,17 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 
 public class ToolCanvas : MonoBehaviour
 {
-	[SerializeField]
 	private Transform _lookAt;
-    [SerializeField]
     private Transform _transformToFollow;
+
+	private void Start()
+	{
+		_lookAt = Camera.main.transform;
+	}
 
 	private void LateUpdate()
 	{
@@ -19,5 +24,11 @@ public class ToolCanvas : MonoBehaviour
 		transform.position = newPosition;
 
 		transform.LookAt(_lookAt, Vector3.up);
+		transform.Rotate(0f, 180f, 0f);
+	}
+
+	public void AddTransformToFollow(Transform transform)
+	{
+		_transformToFollow = transform;
 	}
 }
