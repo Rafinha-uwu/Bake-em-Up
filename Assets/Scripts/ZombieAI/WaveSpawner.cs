@@ -14,8 +14,6 @@ public class WaveSpawner : MonoBehaviour
     public float waveSpawnSpeed = 1.0f;
     private int waveNumber;
 
-    [SerializeField] private TMP_Text waveCanvas;
-
     void Start()
     {
         StartCoroutine(SpawnWaves());
@@ -27,7 +25,7 @@ public class WaveSpawner : MonoBehaviour
         while (true)
         {
             waveNumber++;
-            waveCanvas.text = "Wave Number: " + waveNumber;
+
             for (int i = 0; i < waveSize; i++)
             {
                 SpawnEnemy();

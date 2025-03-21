@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6669168788756936774}
   - component: {fileID: 3585053005736155519}
   - component: {fileID: 7658634381386138339}
+  - component: {fileID: 6317990741644946166}
   m_Layer: 0
   m_Name: Bread
   m_TagString: Bread
@@ -222,6 +223,19 @@ MonoBehaviour:
   homingRadius: 10
   homingForce: 15
   minDistanceFromPlayer: 3
+--- !u!114 &6317990741644946166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569095257423370382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e4e77caa3bc404ba04d873fc9f44c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
 --- !u!1 &3692069525948836053
 GameObject:
   m_ObjectHideFlags: 0
