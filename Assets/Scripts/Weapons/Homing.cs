@@ -3,18 +3,27 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class Homing : MonoBehaviour
 {
-    public float homingRadius = 2f; 
-    public float homingForce = 5f;  
+    public float homingRadius = 2f;  // Detection range for zombies
+    public float homingForce = 5f;   // Strength of homing effect
+    public float minDistanceFromPlayer = 1f; // How far the bread must be from the player before homing starts
 
     private Rigidbody rb;
     private XRGrabInteractable grabInteractable;
     private bool isThrown = false;
     private bool isHomingActive = true;
+    private Transform player;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         grabInteractable = GetComponent<XRGrabInteractable>();
+
+        // Find the player (assuming they have the "Player" tag)
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj)
+        {
+            player = playerObj.transform;
+        }
 
         // Subscribe to grab & release events
         grabInteractable.selectExited.AddListener(OnRelease);
@@ -22,12 +31,12 @@ public class Homing : MonoBehaviour
 
     private void OnRelease(SelectExitEventArgs args)
     {
-        isThrown = true;
+        isThrown = true; // Mark as thrown
     }
 
     void FixedUpdate()
     {
-        if (isThrown && isHomingActive)
+        if (isThrown && isHomingActive && IsFarEnoughFromPlayer())
         {
             GameObject closestZombie = FindClosestZombie();
             if (closestZombie)
@@ -42,8 +51,14 @@ public class Homing : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Zombie") || collision.gameObject.CompareTag("Ground"))
         {
-            isHomingActive = false;
+            isHomingActive = false; // Stop homing on impact
         }
+    }
+
+    private bool IsFarEnoughFromPlayer()
+    {
+        if (player == null) return true; // If no player found, always allow homing
+        return Vector3.Distance(transform.position, player.position) > minDistanceFromPlayer;
     }
 
     GameObject FindClosestZombie()
