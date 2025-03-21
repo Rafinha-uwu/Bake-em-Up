@@ -3,9 +3,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class Homing : MonoBehaviour
 {
-    public float homingRadius = 2f;  // Detection range for zombies
-    public float homingForce = 5f;   // Strength of homing effect
-    public float minDistanceFromPlayer = 1f; // How far the bread must be from the player before homing starts
+    public float homingRadius = 2f;
+    public float homingForce = 5f;  
+    public float minDistanceFromPlayer = 1f;
 
     private Rigidbody rb;
     private XRGrabInteractable grabInteractable;
@@ -18,20 +18,19 @@ public class Homing : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         grabInteractable = GetComponent<XRGrabInteractable>();
 
-        // Find the player (assuming they have the "Player" tag)
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj)
         {
             player = playerObj.transform;
         }
 
-        // Subscribe to grab & release events
+        // Subscribe to grab and release events
         grabInteractable.selectExited.AddListener(OnRelease);
     }
 
     private void OnRelease(SelectExitEventArgs args)
     {
-        isThrown = true; // Mark as thrown
+        isThrown = true;
     }
 
     void FixedUpdate()
@@ -57,7 +56,7 @@ public class Homing : MonoBehaviour
 
     private bool IsFarEnoughFromPlayer()
     {
-        if (player == null) return true; // If no player found, always allow homing
+        if (player == null) return true;
         return Vector3.Distance(transform.position, player.position) > minDistanceFromPlayer;
     }
 
@@ -82,7 +81,7 @@ public class Homing : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Unsubscribe to prevent memory leaks
+        // Unsubscribe to prevent memory leaks :p
         grabInteractable.selectExited.RemoveListener(OnRelease);
     }
 }
