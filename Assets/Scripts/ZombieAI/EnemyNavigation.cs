@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class EnemyNavigation : MonoBehaviour
 {
-    private LevelManager levelManager;
     private NavMeshAgent agent;
 
 
@@ -12,7 +11,6 @@ public class EnemyNavigation : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        levelManager = GetComponent<LevelManager>();
     }
 
     // Update is called once per frame
