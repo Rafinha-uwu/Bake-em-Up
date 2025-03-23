@@ -14,8 +14,15 @@ public class WaveSpawner : MonoBehaviour
     public float waveSpawnSpeed = 1.0f;
     private int waveNumber;
 
+    private float sideWidth;
+
     void Start()
     {
+        Renderer roulotteRenderer = LevelManager.Instance.roulote.GetComponent<Renderer>();
+        if (roulotteRenderer != null)
+        {
+            sideWidth = roulotteRenderer.bounds.size.x; // Get world-space width
+        }
         StartCoroutine(SpawnWaves());
     }
 
@@ -38,7 +45,7 @@ public class WaveSpawner : MonoBehaviour
     private void SpawnEnemy()
     {
         var element = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
+        Vector3 randomPoint = EnemyNavigation.GetRandomPointOnSide(LevelManager.Instance.targetZombies.position, LevelManager.Instance.targetZombies.right, sideWidth, 1.5f);
 
         GameObject enemy = Instantiate(enemyPrefab, element.position, Quaternion.identity);
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
@@ -46,7 +53,7 @@ public class WaveSpawner : MonoBehaviour
         {
             if (LevelManager.Instance != null)
             {
-                agent.SetDestination(LevelManager.Instance.roulote.position);
+                agent.SetDestination(randomPoint);
             }
             
         }

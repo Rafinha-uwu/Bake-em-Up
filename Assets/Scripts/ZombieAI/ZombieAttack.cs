@@ -29,6 +29,7 @@ public class ZombieAttack : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, whatIsRoulotte);
         foreach (var hitCollider in hitColliders)
         {
+            Debug.Log(hitCollider.gameObject.name);
             HitEvent.GetHit(attackDamage, gameObject, hitCollider.gameObject);
         }
 

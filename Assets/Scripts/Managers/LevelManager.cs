@@ -4,6 +4,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
     public Transform roulote;
+    public Transform targetZombies;
 
     private void Awake()
     {
