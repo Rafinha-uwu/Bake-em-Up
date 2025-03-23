@@ -1,12 +1,16 @@
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 
 public class ToolCanvas : MonoBehaviour
 {
 	private Transform _lookAt;
     private Transform _transformToFollow;
+	private Canvas _canvas;
+
+	private void Awake()
+	{
+		_canvas = GetComponent<Canvas>();
+	}
 
 	private void Start()
 	{
@@ -30,5 +34,15 @@ public class ToolCanvas : MonoBehaviour
 	public void AddTransformToFollow(Transform transform)
 	{
 		_transformToFollow = transform;
+	}
+
+	public void EnableCanvas()
+	{
+		_canvas.enabled = true;
+	}
+
+	public void DisableCanvas()
+	{
+		_canvas.enabled = false;
 	}
 }

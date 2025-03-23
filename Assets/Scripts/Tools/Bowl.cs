@@ -1,31 +1,49 @@
 using System.Collections.Generic;
+using System.Net.Mail;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [RequireComponent(typeof(XRGrabInteractable))]
-public class BowlController : MonoBehaviour
+public class Bowl : ToolContainer
 {
 	[SerializeField]
-	private GameObject _bowlCanvas;
-	[SerializeField]
 	private GameObject _container;
-	[SerializeField]
-	private Transform _transformForCanvasToFollow;
 
 	private BowlCanvasManager _bowlCanvasManager;
 	private RecipeData _recipeData;
 
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
 
-	private void Awake()
+	private bool _hasDough = false;
+
+	protected override void Awake()
 	{
-		GameObject bowlCanvas = Instantiate(_bowlCanvas, transform.position, transform.rotation);
+		base.Awake();
+		_bowlCanvasManager = _toolCanvas.gameObject.GetComponent<BowlCanvasManager>();
+	}
 
-		bowlCanvas.GetComponent<ToolCanvas>().AddTransformToFollow(_transformForCanvasToFollow);
+	public bool GetRecipe(out RecipeData recipe)
+	{
+		recipe = _recipeData;
 
-		_bowlCanvasManager = bowlCanvas.GetComponent<BowlCanvasManager>();
+		return recipe != null;
+	}
+
+	public void MakeDough()
+	{
+		_hasDough = true;
+
+		_ingredientsInside.Clear();
+		foreach (Transform child in _container.transform)
+		{
+			Destroy(child.gameObject);
+		}
+		_bowlCanvasManager.ClearIngredients();
+
+		GameObject dough = Instantiate(_recipeData.doughPrefab);
+		InsertItem(dough);
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -71,12 +89,5 @@ public class BowlController : MonoBehaviour
 				_bowlCanvasManager.UpdateRecipe(_recipeData.recipeSprite);
 			}
 		}
-	}
-
-	private void ReleaseItem(XRGrabInteractable interactable)
-	{
-		XRInteractionManager interactionManager = interactable.interactionManager;
-
-		interactionManager.SelectExit(interactable.firstInteractorSelecting, interactable);
-	}
+	}	
 }
