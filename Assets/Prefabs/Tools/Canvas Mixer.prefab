@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: 1145607782968658420}
   - component: {fileID: 421769173549492191}
   - component: {fileID: 1862458978697607412}
-  - component: {fileID: 1416077266168826704}
   m_Layer: 6
-  m_Name: Canvas Bowl
+  m_Name: Canvas Mixer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +87,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &421769173549492191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,21 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574ff613d31994e469232eb390236420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1416077266168826704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947059706277960669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0ddced18cb3f3341a044ce52d440db2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _recipeImage: {fileID: 8422803136558186101}
-  _ingredientCanvasElement: {fileID: 5310714372354776083, guid: 8ac50eef6cac0bc47a65c4a565a0ee4c, type: 3}
-  _groupParent: {fileID: 4308501006342891902}
 --- !u!1 &2083919423719490481
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +278,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7419617785962357591}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -302,7 +286,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 85}
+  m_AnchoredPosition: {x: -41.5, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8505113285354590389

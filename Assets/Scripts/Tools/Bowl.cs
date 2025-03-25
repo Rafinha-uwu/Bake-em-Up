@@ -60,7 +60,7 @@ public class Bowl : ToolContainer
 
 	private void InsertItem(GameObject obj)
 	{
-		obj.transform.SetParent(_container.transform, false);
+		obj.transform.SetParent(_container.transform, true);
 		obj.transform.localPosition = Vector3.zero;
 		int LayerInsideBowl = LayerMask.NameToLayer("Inside Bowl");
 		obj.layer = LayerInsideBowl;
