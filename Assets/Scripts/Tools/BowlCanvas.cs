@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BowlCanvasManager : MonoBehaviour
+public class BowlCanvas : ToolCanvas
 {
 	[SerializeField]
 	private Image _recipeImage;
@@ -37,7 +37,7 @@ public class BowlCanvasManager : MonoBehaviour
 		_recipeImage.sprite = recipeSprite;
 	}
 
-	public void ClearCanvas()
+	public override void ClearCanvas()
 	{
 		ClearIngredients();
 		ClearRecipe();

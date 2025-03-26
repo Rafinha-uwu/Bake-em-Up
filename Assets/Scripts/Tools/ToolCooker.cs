@@ -1,0 +1,33 @@
+using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+
+public abstract class ToolCooker : MonoBehaviour
+{
+	[SerializeField]
+	protected GameObject _canvasObject;
+	[SerializeField]
+	private Transform _transformForCanvasToFollow;
+
+	protected ToolButton _toolButton;
+	protected XRSocketToolInteractor _socket;
+	protected ToolCanvas _toolCanvas;
+
+	protected virtual void Awake()
+	{
+		GameObject canvas = Instantiate(_canvasObject, transform.position, transform.rotation);
+		_toolCanvas = canvas.GetComponent<ToolCanvas>();
+		_toolCanvas.AddTransformToFollow(_transformForCanvasToFollow);
+		_toolCanvas.DisableCanvas();
+	}
+
+	protected virtual void Start()
+	{
+		_socket = GetComponentInChildren<XRSocketToolInteractor>();
+		_toolButton = GetComponentInChildren<ToolButton>();
+	}
+
+	public abstract void SocketSelectedEnter(XRSocketToolInteractor socket);
+	public abstract void SocketSelectedExit(XRSocketToolInteractor socket);
+	protected abstract void TurnOn();
+	protected abstract void TurnOff();
+}

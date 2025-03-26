@@ -3,10 +3,9 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-public class Mixer : MonoBehaviour
+public class Mixer : ToolCooker
 {
-    private XRSocketToolInteractor _bowlSocket;
-    private ToolButton _toolButton;
+	private MixerCanvas _mixerCanvas;
 
 	private InteractionLayerMask _bowlInteractionLayerMask;
 	private InteractionLayerMask _nothingInteractionLayerMask;
@@ -15,14 +14,15 @@ public class Mixer : MonoBehaviour
 	private bool _isMixing = false;
 	private float _currentTime = 0f;
 
-	private void Awake()
+	protected override void Awake()
 	{
-		_bowlSocket = GetComponentInChildren<XRSocketToolInteractor>();
-		_toolButton = GetComponentInChildren<ToolButton>();
+		base.Awake();
+		_mixerCanvas = _toolCanvas as MixerCanvas;
 	}
 
-	private void OnEnable()
+	protected override void Start()
 	{
+		base.Start();
 		_toolButton.OnTurnOn += TurnOn;
 		_toolButton.OnTurnOff += TurnOff;
 	}
@@ -39,7 +39,7 @@ public class Mixer : MonoBehaviour
 			return;
 
 		_currentTime += Time.deltaTime;
-		Debug.Log(_currentTime % 60);
+		_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime);
 
 		if (_currentTime >= _recipeData.MixerTime * 1.5f)
 		{
@@ -55,33 +55,49 @@ public class Mixer : MonoBehaviour
 		}
 	}
 
-	private void TurnOn()
+	public override void SocketSelectedEnter(XRSocketToolInteractor socket)
+	{
+		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
+		if (bowl.GetRecipe(out _recipeData))
+		{
+			_mixerCanvas.SetRecipe(_recipeData.recipeSprite);
+		}
+		_mixerCanvas.EnableCanvas();
+	}
+
+	public override void SocketSelectedExit(XRSocketToolInteractor socket)
+	{
+		_mixerCanvas.DisableCanvas();
+		_mixerCanvas.ClearCanvas();
+		_recipeData = null;
+	}
+
+	protected override void TurnOn()
 	{
 		Debug.Log("Ligou");
-		_bowlSocket.IsToolOn = true;
+		_socket.IsToolOn = true;
 
-		if (_bowlSocket.Interactable != null)
+		if (_socket.Interactable != null)
 		{
-			XRBaseInteractable grabInteractable = _bowlSocket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
+			XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
 			_bowlInteractionLayerMask = grabInteractable.interactionLayers;
 			grabInteractable.interactionLayers = _nothingInteractionLayerMask;
 
-			Bowl bowl = _bowlSocket.Interactable.transform.gameObject.GetComponent<Bowl>();
-			if (bowl.GetRecipe(out _recipeData))
+			if (_recipeData != null)
 			{
 				_isMixing = true;
 			}
 		}
 	}
 
-	private void TurnOff()
+	protected override void TurnOff()
 	{
 		Debug.Log("Desligou");
-		_bowlSocket.IsToolOn = false;
+		_socket.IsToolOn = false;
 
-		if (_bowlSocket.Interactable != null)
+		if (_socket.Interactable != null)
 		{
-			XRBaseInteractable grabInteractable = _bowlSocket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
+			XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
 			grabInteractable.interactionLayers = _bowlInteractionLayerMask;
 			_isMixing = false;
 		}
@@ -89,10 +105,10 @@ public class Mixer : MonoBehaviour
 
 	private void MakeDough()
 	{
-		if (_bowlSocket.Interactable == null)
+		if (_socket.Interactable == null)
 			return;
 
-		Bowl bowl = _bowlSocket.Interactable.transform.gameObject.GetComponent<Bowl>();
+		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
 		bowl.MakeDough();
 	}
 }

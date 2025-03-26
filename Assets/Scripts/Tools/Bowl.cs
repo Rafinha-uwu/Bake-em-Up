@@ -11,7 +11,7 @@ public class Bowl : ToolContainer
 	[SerializeField]
 	private GameObject _container;
 
-	private BowlCanvasManager _bowlCanvasManager;
+	private BowlCanvas _bowlCanvas;
 	private RecipeData _recipeData;
 
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
@@ -21,7 +21,7 @@ public class Bowl : ToolContainer
 	protected override void Awake()
 	{
 		base.Awake();
-		_bowlCanvasManager = _toolCanvas.gameObject.GetComponent<BowlCanvasManager>();
+		_bowlCanvas = _toolCanvas.gameObject.GetComponent<BowlCanvas>();
 	}
 
 	public bool GetRecipe(out RecipeData recipe)
@@ -40,7 +40,7 @@ public class Bowl : ToolContainer
 		{
 			Destroy(child.gameObject);
 		}
-		_bowlCanvasManager.ClearIngredients();
+		_bowlCanvas.ClearIngredients();
 
 		GameObject dough = Instantiate(_recipeData.doughPrefab);
 		InsertItem(dough);
@@ -77,16 +77,16 @@ public class Bowl : ToolContainer
 		if(_ingredientsInside.TryGetValue(name, out int value))
 		{
 			_ingredientsInside[name] += 1;
-			_bowlCanvasManager.UpdateIngredient(name, _ingredientsInside[name]);
+			_bowlCanvas.UpdateIngredient(name, _ingredientsInside[name]);
 		}
 		else
 		{
 			_ingredientsInside.Add(name, 1);
-			_bowlCanvasManager.AddIngredient(ingredient);
+			_bowlCanvas.AddIngredient(ingredient);
 			
 			if (RecipesManager.Instance.GetCompleteRecipe(_ingredientsInside, out RecipeData recipe)){
 				_recipeData = recipe;
-				_bowlCanvasManager.UpdateRecipe(_recipeData.recipeSprite);
+				_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 			}
 		}
 	}	

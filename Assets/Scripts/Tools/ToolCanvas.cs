@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -44,5 +45,10 @@ public class ToolCanvas : MonoBehaviour
 	public void DisableCanvas()
 	{
 		_canvas.enabled = false;
+	}
+
+	public virtual void ClearCanvas()
+	{
+		throw new NotImplementedException($"Clear Canvas for {gameObject.name} not implemented.");
 	}
 }

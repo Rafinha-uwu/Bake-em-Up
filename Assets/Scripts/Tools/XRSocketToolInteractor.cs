@@ -6,12 +6,22 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class XRSocketToolInteractor : XRSocketInteractor
 {
+	public bool IsToolOn = false;
+
     [SerializeField]
     private ToolName _toolName;
+	
 	private IXRSelectInteractable _interactable;
 	public IXRSelectInteractable Interactable => _interactable;
 
-	public bool IsToolOn = false;
+	private ToolCooker _cooker;
+
+	protected override void Start()
+	{
+		base.Start();
+		_cooker = GetComponentInParent<ToolCooker>();
+	}
+
 
 	protected override void OnEnable()
 	{
@@ -62,7 +72,10 @@ public class XRSocketToolInteractor : XRSocketInteractor
 
 		_interactable = args.interactableObject;
 		if (_interactable.transform.gameObject.TryGetComponent<ToolContainer>(out var container))
+		{
 			container.DisableCanvas();
+			_cooker.SocketSelectedEnter(this);
+		}
 	}
 
 	private void SocketSelectExit(SelectExitEventArgs args)
@@ -71,7 +84,10 @@ public class XRSocketToolInteractor : XRSocketInteractor
 			return;
 
 		if (_interactable.transform.gameObject.TryGetComponent<ToolContainer>(out var container))
+		{
 			container.EnableCanvas();
+			_cooker.SocketSelectedExit(this);
+		}
 
 		_interactable = null;
 	}
