@@ -13,6 +13,9 @@ public class Mixer : ToolCooker
 	private RecipeData _recipeData;
 	private bool _isMixing = false;
 	private float _currentTime = 0f;
+	private float _badTimer = 0f;
+	private bool _mixingComplete = false;
+	private bool _mixingRuined = false;
 
 	protected override void Awake()
 	{
@@ -39,19 +42,18 @@ public class Mixer : ToolCooker
 			return;
 
 		_currentTime += Time.deltaTime;
-		_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime);
+		_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);
 
-		if (_currentTime >= _recipeData.MixerTime * 1.5f)
+		if (!_mixingRuined && _currentTime >= _badTimer)
 		{
 			Debug.Log("Estragou a massa!");
+			MakeBadDough();
 			
 		}
-		else if(_currentTime >= _recipeData.MixerTime)
+		else if(!_mixingComplete && _currentTime >= _recipeData.MixerTime)
 		{
 			Debug.Log("Terminou de Misturar");
-			_isMixing = false;
 			MakeDough();
-			_currentTime = 0f;
 		}
 	}
 
@@ -60,16 +62,35 @@ public class Mixer : ToolCooker
 		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
 		if (bowl.GetRecipe(out _recipeData))
 		{
+			_badTimer = _recipeData.MixerTime * BadTimerMultiplier;
+
+			if (bowl.HasBadDough)
+			{
+				_currentTime = _badTimer;
+				_mixingRuined = true;
+			}
+			else if (bowl.HasCompletedDough)
+			{
+				_currentTime = _recipeData.MixerTime;
+				_mixingComplete = true;
+			}
+
 			_mixerCanvas.SetRecipe(_recipeData.recipeSprite);
+			_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);
 		}
 		_mixerCanvas.EnableCanvas();
 	}
 
 	public override void SocketSelectedExit(XRSocketToolInteractor socket)
 	{
-		_mixerCanvas.DisableCanvas();
 		_mixerCanvas.ClearCanvas();
+		_mixerCanvas.DisableCanvas();
+		
 		_recipeData = null;
+		_currentTime = 0f;
+		_badTimer = 0f;
+		_mixingRuined = false;
+		_mixingComplete = false;
 	}
 
 	protected override void TurnOn()
@@ -108,7 +129,20 @@ public class Mixer : ToolCooker
 		if (_socket.Interactable == null)
 			return;
 
+		_mixingComplete = true;
+
 		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
 		bowl.MakeDough();
+	}
+
+	private void MakeBadDough()
+	{
+		if (_socket.Interactable == null)
+			return;
+
+		_mixingRuined = true;
+
+		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
+		bowl.MakeBadDough();
 	}
 }

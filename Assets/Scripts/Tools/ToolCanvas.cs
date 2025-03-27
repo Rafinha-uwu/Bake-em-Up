@@ -21,10 +21,10 @@ public class ToolCanvas : MonoBehaviour
 	private void LateUpdate()
 	{
 		Vector3 newPosition = _transformToFollow.position;
-		if(Vector3.Distance(_transformToFollow.position, _lookAt.position) < 1f)
+		if(Vector3.Distance(_transformToFollow.position, _lookAt.position) < 0.75f)
 		{
 			Vector3 direction = (_transformToFollow.position - _lookAt.position).normalized;
-			newPosition = _lookAt.position + direction * 1f;
+			newPosition = _lookAt.position + direction * 0.75f;
 		}
 		transform.position = newPosition;
 

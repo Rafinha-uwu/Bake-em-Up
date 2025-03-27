@@ -7,6 +7,12 @@ public abstract class ToolCooker : MonoBehaviour
 	protected GameObject _canvasObject;
 	[SerializeField]
 	private Transform _transformForCanvasToFollow;
+	[SerializeField]
+	private int _badTimerPercent;
+	public float BadTimerMultiplier 
+	{ 
+		get { return _badTimerPercent / 100f; }
+	}
 
 	protected ToolButton _toolButton;
 	protected XRSocketToolInteractor _socket;
@@ -18,6 +24,10 @@ public abstract class ToolCooker : MonoBehaviour
 		_toolCanvas = canvas.GetComponent<ToolCanvas>();
 		_toolCanvas.AddTransformToFollow(_transformForCanvasToFollow);
 		_toolCanvas.DisableCanvas();
+		if (_badTimerPercent <= 100f)
+		{
+			throw new System.NotSupportedException($"Bad Timer Percent is {_badTimerPercent}%, needs to be more than 100%");
+		}
 	}
 
 	protected virtual void Start()

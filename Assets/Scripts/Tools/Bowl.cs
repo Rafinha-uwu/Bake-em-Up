@@ -16,7 +16,10 @@ public class Bowl : ToolContainer
 
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
 
-	private bool _hasDough = false;
+	[HideInInspector]
+	public bool HasCompletedDough = false;
+	[HideInInspector]
+	public bool HasBadDough = false;
 
 	protected override void Awake()
 	{
@@ -33,7 +36,28 @@ public class Bowl : ToolContainer
 
 	public void MakeDough()
 	{
-		_hasDough = true;
+		ClearBowl();
+
+		HasCompletedDough = true;
+
+		GameObject dough = Instantiate(_recipeData.doughPrefab);
+		InsertItem(dough);
+	}
+
+	public void MakeBadDough()
+	{
+		ClearBowl();
+
+		HasBadDough = true;
+
+		GameObject badDough = Instantiate(RecipesManager.Instance.GetBadDough());
+		InsertItem(badDough);
+	}
+
+	public void ClearBowl()
+	{
+		HasCompletedDough = false;
+		HasBadDough = false;
 
 		_ingredientsInside.Clear();
 		foreach (Transform child in _container.transform)
@@ -41,9 +65,6 @@ public class Bowl : ToolContainer
 			Destroy(child.gameObject);
 		}
 		_bowlCanvas.ClearIngredients();
-
-		GameObject dough = Instantiate(_recipeData.doughPrefab);
-		InsertItem(dough);
 	}
 
 	private void OnTriggerEnter(Collider other)

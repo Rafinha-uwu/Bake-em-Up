@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class XRSocketToolInteractor : XRSocketInteractor
 {
+	[HideInInspector]
 	public bool IsToolOn = false;
 
     [SerializeField]
