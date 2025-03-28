@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1191302341109410845
+--- !u!1 &290140656924485138
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7570903804505253060}
-  - component: {fileID: 771001620257548972}
-  - component: {fileID: 7189649598741973711}
-  - component: {fileID: 3135697212168672534}
+  - component: {fileID: 2098497921634962775}
+  - component: {fileID: 9082925350387032286}
+  - component: {fileID: 8118015618544324422}
+  - component: {fileID: 4481298097803735208}
   m_Layer: 6
   m_Name: Capsule
-  m_TagString: Dough
+  m_TagString: Shaped Dough
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7570903804505253060
+--- !u!4 &2098497921634962775
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191302341109410845}
+  m_GameObject: {fileID: 290140656924485138}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4633799662486780202}
+  m_Father: {fileID: 477279650583529015}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &771001620257548972
+--- !u!33 &9082925350387032286
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191302341109410845}
+  m_GameObject: {fileID: 290140656924485138}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7189649598741973711
+--- !u!23 &8118015618544324422
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191302341109410845}
+  m_GameObject: {fileID: 290140656924485138}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e52c49b12ac29e34cafa83dfa4f714de, type: 2}
+  - {fileID: 2100000, guid: 4eefdbf866a64cc478e6700dc6e34174, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,13 +87,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3135697212168672534
+--- !u!136 &4481298097803735208
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191302341109410845}
+  m_GameObject: {fileID: 290140656924485138}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -110,7 +110,7 @@ CapsuleCollider:
   m_Height: 1.9999998
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &2686940738494327468
+--- !u!1 &2140565099353989707
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,31 +118,31 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4633799662486780202}
+  - component: {fileID: 477279650583529015}
   m_Layer: 6
   m_Name: Visuals
-  m_TagString: Dough
+  m_TagString: Shaped Dough
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4633799662486780202
+--- !u!4 &477279650583529015
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2686940738494327468}
+  m_GameObject: {fileID: 2140565099353989707}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7570903804505253060}
-  m_Father: {fileID: 7196372625908419394}
+  - {fileID: 2098497921634962775}
+  m_Father: {fileID: 3658479588459841934}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7155525543733279686
+--- !u!1 &3731123898536687147
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,30 +150,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 944316750198181892}
+  - component: {fileID: 6994158565659602514}
   m_Layer: 6
   m_Name: Socket Point
-  m_TagString: Dough
+  m_TagString: Shaped Dough
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &944316750198181892
+--- !u!4 &6994158565659602514
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7155525543733279686}
+  m_GameObject: {fileID: 3731123898536687147}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.15, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7196372625908419394}
+  m_Father: {fileID: 3658479588459841934}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8014039779833279574
+--- !u!1 &5205764263344617521
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,41 +181,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7196372625908419394}
-  - component: {fileID: 2723571115819150548}
-  - component: {fileID: 904470282867346450}
-  - component: {fileID: -7438779246123947999}
+  - component: {fileID: 3658479588459841934}
+  - component: {fileID: 6670029204383455787}
+  - component: {fileID: 5090427749755404978}
+  - component: {fileID: 3106931377842982506}
   m_Layer: 6
-  m_Name: Bad Dough
-  m_TagString: Dough
+  m_Name: Shaped Bread Dough
+  m_TagString: Shaped Dough
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7196372625908419394
+--- !u!4 &3658479588459841934
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8014039779833279574}
+  m_GameObject: {fileID: 5205764263344617521}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.9325397, y: 1.1470385, z: -1.345}
+  m_LocalPosition: {x: 2.149149, y: 1.1, z: -0.42495373}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4633799662486780202}
-  - {fileID: 944316750198181892}
+  - {fileID: 477279650583529015}
+  - {fileID: 6994158565659602514}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &2723571115819150548
+--- !u!54 &6670029204383455787
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8014039779833279574}
+  m_GameObject: {fileID: 5205764263344617521}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -236,13 +236,13 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &904470282867346450
+--- !u!114 &5090427749755404978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8014039779833279574}
+  m_GameObject: {fileID: 5205764263344617521}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef588bc6c1a32494584a9ff09b907fc7, type: 3}
@@ -358,19 +358,19 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 1
-  _socketTransform: {fileID: 944316750198181892}
---- !u!114 &-7438779246123947999
+  _socketTransform: {fileID: 6994158565659602514}
+--- !u!114 &3106931377842982506
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8014039779833279574}
+  m_GameObject: {fileID: 5205764263344617521}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3e60e5dd4587054ca6b1d0f9d610bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _recipeData: {fileID: 0}
-  _isBadDough: 1
-  _isShaped: 0
+  _recipeData: {fileID: 11400000, guid: 3190366478569244baadac612ad0a977, type: 2}
+  _isBadDough: 0
+  _isShaped: 1
