@@ -5,54 +5,67 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class DoughSocketsManager : MonoBehaviour
+public class ShapedDoughsSocketsManager : MonoBehaviour
 {
 	[SerializeField]
 	private List<MultipleSocketsManager> _shapedDoughSocketManager;
 
-	[SerializeField]
-	private XRSocketInteractor _doughSocket;
-
 	private Dictionary<int, MultipleSocketsManager> _socketsManagerDict = new();
 
 	private Collider _collider;
-
-	private bool _hasDoughSocket;
+	private WoodenBoard _woodenBoard;
 	private RecipeData _shapedDoughRecipe;
 
 	private void Awake()
 	{
 		_collider = GetComponent<Collider>();
-		_hasDoughSocket = _doughSocket != null;
 
 		foreach(MultipleSocketsManager manager in _shapedDoughSocketManager)
 		{
 			_socketsManagerDict.Add(manager.GetSocketsCount(), manager);
+			manager.OnValidateObject += ValidateRecipe;
+			manager.OnGridEmpty += GridIsEmpty;
 		}
 	}
 
-	private void OnEnable()
+	private void Start()
 	{
-		if (_doughSocket)
-			_doughSocket.selectExited.AddListener(DoughRemoved);
+		_woodenBoard = GetComponentInParent<WoodenBoard>();
+		if (_woodenBoard)
+			_collider.enabled = false;
 	}
 
-	private void OnDisable()
+	private void OnDestroy()
 	{
-		if (_doughSocket)
-			_doughSocket.selectExited.RemoveListener(DoughRemoved);
-	}
-
-	public bool IsSameRecipe(RecipeData recipe)
-	{
-		return _shapedDoughRecipe == recipe;
+		foreach (MultipleSocketsManager manager in _shapedDoughSocketManager)
+		{
+			manager.OnValidateObject -= ValidateRecipe;
+			manager.OnGridEmpty -= GridIsEmpty;
+		}
 	}
 
 	public void GridIsEmpty(MultipleSocketsManager manager)
 	{
 		manager.gameObject.SetActive(false);
-		_shapedDoughRecipe = null;
+		if (_woodenBoard)
+		{
+			_woodenBoard.ShapedDoughsGridIsEmpty();
+		}
+		else
+		{
+			_collider.enabled = true;
+		}
+	}
+
+	public void ReceivedShapedDough()
+	{
 		_collider.enabled = true;
+	}
+
+	private bool ValidateRecipe(GameObject objectToValidate)
+	{
+		RecipeData recipe = objectToValidate.GetComponentInParent<Dough>().GetRecipe();
+		return _shapedDoughRecipe == recipe;
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -62,28 +75,15 @@ public class DoughSocketsManager : MonoBehaviour
 		if (interactable.isSelected)
 			return;
 
-		if (_hasDoughSocket && _doughSocket.hasSelection)
-			return;
-
-		if (other.gameObject.CompareTag("Dough"))
-		{
-			_doughSocket.socketActive = true;
-			_doughSocket.interactionManager.SelectEnter(_doughSocket as IXRSelectInteractor, interactable as IXRSelectInteractable);
-		}
-		else if(other.gameObject.CompareTag("Shaped Dough"))
+		if(other.gameObject.CompareTag("Shaped Dough"))
 		{
 			RecipeData recipe = other.gameObject.GetComponentInParent<Dough>().GetRecipe();
-
+			
 			MultipleSocketsManager manager = _socketsManagerDict[recipe.shapedDoughCount];
 			manager.gameObject.SetActive(true);
 
-			_collider.enabled = false;
 			_shapedDoughRecipe = recipe;
+			_collider.enabled = false;
 		}
-	}
-
-	private void DoughRemoved(SelectExitEventArgs args)
-	{
-		_doughSocket.socketActive = false;
 	}
 }
