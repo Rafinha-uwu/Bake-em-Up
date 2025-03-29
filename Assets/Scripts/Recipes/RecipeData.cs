@@ -10,6 +10,7 @@ public class RecipeData : ScriptableObject
 
     public float MixerTime;
     public GameObject doughPrefab;
+    public int shapedDoughCount;
 
 	public bool CheckIfComplete(Dictionary<IngredientName, int> ingredientsInsideBowl)
     {

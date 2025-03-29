@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Net.Mail;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [RequireComponent(typeof(XRGrabInteractable))]
@@ -20,6 +17,7 @@ public class Bowl : ToolContainer
 	public bool HasCompletedDough = false;
 	[HideInInspector]
 	public bool HasBadDough = false;
+	private int _doughQuantity = 0;
 
 	protected override void Awake()
 	{
@@ -40,8 +38,11 @@ public class Bowl : ToolContainer
 
 		HasCompletedDough = true;
 
-		GameObject dough = Instantiate(_recipeData.doughPrefab);
-		InsertItem(dough);
+		GameObject firstDough = Instantiate(_recipeData.doughPrefab);
+		InsertItem(firstDough);
+		GameObject secondDough = Instantiate(_recipeData.doughPrefab);
+		InsertItem(secondDough);
+		_doughQuantity = 2;
 	}
 
 	public void MakeBadDough()
@@ -52,12 +53,14 @@ public class Bowl : ToolContainer
 
 		GameObject badDough = Instantiate(RecipesManager.Instance.GetBadDough());
 		InsertItem(badDough);
+		_doughQuantity = 1;
 	}
 
 	public void ClearBowl()
 	{
 		HasCompletedDough = false;
 		HasBadDough = false;
+		_doughQuantity = 0;
 
 		_ingredientsInside.Clear();
 		foreach (Transform child in _container.transform)
