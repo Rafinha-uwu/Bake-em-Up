@@ -87,7 +87,7 @@ public class MultipleSocketsManager : MonoBehaviour
 		_usedSockets -= 1;
 		if(_usedSockets == 0)
 		{
-			OnGridEmpty.Invoke(this);
+			OnGridEmpty?.Invoke(this);
 		}
 	}
 
