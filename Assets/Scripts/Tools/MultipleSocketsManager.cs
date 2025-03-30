@@ -4,6 +4,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using System.Linq;
+using UnityEngine.Events;
+using System;
 
 public class MultipleSocketsManager : MonoBehaviour
 {
@@ -15,17 +17,22 @@ public class MultipleSocketsManager : MonoBehaviour
 	[SerializeField]
 	private string _tagToCompare;
 
-	private Dictionary<XRSocketInteractor, bool> _socketAvailable = new();
+	private Dictionary<XRSocketInteractor, bool> _socketsAvailables = new();
 	private Dictionary<XRBaseInteractable, XRSocketInteractor> _interactablesAttach = new();
 
-	private DoughSocketsManager _doughSocketsManager;
+	public delegate void GridEmptyHandler(MultipleSocketsManager manager);
+	public event GridEmptyHandler OnGridEmpty;
+
+	public delegate bool ValidateObjectHandler(GameObject objectToValidate);
+	public event ValidateObjectHandler OnValidateObject;
+
 	private int _usedSockets = 0;
 
 	private void Awake()
 	{
 		foreach (XRSocketInteractor socket in _socketsInteractors)
 		{
-			_socketAvailable.Add(socket, true);
+			_socketsAvailables.Add(socket, true);
 			socket.selectExited.AddListener(InteractableRemoved);
 		}
 	}
@@ -35,11 +42,6 @@ public class MultipleSocketsManager : MonoBehaviour
 		{
 			socket.selectExited.RemoveListener(InteractableRemoved);
 		}
-	}
-
-	private void Start()
-	{
-		_doughSocketsManager = GetComponentInParent<DoughSocketsManager>();
 	}
 
 	public int GetSocketsCount()
@@ -59,18 +61,18 @@ public class MultipleSocketsManager : MonoBehaviour
 		if (_interactablesAttach.ContainsKey(interactable))
 			return;
 		
-		XRSocketInteractor socket = _socketAvailable.FirstOrDefault(kv => kv.Value).Key;
+		XRSocketInteractor socket = _socketsAvailables.FirstOrDefault(kv => kv.Value).Key;
 		if (socket == null)
 			return;
 
-		if (!_doughSocketsManager.IsSameRecipe(other.gameObject.GetComponentInParent<Dough>().GetRecipe()))
+		if (!CheckValidations(other.gameObject))
 			return;
 
 		socket.socketActive = true;
 		socket.interactionManager.SelectEnter(socket as IXRSelectInteractor, interactable as IXRSelectInteractable);
 		_usedSockets += 1;
 
-		_socketAvailable[socket] = false;
+		_socketsAvailables[socket] = false;
 		_interactablesAttach.Add(interactable, socket);
 	}
 
@@ -80,13 +82,22 @@ public class MultipleSocketsManager : MonoBehaviour
 		XRSocketInteractor socket = args.interactorObject as XRSocketInteractor;
 
 		socket.socketActive = false;
-		_socketAvailable[socket] = true;
+		_socketsAvailables[socket] = true;
 		_interactablesAttach.Remove(interactable);
 		_usedSockets -= 1;
 		if(_usedSockets == 0)
 		{
-			_doughSocketsManager.GridIsEmpty(this);
+			OnGridEmpty.Invoke(this);
 		}
+	}
+
+	private bool CheckValidations(GameObject objectToValidate)
+	{
+		if(OnValidateObject == null) return true;
+
+		return OnValidateObject.GetInvocationList()
+		.Cast<ValidateObjectHandler>()
+		.All(ev => ev.Invoke(objectToValidate));
 	}
 }
 

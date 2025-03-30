@@ -38,9 +38,9 @@ public class Bowl : ToolContainer
 
 		HasCompletedDough = true;
 
-		GameObject firstDough = Instantiate(_recipeData.doughPrefab);
+		GameObject firstDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(firstDough);
-		GameObject secondDough = Instantiate(_recipeData.doughPrefab);
+		GameObject secondDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(secondDough);
 		_doughQuantity = 2;
 	}
@@ -51,7 +51,7 @@ public class Bowl : ToolContainer
 
 		HasBadDough = true;
 
-		GameObject badDough = Instantiate(RecipesManager.Instance.GetBadDough());
+		GameObject badDough = Instantiate(RecipesManager.Instance.GetBadDough(), _container.transform.position, Quaternion.identity);
 		InsertItem(badDough);
 		_doughQuantity = 1;
 	}
@@ -85,9 +85,8 @@ public class Bowl : ToolContainer
 	private void InsertItem(GameObject obj)
 	{
 		obj.transform.SetParent(_container.transform, true);
+		SetLayerAllChildren(obj.transform, "Inside Bowl");
 		obj.transform.localPosition = Vector3.zero;
-		int LayerInsideBowl = LayerMask.NameToLayer("Inside Bowl");
-		obj.layer = LayerInsideBowl;
 
 		if(obj.TryGetComponent<IngredientController>(out var ingredient))
 		{
@@ -113,5 +112,14 @@ public class Bowl : ToolContainer
 				_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 			}
 		}
-	}	
+	}
+
+	private void SetLayerAllChildren(Transform root, string layerName)
+	{
+		var children = root.GetComponentsInChildren<Transform>(includeInactive: true);
+		foreach (var child in children)
+		{
+			child.gameObject.layer = LayerMask.NameToLayer(layerName);
+		}
+	}
 }
