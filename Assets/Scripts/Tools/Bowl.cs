@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-[RequireComponent(typeof(XRGrabInteractable))]
+[RequireComponent(typeof(XRGrabInteractable)), RequireComponent(typeof(Resettable))]
 public class Bowl : ToolContainer
 {
 	[SerializeField]
@@ -17,12 +17,19 @@ public class Bowl : ToolContainer
 	public bool HasCompletedDough = false;
 	[HideInInspector]
 	public bool HasBadDough = false;
-	private int _doughQuantity = 0;
+	private Resettable _resettable;
 
 	protected override void Awake()
 	{
 		base.Awake();
 		_bowlCanvas = _toolCanvas.gameObject.GetComponent<BowlCanvas>();
+		_resettable = GetComponent<Resettable>();
+		_resettable.OnObjectReset += ClearBowl;
+	}
+
+	private void OnDestroy()
+	{
+		_resettable.OnObjectReset -= ClearBowl;
 	}
 
 	public bool GetRecipe(out RecipeData recipe)
@@ -40,9 +47,9 @@ public class Bowl : ToolContainer
 
 		GameObject firstDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(firstDough);
+
 		GameObject secondDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(secondDough);
-		_doughQuantity = 2;
 	}
 
 	public void MakeBadDough()
@@ -53,14 +60,12 @@ public class Bowl : ToolContainer
 
 		GameObject badDough = Instantiate(RecipesManager.Instance.GetBadDough(), _container.transform.position, Quaternion.identity);
 		InsertItem(badDough);
-		_doughQuantity = 1;
 	}
 
 	public void ClearBowl()
 	{
 		HasCompletedDough = false;
 		HasBadDough = false;
-		_doughQuantity = 0;
 
 		_ingredientsInside.Clear();
 		foreach (Transform child in _container.transform)
@@ -72,23 +77,29 @@ public class Bowl : ToolContainer
 
 	private void OnTriggerEnter(Collider other)
 	{
-		GameObject obj = other.gameObject;
+		var interactable = other.gameObject.GetComponentInParent<XRGrabInteractable>();
 
-		if (obj.TryGetComponent<XRGrabInteractable>(out var interactable))
+		if (interactable)
 		{
-			if (!interactable.isSelected) return;
+			if (!interactable.isSelected)
+				return;
+
+			if (!interactable.firstInteractorSelecting.transform.CompareTag("Player"))
+				return;
+
 			ReleaseItem(interactable);
-			InsertItem(obj);
+			InsertItem(interactable.gameObject);
 		}
 	}
 
 	private void InsertItem(GameObject obj)
 	{
-		obj.transform.SetParent(_container.transform, true);
 		SetLayerAllChildren(obj.transform, "Inside Bowl");
+		obj.transform.SetParent(_container.transform, true);
 		obj.transform.localPosition = Vector3.zero;
+		//obj.transform.SetPositionAndRotation(_container.transform.position, Quaternion.identity);
 
-		if(obj.TryGetComponent<IngredientController>(out var ingredient))
+		if (obj.TryGetComponent<IngredientController>(out var ingredient))
 		{
 			AddIngredient(ingredient);
 		}

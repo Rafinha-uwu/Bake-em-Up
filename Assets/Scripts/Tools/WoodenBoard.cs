@@ -51,7 +51,7 @@ public class WoodenBoard : MonoBehaviour
 			if (!_doughOnBoard)
 				return;
 
-			_doughOnBoard.KneadDough(gameObject);
+			_doughOnBoard.KneadDough();
 
 			return;
 		}

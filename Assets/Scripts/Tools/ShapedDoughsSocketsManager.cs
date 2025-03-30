@@ -64,7 +64,7 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 	private bool ValidateRecipe(GameObject objectToValidate)
 	{
-		RecipeData recipe = objectToValidate.GetComponentInParent<Dough>().GetRecipe();
+		RecipeData recipe = objectToValidate.GetComponentInParent<ShapedDough>().GetRecipe();
 		return _shapedDoughRecipe == recipe;
 	}
 
