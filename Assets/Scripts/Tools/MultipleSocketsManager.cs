@@ -4,8 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using System.Linq;
-using UnityEngine.Events;
-using System;
+
 
 public class MultipleSocketsManager : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class MultipleSocketsManager : MonoBehaviour
 	[SerializeField]
 	private bool _compareTag = false;
 	[SerializeField]
-	private string _tagToCompare;
+	private List<string> _tagsToCompare;
 
 	private Dictionary<XRSocketInteractor, bool> _socketsAvailables = new();
 	private Dictionary<XRBaseInteractable, XRSocketInteractor> _interactablesAttach = new();
@@ -49,9 +48,19 @@ public class MultipleSocketsManager : MonoBehaviour
 		return _socketsInteractors.Count;
 	}
 
+	public void ReleaseAllDough()
+	{
+		List<XRBaseInteractable> interactables = _interactablesAttach.Keys.ToList();
+
+		foreach(var inter in interactables)
+		{
+            inter.interactionManager.SelectExit(inter.firstInteractorSelecting as IXRSelectInteractor, inter as IXRSelectInteractable);
+        }
+	}
+
 	private void OnTriggerEnter(Collider other)
 	{
-		if (_compareTag && !other.gameObject.CompareTag(_tagToCompare))
+		if (_compareTag && !CompareTags(other.tag))
 			return;
 
 		XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
@@ -74,6 +83,17 @@ public class MultipleSocketsManager : MonoBehaviour
 
 		_socketsAvailables[socket] = false;
 		_interactablesAttach.Add(interactable, socket);
+	}
+
+	private bool CompareTags(string objectTag)
+	{
+		bool result = false;
+		foreach(string tag in _tagsToCompare)
+		{
+			if (tag.Equals(objectTag))
+				result = true;
+		}
+		return result;
 	}
 
 	private void InteractableRemoved(SelectExitEventArgs args)

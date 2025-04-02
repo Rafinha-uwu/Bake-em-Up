@@ -12,7 +12,10 @@ public class RecipesManager : MonoBehaviour
 	[SerializeField]
 	private GameObject _badDough;
 
-	private void Awake()
+    [SerializeField]
+    private GameObject _burnedBread;
+
+    private void Awake()
 	{
 		if (Instance != null && Instance != this)
 		{
@@ -43,4 +46,9 @@ public class RecipesManager : MonoBehaviour
 	{
 		return _badDough;
 	}
+
+    public GameObject GetBurnedBread()
+    {
+        return _burnedBread;
+    }
 }

@@ -38,6 +38,11 @@ public class WoodenBoard : MonoBehaviour
 		_collider.enabled = true;
 	}
 
+	public void ReleaseAllDough()
+	{
+        _shapedDoughsSocketsManager.ReleaseAllDough();
+    }
+
 	private void DoughRemoved(SelectExitEventArgs args)
 	{
 		_doughSocket.socketActive = false;

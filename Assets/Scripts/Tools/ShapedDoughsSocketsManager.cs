@@ -14,6 +14,7 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 	private Collider _collider;
 	private WoodenBoard _woodenBoard;
+	private OvenDish _ovenDish;
 	private RecipeData _shapedDoughRecipe;
 
 	private void Awake()
@@ -31,7 +32,9 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 	private void Start()
 	{
 		_woodenBoard = GetComponentInParent<WoodenBoard>();
-		if (_woodenBoard)
+		_ovenDish = GetComponentInParent<OvenDish>();
+
+		if (_woodenBoard || _ovenDish)
 			_collider.enabled = false;
 	}
 
@@ -62,6 +65,12 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 		_collider.enabled = true;
 	}
 
+	public void ReleaseAllDough()
+	{
+        MultipleSocketsManager manager = _socketsManagerDict[_shapedDoughRecipe.shapedDoughCount];
+		manager.ReleaseAllDough();
+    }
+
 	private bool ValidateRecipe(GameObject objectToValidate)
 	{
 		RecipeData recipe = objectToValidate.GetComponentInParent<ShapedDough>().GetRecipe();
@@ -70,20 +79,29 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
-
-		if (interactable.isSelected)
-			return;
-
+		RecipeData recipe = null;
 		if(other.gameObject.CompareTag("Shaped Dough"))
 		{
-			RecipeData recipe = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
-			
-			MultipleSocketsManager manager = _socketsManagerDict[recipe.shapedDoughCount];
-			manager.gameObject.SetActive(true);
-
-			_shapedDoughRecipe = recipe;
-			_collider.enabled = false;
+			recipe = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
 		}
-	}
+		else if (other.gameObject.CompareTag("Bread"))
+		{
+            recipe = other.gameObject.GetComponentInParent<Bread>().GetRecipe();
+        }
+
+		if(recipe != null)
+		{
+            XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
+
+            if (interactable.isSelected)
+                return;
+
+            MultipleSocketsManager manager = _socketsManagerDict[recipe.shapedDoughCount];
+            manager.gameObject.SetActive(true);
+
+            _shapedDoughRecipe = recipe;
+            _collider.enabled = false;
+        }
+        
+    }
 }
