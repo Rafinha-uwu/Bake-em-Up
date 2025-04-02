@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 468114686572532402}
   - component: {fileID: 1145607782968658420}
   - component: {fileID: 421769173549492191}
-  - component: {fileID: 1862458978697607412}
   - component: {fileID: 1416077266168826704}
   m_Layer: 6
   m_Name: Canvas Bowl
@@ -88,7 +87,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &421769173549492191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,18 +105,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1862458978697607412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947059706277960669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 574ff613d31994e469232eb390236420, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1416077266168826704
 MonoBehaviour:
   m_ObjectHideFlags: 0

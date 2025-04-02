@@ -1,12 +1,17 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 
 public class ToolCanvas : MonoBehaviour
 {
 	private Transform _lookAt;
     private Transform _transformToFollow;
+	private Canvas _canvas;
+
+	private void Awake()
+	{
+		_canvas = GetComponent<Canvas>();
+	}
 
 	private void Start()
 	{
@@ -16,10 +21,10 @@ public class ToolCanvas : MonoBehaviour
 	private void LateUpdate()
 	{
 		Vector3 newPosition = _transformToFollow.position;
-		if(Vector3.Distance(_transformToFollow.position, _lookAt.position) < 1f)
+		if(Vector3.Distance(_transformToFollow.position, _lookAt.position) < 0.75f)
 		{
 			Vector3 direction = (_transformToFollow.position - _lookAt.position).normalized;
-			newPosition = _lookAt.position + direction * 1f;
+			newPosition = _lookAt.position + direction * 0.75f;
 		}
 		transform.position = newPosition;
 
@@ -30,5 +35,20 @@ public class ToolCanvas : MonoBehaviour
 	public void AddTransformToFollow(Transform transform)
 	{
 		_transformToFollow = transform;
+	}
+
+	public void EnableCanvas()
+	{
+		_canvas.enabled = true;
+	}
+
+	public void DisableCanvas()
+	{
+		_canvas.enabled = false;
+	}
+
+	public virtual void ClearCanvas()
+	{
+		throw new NotImplementedException($"Clear Canvas for {gameObject.name} not implemented.");
 	}
 }

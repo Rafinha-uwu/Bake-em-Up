@@ -8,6 +8,11 @@ public class RecipeData : ScriptableObject
     public List<IngredientName> ingredients = new();
     public Sprite recipeSprite;
 
+    public float MixerTime;
+    public GameObject doughPrefab;
+    public int shapedDoughCount;
+    public GameObject shapedDoughPrefab;
+
 	public bool CheckIfComplete(Dictionary<IngredientName, int> ingredientsInsideBowl)
     {
         foreach(IngredientName ingrediant in ingredients)
