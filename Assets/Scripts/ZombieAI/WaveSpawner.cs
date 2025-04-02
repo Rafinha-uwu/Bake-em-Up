@@ -45,7 +45,7 @@ public class WaveSpawner : MonoBehaviour
     private void SpawnEnemy()
     {
         var element = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Vector3 randomPoint = EnemyNavigation.GetRandomPointOnSide(LevelManager.Instance.targetZombies.position, LevelManager.Instance.targetZombies.right, sideWidth, 1.5f);
+        Vector3 randomPoint = EnemyNavigation.GetRandomPointOnSide(LevelManager.Instance.targetZombies.position, LevelManager.Instance.targetZombies.right, sideWidth, 0f);
 
         GameObject enemy = Instantiate(enemyPrefab, element.position, Quaternion.identity);
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();

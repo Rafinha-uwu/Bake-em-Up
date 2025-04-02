@@ -77,7 +77,7 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 		if(other.gameObject.CompareTag("Shaped Dough"))
 		{
-			RecipeData recipe = other.gameObject.GetComponentInParent<Dough>().GetRecipe();
+			RecipeData recipe = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
 			
 			MultipleSocketsManager manager = _socketsManagerDict[recipe.shapedDoughCount];
 			manager.gameObject.SetActive(true);

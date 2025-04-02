@@ -18,7 +18,7 @@ public class EnemyNavigation : MonoBehaviour
         if (roulotteRenderer != null)
         {
             sideWidth = roulotteRenderer.bounds.size.x; // Get world-space width
-            randomPoint = GetRandomPointOnSide(LevelManager.Instance.targetZombies.position, LevelManager.Instance.targetZombies.right, sideWidth, 1.5f);
+            randomPoint = GetRandomPointOnSide(LevelManager.Instance.targetZombies.position, LevelManager.Instance.targetZombies.right, sideWidth, 0f);
 
         }
         agent = GetComponent<NavMeshAgent>();
