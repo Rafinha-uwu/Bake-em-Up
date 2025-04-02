@@ -49,7 +49,7 @@ public class XRSocketToolInteractor : XRSocketInteractor
 				correctTool = true;
 		}
 
-		return canHover && correctTool && !IsToolOn;
+		return canHover && correctTool;
 	}
 
 	public override bool CanSelect(IXRSelectInteractable interactable)
@@ -63,7 +63,7 @@ public class XRSocketToolInteractor : XRSocketInteractor
 				correctTool = true;
 		}
 
-		return canSelect && correctTool && !IsToolOn;
+		return canSelect && correctTool;
 	}
 
 	private void SocketSelectEnter(SelectEnterEventArgs args)

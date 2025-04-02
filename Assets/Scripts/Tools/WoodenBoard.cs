@@ -82,7 +82,7 @@ public class WoodenBoard : MonoBehaviour
 		}
 		else if (other.gameObject.CompareTag("Shaped Dough"))
 		{
-			_shapedDoughsSocketsManager.ReceivedShapedDough();
+			_shapedDoughsSocketsManager.ReceivedItem();
 			_collider.enabled = false;
 
 			return;

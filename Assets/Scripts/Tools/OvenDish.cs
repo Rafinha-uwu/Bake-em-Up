@@ -71,6 +71,8 @@ public class OvenDish : ToolContainer
         HasCompletedBread = false;
         HasBurnedBread = false;
 
+        _shapedDoughsSocketsManager.DestroyAllDough();
+
         _dishCanvas.ClearCanvas();
     }
 
@@ -91,7 +93,7 @@ public class OvenDish : ToolContainer
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Shaped Dough"))
+        if (other.gameObject.CompareTag("Shaped Dough"))
         {
             XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
             if (interactable.isSelected)
@@ -103,10 +105,21 @@ public class OvenDish : ToolContainer
 
                 board.ReleaseAllDough();
 
-                _recipeData = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
-                _shapedDoughsSocketsManager.ReceivedShapedDough();
-                _collider.enabled = false;
             }
+
+            _recipeData = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
+            _shapedDoughsSocketsManager.ReceivedItem();
+            _collider.enabled = false;
         }
+        else if (other.gameObject.CompareTag("Bread"))
+        {
+            XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
+            if (interactable.isSelected)
+                return;
+
+			_recipeData = other.gameObject.GetComponentInParent<Bread>().GetRecipe();
+			_shapedDoughsSocketsManager.ReceivedItem();
+			_collider.enabled = false;
+		}
     }
 }

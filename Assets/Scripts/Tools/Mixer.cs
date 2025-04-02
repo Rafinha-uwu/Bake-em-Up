@@ -8,7 +8,8 @@ public class Mixer : ToolCooker
 	private MixerCanvas _mixerCanvas;
 
 	private InteractionLayerMask _bowlInteractionLayerMask;
-	private InteractionLayerMask _nothingInteractionLayerMask;
+	[SerializeField]
+	private InteractionLayerMask _trackInteractionLayerMask;
 
 	private RecipeData _recipeData;
 	private bool _isMixing = false;
@@ -96,13 +97,13 @@ public class Mixer : ToolCooker
 	protected override void TurnOn()
 	{
 		Debug.Log("Ligou");
-		_socket.IsToolOn = true;
 
 		if (_socket.Interactable != null)
 		{
+			_socket.IsToolOn = true;
 			XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
 			_bowlInteractionLayerMask = grabInteractable.interactionLayers;
-			grabInteractable.interactionLayers = _nothingInteractionLayerMask;
+			grabInteractable.interactionLayers = _trackInteractionLayerMask;
 
 			if (_recipeData != null)
 			{
@@ -114,10 +115,10 @@ public class Mixer : ToolCooker
 	protected override void TurnOff()
 	{
 		Debug.Log("Desligou");
-		_socket.IsToolOn = false;
 
 		if (_socket.Interactable != null)
 		{
+			_socket.IsToolOn = false;
 			XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
 			grabInteractable.interactionLayers = _bowlInteractionLayerMask;
 			_isMixing = false;
