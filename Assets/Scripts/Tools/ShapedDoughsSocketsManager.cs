@@ -60,7 +60,7 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 		}
 	}
 
-	public void ReceivedShapedDough()
+	public void ReceivedItem()
 	{
 		_collider.enabled = true;
 	}
@@ -68,12 +68,27 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 	public void ReleaseAllDough()
 	{
         MultipleSocketsManager manager = _socketsManagerDict[_shapedDoughRecipe.shapedDoughCount];
-		manager.ReleaseAllDough();
+		manager.ReleaseAllItems();
     }
+
+	public void DestroyAllDough()
+	{
+		MultipleSocketsManager manager = _socketsManagerDict[_shapedDoughRecipe.shapedDoughCount];
+		manager.DestroyAllItems();
+	}
 
 	private bool ValidateRecipe(GameObject objectToValidate)
 	{
-		RecipeData recipe = objectToValidate.GetComponentInParent<ShapedDough>().GetRecipe();
+		RecipeData recipe = null;
+		if (objectToValidate.gameObject.CompareTag("Shaped Dough"))
+		{
+			recipe = objectToValidate.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
+		}
+		else if (objectToValidate.gameObject.CompareTag("Bread"))
+		{
+			recipe = objectToValidate.gameObject.GetComponentInParent<Bread>().GetRecipe();
+		}
+
 		return _shapedDoughRecipe == recipe;
 	}
 

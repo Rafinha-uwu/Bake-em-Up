@@ -69,7 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 16
   m_Handedness: 0
   m_AttachTransform: {fileID: 1065633883978199816}
   m_KeepSelectedTargetValid: 1
@@ -728,6 +728,8 @@ MonoBehaviour:
   _transformForCanvasToFollow: {fileID: 3002140599736775542}
   _badTimerPercent: 150
   _socket: {fileID: 3671289700795073015}
+  _trackInteractionLayerMask:
+    m_Bits: 16
 --- !u!1 &7015154834784601507
 GameObject:
   m_ObjectHideFlags: 0

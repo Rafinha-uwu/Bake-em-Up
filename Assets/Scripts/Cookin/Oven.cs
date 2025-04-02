@@ -15,7 +15,8 @@ public class Oven : ToolCooker
     private OvenDoor _ovenDoor;
 
     private InteractionLayerMask _dishInteractionLayerMask;
-    private InteractionLayerMask _nothingInteractionLayerMask;
+	[SerializeField]
+	private InteractionLayerMask _trackInteractionLayerMask;
 
     private RecipeData _recipeDataDish1;
     private RecipeData _recipeDataDish2;
@@ -165,7 +166,6 @@ public class Oven : ToolCooker
     protected override void TurnOn()
     {
         Debug.Log("Ligou");
-        if(_socket)
 
         if (_socket.Interactable != null)
         {
@@ -173,7 +173,7 @@ public class Oven : ToolCooker
 
             XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
             _dishInteractionLayerMask = grabInteractable.interactionLayers;
-            grabInteractable.interactionLayers = _nothingInteractionLayerMask;
+            grabInteractable.interactionLayers = _trackInteractionLayerMask;
 
             if (_recipeDataDish1 != null)
             {
@@ -183,12 +183,11 @@ public class Oven : ToolCooker
 
         if (_socketDish2.Interactable != null)
         {
-
             _socketDish2.IsToolOn = true;
 
             XRBaseInteractable grabInteractable = _socketDish2.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
             _dishInteractionLayerMask = grabInteractable.interactionLayers;
-            grabInteractable.interactionLayers = _nothingInteractionLayerMask;
+            grabInteractable.interactionLayers = _trackInteractionLayerMask;
 
             if (_recipeDataDish2 != null)
             {
@@ -206,14 +205,13 @@ public class Oven : ToolCooker
         if (!_burnedDish1 && _currentTimeDish1 >= _badTimerDish1)
         {
             Debug.Log("Estragou a massa!");
-            MakeBread(_socket);
-
+			BurnedBread(_socket);
         }
         else if (!_heatingCompleteDish1 && _currentTimeDish1 >= _recipeDataDish1.OvenTime)
         {
             Debug.Log("Terminou de Misturar");
-            BurnedBread(_socket);
-        }
+			MakeBread(_socket);
+		}
     }
     private void HeatDish2()
     {
@@ -224,13 +222,12 @@ public class Oven : ToolCooker
         if (!_burnedDish2 && _currentTimeDish2 >= _badTimerDish2)
         {
             Debug.Log("Estragou a massa!");
-            MakeBread(_socketDish2);
-
+            BurnedBread(_socketDish2);
         }
         else if (!_heatingCompleteDish2 && _currentTimeDish2 >= _recipeDataDish2.OvenTime)
         {
             Debug.Log("Terminou de Misturar");
-            BurnedBread(_socketDish2);
+            MakeBread(_socketDish2);
         }
 
     }

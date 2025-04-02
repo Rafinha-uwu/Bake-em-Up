@@ -48,7 +48,7 @@ public class MultipleSocketsManager : MonoBehaviour
 		return _socketsInteractors.Count;
 	}
 
-	public void ReleaseAllDough()
+	public void ReleaseAllItems()
 	{
 		List<XRBaseInteractable> interactables = _interactablesAttach.Keys.ToList();
 
@@ -56,6 +56,17 @@ public class MultipleSocketsManager : MonoBehaviour
 		{
             inter.interactionManager.SelectExit(inter.firstInteractorSelecting as IXRSelectInteractor, inter as IXRSelectInteractable);
         }
+	}
+
+	public void DestroyAllItems()
+	{
+		List<XRBaseInteractable> interactables = _interactablesAttach.Keys.ToList();
+
+		foreach (var inter in interactables)
+		{
+			//inter.interactionManager.SelectExit(inter.firstInteractorSelecting as IXRSelectInteractor, inter as IXRSelectInteractable);
+			Destroy(inter.gameObject);
+		}
 	}
 
 	private void OnTriggerEnter(Collider other)
