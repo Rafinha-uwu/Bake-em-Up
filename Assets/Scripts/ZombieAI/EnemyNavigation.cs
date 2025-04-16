@@ -25,10 +25,9 @@ public class EnemyNavigation : MonoBehaviour
         agent.SetDestination(randomPoint);
     }
 
-    void Update()
+    public Vector3 GetDestination()
     {
-        Debug.Log(randomPoint);
-        //agent.SetDestination(randomPoint);
+        return randomPoint;
     }
 
     public static Vector3 GetRandomPointOnSide(Vector3 center, Vector3 rightDirection, float sideWidth, float depthOffset)

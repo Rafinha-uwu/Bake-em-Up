@@ -887,9 +887,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5653766157315446028, guid: cad4381f22927204b86a78d33036a87f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7368835924454958895, guid: cad4381f22927204b86a78d33036a87f, type: 3}
       propertyPath: m_Name
       value: Flour Container
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368835924454958895, guid: cad4381f22927204b86a78d33036a87f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1525,7 +1533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3620,8 +3628,8 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 1985459052}
   - {fileID: 1329584714}
-  waveSize: 4
-  timeBetweenWaves: 40
+  waveSize: 5
+  timeBetweenWaves: 5
   waveSpawnSpeed: 10
 --- !u!1001 &1290109766
 PrefabInstance:
@@ -4271,7 +4279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1555162073
 Transform:
   m_ObjectHideFlags: 0
