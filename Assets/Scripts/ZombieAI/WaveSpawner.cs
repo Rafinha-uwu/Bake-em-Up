@@ -7,7 +7,7 @@ public class WaveSpawner : MonoBehaviour
 {
     public int enemyCount;
 
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefab;
     public Transform[] spawnPoints;
     public int waveSize = 5;
     public float timeBetweenWaves = 3.0f;
@@ -15,6 +15,7 @@ public class WaveSpawner : MonoBehaviour
     private int waveNumber;
 
     private float sideWidth;
+    private int changeZombie;
 
     void Start()
     {
@@ -47,7 +48,14 @@ public class WaveSpawner : MonoBehaviour
         var element = spawnPoints[Random.Range(0, spawnPoints.Length)];
         Vector3 randomPoint = EnemyNavigation.GetRandomPointOnSide(LevelManager.Instance.targetZombies.position, LevelManager.Instance.targetZombies.right, sideWidth, 0f);
 
-        GameObject enemy = Instantiate(enemyPrefab, element.position, Quaternion.identity);
+        GameObject enemy = Instantiate(enemyPrefab[changeZombie], element.position, Quaternion.identity);
+        if (changeZombie == 0)
+        {
+            changeZombie += 1;
+        } else if(changeZombie == enemyPrefab.Length -1)
+        {
+            changeZombie -= 1;
+        }
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
         if (agent != null)
         {

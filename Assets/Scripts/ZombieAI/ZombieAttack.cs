@@ -52,7 +52,6 @@ public class ZombieAttack : MonoBehaviour
 
         isAttacking = false;
 
-        // Optional: If zombie continues to attack, don't re-enable agent
         if (!roulotteInAttackRange)
         {
             if (obstacle != null) obstacle.enabled = false;
