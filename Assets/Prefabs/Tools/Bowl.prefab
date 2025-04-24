@@ -224,10 +224,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c840d1ce7082ce4fb29e2f7761c160f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toolName: 0
+  _toolContainerName: 0
   _canvasObject: {fileID: 1947059706277960669, guid: 6d2234095db90bd42992bf5021bc3722, type: 3}
   _transformForCanvasToFollow: {fileID: 4600684709313209919}
   _container: {fileID: 3551642349289000730}
+  hoverMeshTransformTest: {fileID: 0}
+  hoverMaterial: {fileID: 0}
+  objectMeshFilter: {fileID: 0}
   HasCompletedDough: 0
   HasBadDough: 0
 --- !u!114 &425245515829643114
@@ -242,6 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45e757e663b7d642a36bf53d4a1e4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 2949708435516075507}
 --- !u!1 &3473316273444684463
 GameObject:
   m_ObjectHideFlags: 0

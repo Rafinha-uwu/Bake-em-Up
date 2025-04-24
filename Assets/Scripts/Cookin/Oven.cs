@@ -101,7 +101,7 @@ public class Oven : ToolCooker
                 }
                 else if (ovendish.HasCompletedBread)
                 {
-                    _currentTimeDish2 = _recipeDataDish1.OvenTime;
+                    _currentTimeDish2 = _recipeDataDish2.OvenTime;
                     _heatingCompleteDish1 = true;
                 }
 

@@ -4,9 +4,6 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Trash : MonoBehaviour
 {
-	[SerializeField]
-	private Collider _collider;
-
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.CompareTag("Player"))

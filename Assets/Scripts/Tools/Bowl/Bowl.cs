@@ -8,6 +8,10 @@ public class Bowl : ToolContainer
 	[SerializeField]
 	private GameObject _container;
 
+	public Transform hoverMeshTransformTest; //DELETE LATER
+	public Material hoverMaterial; //DELETE LATER
+	public MeshFilter objectMeshFilter; //DELETE LATER
+
 	private BowlCanvas _bowlCanvas;
 	private RecipeData _recipeData;
 
@@ -32,6 +36,30 @@ public class Bowl : ToolContainer
 		_resettable.OnObjectReset -= ClearBowl;
 	}
 
+	//DELETE LATER
+	private void Update()
+	{
+		var matrix = GetMatrix();
+
+		Graphics.DrawMesh(
+			objectMeshFilter.sharedMesh,
+			matrix,
+			hoverMaterial,
+			gameObject.layer
+		);
+	}
+
+	//DELETE LATER
+	private Matrix4x4 GetMatrix()
+	{
+		Matrix4x4 matrix = Matrix4x4.TRS(
+			hoverMeshTransformTest.position,
+			Quaternion.identity,
+			objectMeshFilter.transform.lossyScale// usa a escala mundial se quiser seguir a escala de outro objeto
+		);
+		return matrix;
+	}
+
 	public bool GetRecipe(out RecipeData recipe)
 	{
 		recipe = _recipeData;
@@ -50,6 +78,8 @@ public class Bowl : ToolContainer
 
 		GameObject secondDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(secondDough);
+
+		_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 	}
 
 	public void MakeBadDough()
@@ -58,8 +88,11 @@ public class Bowl : ToolContainer
 
 		HasBadDough = true;
 
-		GameObject badDough = Instantiate(RecipesManager.Instance.GetBadDough(), _container.transform.position, Quaternion.identity);
+		_recipeData = RecipesManager.Instance.GetBadBread();
+		GameObject badDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(badDough);
+
+		_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 	}
 
 	public void ClearBowl()
@@ -72,14 +105,15 @@ public class Bowl : ToolContainer
 		{
 			Destroy(child.gameObject);
 		}
-		_bowlCanvas.ClearIngredients();
+		_bowlCanvas.ClearCanvas();
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		var interactable = other.gameObject.GetComponentInParent<XRGrabInteractable>();
+		var tool = other.gameObject.GetComponentInParent<Tool>();
 
-		if (interactable)
+		if (interactable && !tool)
 		{
 			if (!interactable.isSelected)
 				return;

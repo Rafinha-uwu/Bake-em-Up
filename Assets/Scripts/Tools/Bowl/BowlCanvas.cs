@@ -8,6 +8,9 @@ public class BowlCanvas : ToolCanvas
 	private Image _recipeImage;
 
 	[SerializeField]
+	private Sprite _emptyRecipeSprite;
+
+	[SerializeField]
 	private GameObject _ingredientCanvasElement;
 
 	[SerializeField]
@@ -54,6 +57,6 @@ public class BowlCanvas : ToolCanvas
 
 	public void ClearRecipe()
 	{
-		_recipeImage.sprite = null;
+		_recipeImage.sprite = _emptyRecipeSprite;
 	}
 }

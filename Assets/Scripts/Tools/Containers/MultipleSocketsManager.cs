@@ -4,7 +4,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using System.Linq;
-
+using System;
+using UnityEngine.Events;
 
 public class MultipleSocketsManager : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class MultipleSocketsManager : MonoBehaviour
 	public delegate bool ValidateObjectHandler(GameObject objectToValidate);
 	public event ValidateObjectHandler OnValidateObject;
 
+	public UnityEvent<XRBaseInteractable> selectEnter;
+	public UnityEvent<XRBaseInteractable> selectExit;
+
 	private int _usedSockets = 0;
 
 	private void Awake()
@@ -33,7 +37,7 @@ public class MultipleSocketsManager : MonoBehaviour
 		{
 			_socketsAvailables.Add(socket, true);
 			socket.selectExited.AddListener(InteractableRemoved);
-		}
+		}			
 	}
 	private void OnDestroy()
 	{
@@ -89,6 +93,7 @@ public class MultipleSocketsManager : MonoBehaviour
 			return;
 
 		socket.socketActive = true;
+		selectEnter?.Invoke(interactable);
 		socket.interactionManager.SelectEnter(socket as IXRSelectInteractor, interactable as IXRSelectInteractable);
 		_usedSockets += 1;
 
@@ -115,6 +120,7 @@ public class MultipleSocketsManager : MonoBehaviour
 		socket.socketActive = false;
 		_socketsAvailables[socket] = true;
 		_interactablesAttach.Remove(interactable);
+		selectExit?.Invoke(interactable);
 		_usedSockets -= 1;
 		if(_usedSockets == 0)
 		{

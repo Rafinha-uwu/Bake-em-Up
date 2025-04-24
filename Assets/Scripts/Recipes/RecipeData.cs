@@ -16,6 +16,8 @@ public class RecipeData : ScriptableObject
     public float OvenTime;
     public GameObject breadPrefab;
 
+    public int damage;
+
     public bool CheckIfComplete(Dictionary<IngredientName, int> ingredientsInsideBowl)
     {
         foreach(IngredientName ingrediant in ingredients)

@@ -170,8 +170,10 @@ GameObject:
   - component: {fileID: 5558619380359519322}
   - component: {fileID: 8771348391534732751}
   - component: {fileID: 6494277326777992512}
+  - component: {fileID: 7682547954094474860}
+  - component: {fileID: 252230469113986053}
   m_Layer: 0
-  m_Name: Oven Dish1
+  m_Name: Oven Dish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,7 +217,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.345968, y: 0.05995081, z: 0.571676}
+  m_Size: {x: 0.345968, y: 0.05995083, z: 0.571676}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &876587844974198477
 Rigidbody:
@@ -378,6 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45e757e663b7d642a36bf53d4a1e4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab: {fileID: 1272705569214346854}
 --- !u!114 &6494277326777992512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,12 +393,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca24b3efa171a1140828b4486e1bda19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toolName: 1
+  _toolContainerName: 1
   _canvasObject: {fileID: 1947059706277960669, guid: cb69f707a81372847a1c4a1461db07d0, type: 3}
   _transformForCanvasToFollow: {fileID: 1484913515641283547}
   _shapedDoughsSocketsManager: {fileID: 1539262534644177826}
   HasCompletedBread: 0
   HasBurnedBread: 0
+--- !u!114 &7682547954094474860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272705569214346854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccf0af2dea57f943bfe284f261d4ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resizeValue: 0.6
+--- !u!114 &252230469113986053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272705569214346854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff658a0241f23548b6c8c2044b8e896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreFirstHandGrabLayerIndex: 2
+  defaultInteractableLayerIndex: 6
 --- !u!1 &1577857740564977075
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,7 +849,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3543675551002602115}
   m_Layer: 0
-  m_Name: Atatch
+  m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1084,7 +1114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1484913515641283547}
   m_Layer: 0
-  m_Name: Atatch Hand
+  m_Name: Attach Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1366,7 +1396,7 @@ Transform:
   m_GameObject: {fileID: 6853142873724194752}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.015, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1395,6 +1425,60 @@ MonoBehaviour:
   _tagsToCompare:
   - Shaped Dough
   - Bread
+  selectEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7682547954094474860}
+        m_TargetAssemblyTypeName: ResizeInContainer, Assembly-CSharp
+        m_MethodName: EnteredContainer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 252230469113986053}
+        m_TargetAssemblyTypeName: GrabInteractablesOnSecondHand, Assembly-CSharp
+        m_MethodName: InteractableEnteredSocket
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  selectExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7682547954094474860}
+        m_TargetAssemblyTypeName: ResizeInContainer, Assembly-CSharp
+        m_MethodName: ExitedContainer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 252230469113986053}
+        m_TargetAssemblyTypeName: GrabInteractablesOnSecondHand, Assembly-CSharp
+        m_MethodName: InteractableExitedSocket
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &951547446078149196
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1599,7 +1683,7 @@ Transform:
   m_GameObject: {fileID: 7935681874276886915}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.015, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1646,6 +1730,60 @@ MonoBehaviour:
   _tagsToCompare:
   - Shaped Dough
   - Bread
+  selectEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7682547954094474860}
+        m_TargetAssemblyTypeName: ResizeInContainer, Assembly-CSharp
+        m_MethodName: EnteredContainer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 252230469113986053}
+        m_TargetAssemblyTypeName: GrabInteractablesOnSecondHand, Assembly-CSharp
+        m_MethodName: InteractableEnteredSocket
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  selectExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7682547954094474860}
+        m_TargetAssemblyTypeName: ResizeInContainer, Assembly-CSharp
+        m_MethodName: ExitedContainer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 252230469113986053}
+        m_TargetAssemblyTypeName: GrabInteractablesOnSecondHand, Assembly-CSharp
+        m_MethodName: InteractableExitedSocket
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &8022031380798932949
 BoxCollider:
   m_ObjectHideFlags: 0

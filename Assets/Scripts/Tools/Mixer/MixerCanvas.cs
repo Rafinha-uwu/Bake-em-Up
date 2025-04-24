@@ -50,6 +50,7 @@ public class MixerCanvas : ToolCanvas
 	{
 		_recipeImage.sprite = null;
 		_clockSlider.value = 0;
+		_badClockSlider.value = 0;
 		_timerTMP.text = "0:00";
 		_percentTMP.text = "0%";
 	}

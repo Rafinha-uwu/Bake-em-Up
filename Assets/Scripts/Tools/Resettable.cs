@@ -1,14 +1,21 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Resettable : MonoBehaviour
 {
+	[SerializeField]
+	private GameObject prefab;
+
 	private Vector3 _initialPosition;
 	private Quaternion _initialRotation;
 	private XRGrabInteractable _interactable;
 
 	public delegate void ObjectResetHandler();
 	public event ObjectResetHandler OnObjectReset;
+
+	private bool createCopy = false;
+	private int createOne = 1;
 
 	private void Awake()
 	{
@@ -17,15 +24,36 @@ public class Resettable : MonoBehaviour
 		_interactable = GetComponent<XRGrabInteractable>();
 	}
 
-	public void ResetObject()
+	private void Update()
 	{
-		OnObjectReset?.Invoke();
+		if(createCopy && !_interactable.isSelected && createOne == 1)
+		{
+			OnObjectReset?.Invoke();
+			Instantiate(prefab, _initialPosition, _initialRotation);
+			createCopy = false;
+			createOne = 0;
+		}
+	}
 
-		if(_interactable.isSelected)
-			_interactable.interactionManager.SelectExit(_interactable.firstInteractorSelecting, _interactable);
+	public void ResetObject(bool resetNewInstance = false)
+	{
+		if (!resetNewInstance)
+		{
+			OnObjectReset?.Invoke();
 
-		transform.SetPositionAndRotation(_initialPosition, _initialRotation);
-		//_rb.linearVelocity = Vector3.zero;
-		//_rb.angularVelocity = Vector3.zero;
+			if (_interactable.isSelected)
+				_interactable.interactionManager.SelectExit(_interactable.firstInteractorSelecting, _interactable);
+			
+			transform.SetPositionAndRotation(_initialPosition, _initialRotation);
+		}
+		else
+		{
+			createCopy = true;
+		}
+	}
+
+	public void CancelReset()
+	{
+		createCopy = false;
 	}
 }
