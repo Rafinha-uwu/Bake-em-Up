@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 6557940358507428854}
   - component: {fileID: 468114686572532402}
   - component: {fileID: 1145607782968658420}
-  - component: {fileID: 421769173549492191}
   - component: {fileID: 1416077266168826704}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Canvas Bowl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1.7489929, y: 1.891098}
+  m_AnchoredPosition: {x: 1.7490234, y: 1.8911133}
   m_SizeDelta: {x: 160, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &468114686572532402
@@ -59,7 +58,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 23195943
@@ -88,23 +87,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
---- !u!114 &421769173549492191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947059706277960669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &1416077266168826704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _recipeImage: {fileID: 8422803136558186101}
+  _emptyRecipeSprite: {fileID: 21300000, guid: 2747c6c2563e74e45b0d3d814c903b31, type: 3}
   _ingredientCanvasElement: {fileID: 5310714372354776083, guid: 8ac50eef6cac0bc47a65c4a565a0ee4c, type: 3}
   _groupParent: {fileID: 4308501006342891902}
 --- !u!1 &2083919423719490481
@@ -131,7 +114,7 @@ GameObject:
   - component: {fileID: 6959627752246219311}
   - component: {fileID: 7291470462246591772}
   - component: {fileID: 2606187371522781275}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4308501006342891902}
   - component: {fileID: 1934505562592939083}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +249,7 @@ GameObject:
   - component: {fileID: 1521833138540492524}
   - component: {fileID: 8505113285354590389}
   - component: {fileID: 8422803136558186101}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Recipe Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

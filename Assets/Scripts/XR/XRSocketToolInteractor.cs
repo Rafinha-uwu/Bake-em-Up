@@ -10,7 +10,7 @@ public class XRSocketToolInteractor : XRSocketInteractor
 	public bool IsToolOn = false;
 
     [SerializeField]
-    private ToolName _toolName;
+    private ToolContainerName _toolContainerName;
 	
 	private IXRSelectInteractable _interactable;
 	public IXRSelectInteractable Interactable => _interactable;
@@ -22,7 +22,6 @@ public class XRSocketToolInteractor : XRSocketInteractor
 		base.Start();
 		_cooker = GetComponentInParent<ToolCooker>();
 	}
-
 
 	protected override void OnEnable()
 	{
@@ -45,7 +44,7 @@ public class XRSocketToolInteractor : XRSocketInteractor
 		bool correctTool = false;
 		if (interactable.transform.gameObject.TryGetComponent<ToolContainer>(out var tool))
 		{
-			if(tool.ToolName == _toolName)
+			if(tool.ToolContainerName == _toolContainerName)
 				correctTool = true;
 		}
 
@@ -59,7 +58,7 @@ public class XRSocketToolInteractor : XRSocketInteractor
 		bool correctTool = false;
 		if (interactable.transform.gameObject.TryGetComponent<ToolContainer>(out var tool))
 		{
-			if (tool.ToolName == _toolName)
+			if (tool.ToolContainerName == _toolContainerName)
 				correctTool = true;
 		}
 

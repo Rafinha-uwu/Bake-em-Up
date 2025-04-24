@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class ToolContainer : MonoBehaviour
+public class ToolContainer : Tool
 {
     [SerializeField]
-    private ToolName _toolName;
-	public ToolName ToolName => _toolName;
+    private ToolContainerName _toolContainerName;
+	public ToolContainerName ToolContainerName => _toolContainerName;
 
 	[SerializeField]
 	protected GameObject _canvasObject;
@@ -40,4 +40,4 @@ public class ToolContainer : MonoBehaviour
 	}
 }
 
-public enum ToolName { Bowl, OvenDish, FryingBasket }
+public enum ToolContainerName { Bowl, OvenDish, FryingBasket }

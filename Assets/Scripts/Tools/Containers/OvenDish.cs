@@ -51,7 +51,6 @@ public class OvenDish : ToolContainer
         {
             Instantiate(_recipeData.breadPrefab, transform.position, Quaternion.identity);
         }
-
     }
 
     public void BurnBread()
@@ -59,10 +58,11 @@ public class OvenDish : ToolContainer
         ClearDish();
 
         HasBurnedBread = true;
+        _recipeData = RecipesManager.Instance.GetBadBread();
 
         for (int i = 0; i < _recipeData.shapedDoughCount; i++) 
         {
-            Instantiate(RecipesManager.Instance.GetBurnedBread(), transform.position, Quaternion.identity);
+            Instantiate(_recipeData.breadPrefab, transform.position, Quaternion.identity);
         }
     }
 

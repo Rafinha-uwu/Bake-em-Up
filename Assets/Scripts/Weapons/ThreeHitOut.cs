@@ -34,24 +34,24 @@ public class ThreeHitOut : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Zombie") && isGrabbed)
-        {
-            hitCount++;
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Zombie") && isGrabbed)
+		{
+			hitCount++;
 
-            if (hitCount >= maxHits && !isDestroyed)
-            {
-                isDestroyed = true;
-                StartCoroutine(DestroyAfterDelay());
-            }
-        }
-        else if (other.CompareTag("Ground") && !isDestroyed)
-        {
-            isDestroyed = true;
-            StartCoroutine(DestroyAfterDelay());
-        }
-    }
+			if (hitCount >= maxHits && !isDestroyed)
+			{
+				isDestroyed = true;
+				StartCoroutine(DestroyAfterDelay());
+			}
+		}
+		else if (collision.gameObject.CompareTag("Ground") && !isDestroyed)
+		{
+			isDestroyed = true;
+			StartCoroutine(DestroyAfterDelay());
+		}
+	}
 
     private IEnumerator DestroyAfterDelay()
     {

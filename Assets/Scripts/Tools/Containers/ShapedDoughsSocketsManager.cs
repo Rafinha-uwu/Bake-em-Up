@@ -73,8 +73,11 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 	public void DestroyAllDough()
 	{
-		MultipleSocketsManager manager = _socketsManagerDict[_shapedDoughRecipe.shapedDoughCount];
-		manager.DestroyAllItems();
+		if (_shapedDoughRecipe)
+		{
+			MultipleSocketsManager manager = _socketsManagerDict[_shapedDoughRecipe.shapedDoughCount];
+			manager.DestroyAllItems();
+		}
 	}
 
 	private bool ValidateRecipe(GameObject objectToValidate)

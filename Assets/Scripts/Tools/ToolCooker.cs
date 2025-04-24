@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-public abstract class ToolCooker : MonoBehaviour
+public abstract class ToolCooker : Tool
 {
 	[SerializeField]
 	protected bool _needsCanvas = true;
