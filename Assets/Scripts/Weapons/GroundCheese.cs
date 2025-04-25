@@ -38,7 +38,7 @@ public class GroundCheese : MonoBehaviour
             if (agent != null && !originalSpeeds.ContainsKey(agent))
             {
                 originalSpeeds[agent] = agent.speed;
-                agent.speed *= 0.33f;
+                agent.speed *= 0.2f;
             }
         }
     }

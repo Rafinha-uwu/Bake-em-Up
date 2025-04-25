@@ -12,13 +12,12 @@ public class Dispara : MonoBehaviour
     [SerializeField] private float Force;
 
     private bool cooldown;
-    [SerializeField] private float CoolDownTime = 5f;
-    private float CoolTime = 5f;
+    [SerializeField] private float CooldownTime = 0.5f;
+    private float CoolTime = 0.5f;
 
     public void Start()
     {
-        CoolDownTime = CoolTime;
-
+        CoolTime = CooldownTime;
     }
 
     public void Update()
@@ -49,7 +48,7 @@ public class Dispara : MonoBehaviour
 
             ProjTemp.GetComponent<Rigidbody>().AddForce(ProjTemp.transform.forward * Force);
 
-            CoolTime = CoolDownTime;
+            CoolTime = CooldownTime;
         }
     }
 }

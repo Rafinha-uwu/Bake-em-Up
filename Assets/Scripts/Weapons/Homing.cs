@@ -3,9 +3,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class Homing : MonoBehaviour
 {
-    public float homingRadius = 2f;
-    public float homingForce = 5f;  
-    public float minDistanceFromPlayer = 1f;
+    [SerializeField] private float homingRadius = 2f;
+    [SerializeField] private float homingForce = 5f;
+    [SerializeField] private float minDistanceFromPlayer = 1f;
 
     private Rigidbody rb;
     private XRGrabInteractable grabInteractable;

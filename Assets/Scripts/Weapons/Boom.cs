@@ -15,6 +15,8 @@ public class Boom : MonoBehaviour
     private bool countdownStarted = false;
     private Vector3 BombLocation;
 
+    private bool TouchedGrass = false;
+
     void Start()
     {
         countdown = delay;
@@ -41,11 +43,14 @@ public class Boom : MonoBehaviour
         if (collision.gameObject.CompareTag("Zombie"))
         {
             BombLocation = transform.position;
+            if (TouchedGrass) { BombLocation.y += 1.5f; }
             Explode(); // explode instantly
         }
         else if (collision.gameObject.CompareTag("Ground") && !countdownStarted)
         {
-            countdownStarted = true;   
+            TouchedGrass = true;
+            countdownStarted = true;
+            gameObject.GetComponent<Animator>().Play("Boom");
         }
     }
 

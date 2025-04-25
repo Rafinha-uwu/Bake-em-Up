@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 6097784380699200906}
   - component: {fileID: 8164573261765770261}
   - component: {fileID: 3604470574447366991}
+  - component: {fileID: 9069131986016653275}
   m_Layer: 6
   m_Name: Cupcake
   m_TagString: Bread
@@ -288,7 +289,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 591814144539205725}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -364,3 +365,25 @@ MonoBehaviour:
   blastRadius: 5
   explosionForce: 300
   explosionEffect: {fileID: 2579326276023195693, guid: 94222a4bf435ede459987c5acce09306, type: 3}
+--- !u!95 &9069131986016653275
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6031351276234742079}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eab48d3e5287d974ba6e4863231fac5f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
