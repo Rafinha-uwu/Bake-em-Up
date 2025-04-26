@@ -40,4 +40,4 @@ public class ToolContainer : Tool
 	}
 }
 
-public enum ToolContainerName { Bowl, OvenDish, FryingBasket }
+public enum ToolContainerName { Bowl, OvenDish, FryingBasket, PastryBag }

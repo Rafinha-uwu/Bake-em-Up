@@ -9,7 +9,6 @@ public class OvenDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
         if (other.transform.CompareTag("OvenDoor"))
         {
             OnClose?.Invoke();

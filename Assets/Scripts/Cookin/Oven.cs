@@ -30,7 +30,6 @@ public class Oven : ToolCooker
     private bool _burnedDish1 = false;
     private bool _burnedDish2 = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
         base.Start();
@@ -63,52 +62,56 @@ public class Oven : ToolCooker
     public override void SocketSelectedEnter(XRSocketToolInteractor socket)
     {
         OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
+        ovendish.GetRecipe(out RecipeData recipe);
 
-        if (socket == _socket)
+		if (!IsCorrectRecipe(recipe))
+			return;
+
+		if (socket == _socket)
         {
-            if (ovendish.GetRecipe(out _recipeDataDish1))
+            _recipeDataDish1 = recipe;
+
+            _badTimerDish1 = _recipeDataDish1.OvenTime * BadTimerMultiplier;
+
+            if (ovendish.HasBurnedBread)
             {
-                _badTimerDish1 = _recipeDataDish1.OvenTime * BadTimerMultiplier;
-
-                if (ovendish.HasBurnedBread)
-                {
-                    _currentTimeDish1 = _badTimerDish1;
-                    _burnedDish1 = true;
-                }
-                else if (ovendish.HasCompletedBread)
-                {
-                    _currentTimeDish1 = _recipeDataDish1.OvenTime;
-                    _heatingCompleteDish1 = true;
-                }
-
-                ovendish.UpdateCanvasTimer(_currentTimeDish1, _recipeDataDish1.MixerTime, _badTimerDish1);
-                ovendish.SetCanvasRecipe(_recipeDataDish1.recipeSprite);
+                _currentTimeDish1 = _badTimerDish1;
+                _burnedDish1 = true;
             }
+            else if (ovendish.HasCompletedBread)
+            {
+                _currentTimeDish1 = _recipeDataDish1.OvenTime;
+                _heatingCompleteDish1 = true;
+            }
+
+            ovendish.UpdateCanvasTimer(_currentTimeDish1, _recipeDataDish1.MixerTime, _badTimerDish1);
+            ovendish.SetCanvasRecipe(_recipeDataDish1.recipeSprite);
             ovendish.EnableCanvas();
+
             _dish1 = ovendish;
 
         }
         else if (socket == _socketDish2)
         {
-            if (ovendish.GetRecipe(out _recipeDataDish2))
+            _recipeDataDish2 = recipe;
+
+			_badTimerDish2 = _recipeDataDish2.OvenTime * BadTimerMultiplier;
+
+            if (ovendish.HasBurnedBread)
             {
-                _badTimerDish2 = _recipeDataDish2.OvenTime * BadTimerMultiplier;
-
-                if (ovendish.HasBurnedBread)
-                {
-                    _currentTimeDish2 = _badTimerDish2;
-                    _burnedDish2 = true;
-                }
-                else if (ovendish.HasCompletedBread)
-                {
-                    _currentTimeDish2 = _recipeDataDish2.OvenTime;
-                    _heatingCompleteDish1 = true;
-                }
-
-                ovendish.UpdateCanvasTimer(_currentTimeDish2, _recipeDataDish2.MixerTime, _badTimerDish2);
-                ovendish.SetCanvasRecipe(_recipeDataDish2.recipeSprite);
+                _currentTimeDish2 = _badTimerDish2;
+                _burnedDish2 = true;
             }
+            else if (ovendish.HasCompletedBread)
+            {
+                _currentTimeDish2 = _recipeDataDish2.OvenTime;
+                _heatingCompleteDish1 = true;
+            }
+
+            ovendish.UpdateCanvasTimer(_currentTimeDish2, _recipeDataDish2.MixerTime, _badTimerDish2);
+            ovendish.SetCanvasRecipe(_recipeDataDish2.recipeSprite);
             ovendish.EnableCanvas();
+
             _dish2 = ovendish;
         }
     }
@@ -140,7 +143,6 @@ public class Oven : ToolCooker
 
     protected override void TurnOff()
     {
-
         Debug.Log("Desligou");
 
         if (_socket.Interactable != null)
@@ -194,6 +196,17 @@ public class Oven : ToolCooker
                 _isHeating = true;
             }
         }
+    }
+
+    private bool IsCorrectRecipe(RecipeData recipeData)
+    {
+        if(recipeData == null)
+            return false;
+
+        if (recipeData.OvenTime == 0f)
+            return false;
+
+        return true;
     }
 
     private void HeatDish1()
