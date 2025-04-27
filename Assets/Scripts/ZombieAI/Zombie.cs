@@ -1,11 +1,20 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class Zombie : MonoBehaviour
 {
     [SerializeField] private int hp = 1;
 
     private NavMeshObstacle obstacle;
+    private Rigidbody[] _ragdollRigidboddies;
+    private NavMeshAgent agent;
+
+    private void Awake()
+    {
+        _ragdollRigidboddies = GetComponentsInChildren<Rigidbody>();
+        DisableRagdoll();
+    }
 
     private void OnEnable()
     {
@@ -20,6 +29,15 @@ public class Zombie : MonoBehaviour
     private void Start()
     {
         obstacle = GetComponent<NavMeshObstacle>();
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(OnDeath());
+        }
     }
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
@@ -30,20 +48,40 @@ public class Zombie : MonoBehaviour
             hp -= damage;
             if (hp < 1)
             {
-                OnDeath();
+                StartCoroutine(OnDeath());
             }
         }
     }
 
 
-    void OnDeath()
+    IEnumerator OnDeath()
     {
+        agent.ResetPath();
+        yield return new WaitForSeconds(0.1f);
+        EnableRagdoll();
         if (obstacle != null) obstacle.enabled = false;
 
         // Trigger repath for others
         ZombieRepath.RepathNearbyZombies(transform.position, 5f);
 
+        yield return new WaitForSeconds(5f);
         // Destroy the zombie
         Destroy(gameObject);
+    }
+
+    private void DisableRagdoll()
+    {
+        foreach (var rigidbody in _ragdollRigidboddies)
+        {
+            rigidbody.isKinematic = true;
+        }
+    }
+
+    private void EnableRagdoll()
+    {
+        foreach (var rigidbody in _ragdollRigidboddies)
+        {
+            rigidbody.isKinematic = false;
+        }
     }
 }
