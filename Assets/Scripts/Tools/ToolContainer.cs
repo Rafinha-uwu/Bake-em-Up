@@ -11,7 +11,7 @@ public class ToolContainer : Tool
 	[SerializeField]
 	protected GameObject _canvasObject;
 	[SerializeField]
-	private Transform _transformForCanvasToFollow;
+	protected Transform _transformForCanvasToFollow;
 	
 	protected ToolCanvas _toolCanvas;
 
@@ -31,6 +31,7 @@ public class ToolContainer : Tool
 
 	public void EnableCanvas()
 	{
+		Debug.Log("Enable");
 		_toolCanvas.EnableCanvas();
 	}
 

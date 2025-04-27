@@ -67,7 +67,7 @@ public class XRSocketToolInteractor : XRSocketInteractor
 
 	private void SocketSelectEnter(SelectEnterEventArgs args)
 	{
-		if (_interactable != null)
+		if (_cooker == null || _interactable != null)
 			return;
 
 		_interactable = args.interactableObject;
@@ -80,7 +80,7 @@ public class XRSocketToolInteractor : XRSocketInteractor
 
 	private void SocketSelectExit(SelectExitEventArgs args)
 	{
-		if (_interactable == null || IsToolOn)
+		if (_cooker == null || _interactable == null || IsToolOn)
 			return;
 
 		if (_interactable.transform.gameObject.TryGetComponent<ToolContainer>(out var container))

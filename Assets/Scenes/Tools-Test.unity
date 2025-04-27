@@ -305,7 +305,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 70086905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60523e0647cc6ab43acc73cb266a32a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 22b9fc2d303fcfd46be30f7926eb621d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -342,6 +342,8 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  IsToolOn: 0
+  _toolContainerName: 3
 --- !u!1 &91905719
 GameObject:
   m_ObjectHideFlags: 0
@@ -3511,15 +3513,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 67044638455859507, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 67044638455859507, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 67044638455859507, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.70710677
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 67044638455859507, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3531,7 +3533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 67044638455859507, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -90
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3145684981422013316, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
       propertyPath: m_InteractionLayers.m_Bits
@@ -3540,11 +3542,15 @@ PrefabInstance:
     - target: {fileID: 6984785191756090693, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
       propertyPath: _canvasObject
       value: 
-      objectReference: {fileID: 1947059706277960669, guid: cb69f707a81372847a1c4a1461db07d0, type: 3}
+      objectReference: {fileID: 1947059706277960669, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
     - target: {fileID: 6984785191756090693, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
       propertyPath: _toolContainerName
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6984785191756090693, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
+      propertyPath: _canvasTransformLeftHand
+      value: 
+      objectReference: {fileID: 1856018905463979334}
     - target: {fileID: 6984785191756090693, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
       propertyPath: _transformForCanvasToFollow
       value: 
@@ -3558,6 +3564,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
+--- !u!4 &1856018905463979334 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3090809141842345407, guid: 4e6cdf48888a08942bed0517d4b255d7, type: 3}
+  m_PrefabInstance: {fileID: 1856018905463979333}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2209027834984159767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2307487998565116678, guid: f3e4ac851c71c804c9c26e62c8240371, type: 3}

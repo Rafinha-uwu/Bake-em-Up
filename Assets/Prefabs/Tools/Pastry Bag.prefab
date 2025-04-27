@@ -108,6 +108,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1125344284439583197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3090809141842345407}
+  m_Layer: 6
+  m_Name: Left Hand Canvas Attach (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3090809141842345407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125344284439583197}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1956, y: 0, z: 0.0971}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 67044638455859507}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2778173579602378256
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +207,7 @@ Transform:
   - {fileID: 8084272609784073661}
   - {fileID: 2150757926715000915}
   - {fileID: 6768207838278590044}
+  - {fileID: 3090809141842345407}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &5964887828155144171
@@ -388,6 +420,7 @@ MonoBehaviour:
   _toolContainerName: 0
   _canvasObject: {fileID: 0}
   _transformForCanvasToFollow: {fileID: 0}
+  _canvasTransformLeftHand: {fileID: 0}
 --- !u!1 &8758340870343844712
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,7 +431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6768207838278590044}
   m_Layer: 6
-  m_Name: Canvas Attach
+  m_Name: Right Hand Canvas Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
