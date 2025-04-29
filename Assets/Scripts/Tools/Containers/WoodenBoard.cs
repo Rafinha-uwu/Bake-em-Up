@@ -51,6 +51,9 @@ public class WoodenBoard : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+		if (!_collider.enabled)
+			return;
+
 		if (other.gameObject.CompareTag("Dough Roller"))
 		{
 			if (!_doughOnBoard)

@@ -69,6 +69,7 @@ public class MultipleSocketsManager : MonoBehaviour
 		foreach (var inter in interactables)
 		{
 			//inter.interactionManager.SelectExit(inter.firstInteractorSelecting as IXRSelectInteractor, inter as IXRSelectInteractable);
+			//Destruindo após um curto periodo de tempo, pois provavelmente retornará null no metodo "InteractableRemoved"
 			Destroy(inter.gameObject);
 		}
 	}
@@ -78,15 +79,12 @@ public class MultipleSocketsManager : MonoBehaviour
 		if (_compareTag && !CompareTags(other.tag))
 			return;
 
-		XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
-		if (interactable.isSelected)
-			return;
-
-		if (_interactablesAttach.ContainsKey(interactable))
-			return;
-		
 		XRSocketInteractor socket = _socketsAvailables.FirstOrDefault(kv => kv.Value).Key;
 		if (socket == null)
+			return;
+
+		XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
+		if (_interactablesAttach.ContainsKey(interactable))
 			return;
 
 		if (!CheckValidations(other.gameObject))
@@ -124,6 +122,7 @@ public class MultipleSocketsManager : MonoBehaviour
 		_usedSockets -= 1;
 		if(_usedSockets == 0)
 		{
+			Debug.Log("Ficou vazio");
 			OnGridEmpty?.Invoke(this);
 		}
 	}

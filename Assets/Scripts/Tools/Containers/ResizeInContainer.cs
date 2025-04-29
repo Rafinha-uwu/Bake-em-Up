@@ -6,13 +6,13 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class ResizeInContainer : MonoBehaviour
 {
     [SerializeField]
-    private float _resizeValue = 0.8f;
+    private float _resizeValue = 0.6f;
 
 	private void Awake()
 	{
 		if (_resizeValue == 0f)
 		{
-			_resizeValue = 0.8f;
+			_resizeValue = 0.6f;
 			throw new ArgumentOutOfRangeException($"Resize Value is 0. Needs to be different than 0!");
 		}
 	}

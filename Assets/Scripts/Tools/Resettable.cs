@@ -14,6 +14,9 @@ public class Resettable : MonoBehaviour
 	public delegate void ObjectResetHandler();
 	public event ObjectResetHandler OnObjectReset;
 
+	public delegate void ObjectCreateCopyHandler(GameObject copy);
+	public event ObjectCreateCopyHandler OnObjectCreateCopy;
+
 	private bool createCopy = false;
 	private int createOne = 1;
 
@@ -28,8 +31,8 @@ public class Resettable : MonoBehaviour
 	{
 		if(createCopy && !_interactable.isSelected && createOne == 1)
 		{
-			OnObjectReset?.Invoke();
-			Instantiate(prefab, _initialPosition, _initialRotation);
+			GameObject copy = Instantiate(prefab, _initialPosition, _initialRotation);
+			OnObjectCreateCopy?.Invoke(copy);
 			createCopy = false;
 			createOne = 0;
 		}
