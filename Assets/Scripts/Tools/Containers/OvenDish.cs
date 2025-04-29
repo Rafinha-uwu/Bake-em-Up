@@ -11,20 +11,17 @@ public class OvenDish : ToolContainer
     private ShapedDoughsSocketsManager _shapedDoughsSocketsManager;
 
     private MixerCanvas _dishCanvas;
-    private RecipeData _recipeData;
 
     [HideInInspector]
     public bool HasCompletedBread = false;
     [HideInInspector]
     public bool HasBurnedBread = false;
     private Resettable _resettable;
-
-    private Collider _collider;
+    private bool _skipNextContainerEmptyMessage = false;
 
     protected override void Awake()
     {
         base.Awake();
-        _collider = GetComponent<Collider>();
         _dishCanvas = _toolCanvas.gameObject.GetComponent<MixerCanvas>();
         _resettable = GetComponent<Resettable>();
         _resettable.OnObjectReset += ClearDish;
@@ -34,6 +31,7 @@ public class OvenDish : ToolContainer
     {
         _resettable.OnObjectReset -= ClearDish;
     }
+
     public bool GetRecipe(out RecipeData recipe)
     {
         recipe = _recipeData;
@@ -43,19 +41,23 @@ public class OvenDish : ToolContainer
 
     public void MakeBread()
     {
-        ClearDish();
+        RecipeData auxRecipe = _recipeData;
+		ClearDish();
 
         HasCompletedBread = true;
 
-        for (int i = 0; i < _recipeData.shapedDoughCount; i++)
+        for (int i = 0; i < auxRecipe.shapedDoughCount; i++)
         {
-            Instantiate(_recipeData.breadPrefab, transform.position, Quaternion.identity);
+            Instantiate(auxRecipe.breadPrefab, transform.position, Quaternion.identity);
         }
+        _recipeData = auxRecipe;
     }
 
     public void BurnBread()
     {
-        ClearDish();
+        _skipNextContainerEmptyMessage = true;
+
+		ClearDish();
 
         HasBurnedBread = true;
         _recipeData = RecipesManager.Instance.GetBadBread();
@@ -91,11 +93,34 @@ public class OvenDish : ToolContainer
         _dishCanvas.ClearCanvas();
     }
 
+    public override void ContainerIsEmpty()
+    {
+        if (_skipNextContainerEmptyMessage)
+        {
+            _skipNextContainerEmptyMessage = false;
+            return;
+        }
+
+		_recipeData = null;
+		_collider.enabled = true;
+
+        ClearDish();
+	}
+
     private void OnTriggerEnter(Collider other)
     {
+		if (!_collider.enabled)
+			return;
+
+		RecipeData recipe = null;
+
         if (other.gameObject.CompareTag("Shaped Dough"))
         {
-            XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
+			recipe = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
+            if (recipe.OvenTime == 0f)
+                return;
+
+			XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
             if (interactable.isSelected)
             {
                 XRBaseInteractor interactor = interactable.firstInteractorSelecting as XRBaseInteractor;
@@ -104,20 +129,22 @@ public class OvenDish : ToolContainer
                     return;
 
                 board.ReleaseAllDough();
-
             }
-
-            _recipeData = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
-            _shapedDoughsSocketsManager.ReceivedItem();
-            _collider.enabled = false;
         }
         else if (other.gameObject.CompareTag("Bread"))
         {
-            XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
+			recipe = other.gameObject.GetComponentInParent<Bread>().GetRecipe();
+			if (recipe.OvenTime == 0f)
+				return;
+
+			XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
             if (interactable.isSelected)
                 return;
+		}
 
-			_recipeData = other.gameObject.GetComponentInParent<Bread>().GetRecipe();
+        if(recipe != null)
+        {
+			_recipeData = recipe;
 			_shapedDoughsSocketsManager.ReceivedItem();
 			_collider.enabled = false;
 		}

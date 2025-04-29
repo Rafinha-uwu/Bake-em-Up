@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
+using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -14,7 +15,7 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 	private Collider _collider;
 	private WoodenBoard _woodenBoard;
-	private OvenDish _ovenDish;
+	private ToolContainer _toolContainer;
 	private RecipeData _shapedDoughRecipe;
 
 	private void Awake()
@@ -25,6 +26,7 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 		{
 			_socketsManagerDict.Add(manager.GetSocketsCount(), manager);
 			manager.OnValidateObject += ValidateRecipe;
+			manager.OnValidateObject += ValidatePriority;
 			manager.OnGridEmpty += GridIsEmpty;
 		}
 	}
@@ -32,10 +34,8 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 	private void Start()
 	{
 		_woodenBoard = GetComponentInParent<WoodenBoard>();
-		_ovenDish = GetComponentInParent<OvenDish>();
-
-		if (_woodenBoard || _ovenDish)
-			_collider.enabled = false;
+		_toolContainer = GetComponentInParent<ToolContainer>();
+		_collider.enabled = false;
 	}
 
 	private void OnDestroy()
@@ -43,6 +43,7 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 		foreach (MultipleSocketsManager manager in _shapedDoughSocketManager)
 		{
 			manager.OnValidateObject -= ValidateRecipe;
+			manager.OnValidateObject -= ValidatePriority;
 			manager.OnGridEmpty -= GridIsEmpty;
 		}
 	}
@@ -50,14 +51,9 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 	public void GridIsEmpty(MultipleSocketsManager manager)
 	{
 		manager.gameObject.SetActive(false);
-		if (_woodenBoard)
-		{
-			_woodenBoard.ShapedDoughsGridIsEmpty();
-		}
-		else
-		{
-			_collider.enabled = true;
-		}
+		_shapedDoughRecipe = null;
+		_collider.enabled = false;
+		MessageContainerThatIsEmpty();
 	}
 
 	public void ReceivedItem()
@@ -80,26 +76,58 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 		}
 	}
 
+	private void MessageContainerThatIsEmpty()
+	{
+		if (_woodenBoard)
+		{
+			_woodenBoard.ShapedDoughsGridIsEmpty();
+		}
+		else
+		{
+			_toolContainer.ContainerIsEmpty();
+		}
+	}
+
 	private bool ValidateRecipe(GameObject objectToValidate)
 	{
 		RecipeData recipe = null;
-		if (objectToValidate.gameObject.CompareTag("Shaped Dough"))
+		if (objectToValidate.CompareTag("Shaped Dough"))
 		{
-			recipe = objectToValidate.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
+			recipe = objectToValidate.GetComponentInParent<ShapedDough>().GetRecipe();
 		}
-		else if (objectToValidate.gameObject.CompareTag("Bread"))
+		else if (objectToValidate.CompareTag("Bread"))
 		{
-			recipe = objectToValidate.gameObject.GetComponentInParent<Bread>().GetRecipe();
+			recipe = objectToValidate.GetComponentInParent<Bread>().GetRecipe();
 		}
 
 		return _shapedDoughRecipe == recipe;
 	}
 
+	private bool ValidatePriority(GameObject objectToValidate)
+	{
+		XRBaseInteractable interactable = objectToValidate.GetComponentInParent<XRBaseInteractable>();
+		if (!interactable.isSelected)
+			return true;
+
+		XRBaseInteractor interactor = interactable.firstInteractorSelecting as XRBaseInteractor;
+		if (interactor.transform.CompareTag("Player"))
+			return false;
+
+		if (_toolContainer == null)
+			return false;
+
+		return _toolContainer.HasPriorityOver(interactor.gameObject);
+	}
+
 	private void OnTriggerEnter(Collider other)
 	{
+		if (!_collider.enabled)
+			return;
+
 		RecipeData recipe = null;
 		if(other.gameObject.CompareTag("Shaped Dough"))
 		{
+			Debug.Log("rs");
 			recipe = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
 		}
 		else if (other.gameObject.CompareTag("Bread"))
@@ -111,8 +139,10 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 		{
             XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
 
-            if (interactable.isSelected)
+            if (!ValidatePriority(interactable.gameObject))
+			{
                 return;
+			}
 
             MultipleSocketsManager manager = _socketsManagerDict[recipe.shapedDoughCount];
             manager.gameObject.SetActive(true);

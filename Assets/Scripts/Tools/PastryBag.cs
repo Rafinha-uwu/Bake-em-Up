@@ -11,7 +11,6 @@ public class PastryBag : ToolContainer
 	private int _remainingCream = 0;
 	private int _maxCream = 0;
 
-	private RecipeData _recipeData;
 	private XRGrabInteractable _interactable;
 	private PastryBagCanvas _pastryBagCanvas;
 	private Resettable _resettable;

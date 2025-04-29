@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 [RequireComponent(typeof(XRGrabInteractable)), RequireComponent(typeof(Resettable))]
 public class Bowl : ToolContainer
@@ -13,7 +14,6 @@ public class Bowl : ToolContainer
 	public MeshFilter objectMeshFilter; //DELETE LATER
 
 	private BowlCanvas _bowlCanvas;
-	private RecipeData _recipeData;
 
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
 
@@ -115,10 +115,7 @@ public class Bowl : ToolContainer
 
 		if (interactable && !tool)
 		{
-			if (!interactable.isSelected)
-				return;
-
-			if (!interactable.firstInteractorSelecting.transform.CompareTag("Player"))
+			if (interactable.isSelected && !interactable.firstInteractorSelecting.transform.CompareTag("Player"))
 				return;
 
 			ReleaseItem(interactable);

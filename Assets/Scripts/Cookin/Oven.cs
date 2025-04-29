@@ -84,7 +84,7 @@ public class Oven : ToolCooker
                 _heatingCompleteDish1 = true;
             }
 
-            ovendish.UpdateCanvasTimer(_currentTimeDish1, _recipeDataDish1.MixerTime, _badTimerDish1);
+            ovendish.UpdateCanvasTimer(_currentTimeDish1, _recipeDataDish1.OvenTime, _badTimerDish1);
             ovendish.SetCanvasRecipe(_recipeDataDish1.recipeSprite);
             ovendish.EnableCanvas();
 
@@ -108,7 +108,7 @@ public class Oven : ToolCooker
                 _heatingCompleteDish1 = true;
             }
 
-            ovendish.UpdateCanvasTimer(_currentTimeDish2, _recipeDataDish2.MixerTime, _badTimerDish2);
+            ovendish.UpdateCanvasTimer(_currentTimeDish2, _recipeDataDish2.OvenTime, _badTimerDish2);
             ovendish.SetCanvasRecipe(_recipeDataDish2.recipeSprite);
             ovendish.EnableCanvas();
 
@@ -244,6 +244,7 @@ public class Oven : ToolCooker
         }
 
     }
+
     private void MakeBread(XRSocketToolInteractor socket)
     {
         if (_socket == socket)
@@ -257,7 +258,6 @@ public class Oven : ToolCooker
 
         OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
         ovendish.MakeBread();
-
     }
 
     private void BurnedBread(XRSocketToolInteractor socket)
@@ -274,6 +274,5 @@ public class Oven : ToolCooker
 
         OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
         ovendish.BurnBread();
-
     }
 }
