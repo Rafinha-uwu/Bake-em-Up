@@ -4,7 +4,16 @@ using System.Collections;
 
 public class Zombie : MonoBehaviour
 {
+    public enum ZombieState
+    {
+        WALKING,
+        GETHIT
+
+
+    }
     [SerializeField] private int hp = 1;
+
+    public ZombieState currentState = ZombieState.WALKING;
 
     private NavMeshObstacle obstacle;
     private Rigidbody[] _ragdollRigidboddies;

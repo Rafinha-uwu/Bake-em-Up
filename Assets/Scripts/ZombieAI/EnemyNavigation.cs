@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class EnemyNavigation : MonoBehaviour
 {
     private NavMeshAgent agent;
+    private Animator animator;
 
     private float sideWidth;
 
@@ -22,7 +23,14 @@ public class EnemyNavigation : MonoBehaviour
 
         }
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         agent.SetDestination(randomPoint);
+
+    }
+
+    private void Update()
+    {
+        animator.SetBool("isWalking", true);
     }
 
     public Vector3 GetDestination()

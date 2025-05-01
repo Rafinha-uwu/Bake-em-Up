@@ -15,11 +15,13 @@ public class ZombieAttack : MonoBehaviour
 
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
+    private Animator animator;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
+        animator = GetComponent<Animator>();
         if (obstacle != null) obstacle.enabled = false; // Start disabled
     }
 
@@ -36,6 +38,8 @@ public class ZombieAttack : MonoBehaviour
     private IEnumerator PerformAttack()
     {
         isAttacking = true;
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isAttacking", true);
 
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = false;

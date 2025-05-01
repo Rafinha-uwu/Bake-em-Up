@@ -36,7 +36,9 @@ public class WaveSpawner : MonoBehaviour
 
             for (int i = 0; i < waveSize; i++)
             {
-                SpawnEnemy();
+                var element = spawnPoints[Random.Range(0, spawnPoints.Length)];
+                GameObject enemy = Instantiate(enemyPrefab[changeZombie], element.position, Quaternion.identity);
+                //SpawnEnemy();
                 yield return new WaitForSeconds(waveSpawnSpeed);
             }
             yield return new WaitForSeconds(timeBetweenWaves);
