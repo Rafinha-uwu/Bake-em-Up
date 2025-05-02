@@ -11,6 +11,7 @@ public class WaveSet : ScriptableObject
     {
         if (!isInfinite)
         {
+            Debug.Log($"wave: {waveIndex}");
             if (waveIndex < predefinedWaves.Length)
                 return predefinedWaves[waveIndex];
             return null;

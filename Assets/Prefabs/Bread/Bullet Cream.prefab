@@ -120,10 +120,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1298914938930603793}
   - component: {fileID: 9079674509918329828}
-  - component: {fileID: 1408282349258476196}
   - component: {fileID: 6938931541826164212}
   - component: {fileID: 4008469568931509585}
   - component: {fileID: 3617822132622350506}
+  - component: {fileID: 4671525257506668950}
   m_Layer: 0
   m_Name: Bullet Cream
   m_TagString: Bread
@@ -174,19 +174,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1408282349258476196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3745125057616872124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e4e77caa3bc404ba04d873fc9f44c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 5
 --- !u!136 &6938931541826164212
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -237,3 +224,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Zombies: 0
   GroundCream: {fileID: 4647388620416500380, guid: b8b6d364bbf2a2b4792c3ecdc6aa38cc, type: 3}
+--- !u!114 &4671525257506668950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745125057616872124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ed12d88ba8d374a93e87619c29173a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recipeData: {fileID: 11400000, guid: 349a5e553d2fc8a40b7553ff0c478673, type: 2}

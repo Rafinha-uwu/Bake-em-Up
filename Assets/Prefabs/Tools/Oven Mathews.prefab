@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 7467920608606981619}
   - component: {fileID: 2809479509157041360}
   - component: {fileID: 8015632618460483843}
+  - component: {fileID: 2350586606089857473}
   m_Layer: 0
   m_Name: Oven Door
   m_TagString: OvenDoor
@@ -162,7 +163,7 @@ HingeJoint:
   serializedVersion: 3
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: -0.333, y: 0.1, z: 0.075}
+  m_Anchor: {x: -0.333, y: 0.1, z: 0.24}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
@@ -173,8 +174,47 @@ HingeJoint:
     targetPosition: 0
   m_UseMotor: 1
   m_Motor:
-    targetVelocity: -5
-    force: 200
+    targetVelocity: 10
+    force: 500
+    freeSpin: 0
+  m_UseLimits: 1
+  m_ExtendedLimits: 1
+  m_UseAcceleration: 0
+  m_Limits:
+    min: 0
+    max: 90
+    bounciness: 0
+    bounceMinVelocity: 0.2
+    contactDistance: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
+--- !u!59 &2350586606089857473
+HingeJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2578315264729044740}
+  serializedVersion: 3
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: -0.333, y: 0.1, z: -0.15}
+  m_Axis: {x: 0, y: 0, z: 1}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_UseSpring: 0
+  m_Spring:
+    spring: 0
+    damper: 0
+    targetPosition: 0
+  m_UseMotor: 1
+  m_Motor:
+    targetVelocity: 10
+    force: 500
     freeSpin: 0
   m_UseLimits: 1
   m_ExtendedLimits: 1
@@ -1024,8 +1064,37 @@ PrefabInstance:
     - {fileID: -516098083770646512, guid: 9b931ba15cbe4fc4eb55f38e1bdf2ba6, type: 3}
     - {fileID: -8391222552659086748, guid: 9b931ba15cbe4fc4eb55f38e1bdf2ba6, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -2764273520780456580, guid: 9b931ba15cbe4fc4eb55f38e1bdf2ba6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 852844261006433545}
   m_SourcePrefab: {fileID: 100100000, guid: 9b931ba15cbe4fc4eb55f38e1bdf2ba6, type: 3}
+--- !u!1 &4361467620432415288 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2764273520780456580, guid: 9b931ba15cbe4fc4eb55f38e1bdf2ba6, type: 3}
+  m_PrefabInstance: {fileID: 7288047205076879172}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &852844261006433545
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4361467620432415288}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.68238497, y: 0.45500618, z: 0.67702377}
+  m_Center: {x: -0.010885268, y: 0.00007291138, z: 0.12268385}
 --- !u!4 &7110868444020449455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9b931ba15cbe4fc4eb55f38e1bdf2ba6, type: 3}

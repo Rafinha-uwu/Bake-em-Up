@@ -74,7 +74,11 @@ public class Zombie : MonoBehaviour
 
     IEnumerator OnDeath(RagdollPart hitPart, GameObject sender)
     {
+        // Stop movement and enable obstacle
+        if (agent != null) agent.enabled = true;
+        if (obstacle != null) obstacle.enabled = false;
         agent.ResetPath();
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         yield return new WaitForSeconds(0.1f);
         //EnableRagdoll();
         if (obstacle != null) obstacle.enabled = false;
@@ -97,7 +101,7 @@ public class Zombie : MonoBehaviour
         }
 
         // Trigger repath for others
-        ZombieRepath.RepathNearbyZombies(transform.position, 5f);
+        ZombieRepath.RepathNearbyZombies(transform.position, 5f, gameObject);
 
         yield return new WaitForSeconds(5f);
         // Destroy the zombie

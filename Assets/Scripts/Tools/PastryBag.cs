@@ -15,6 +15,8 @@ public class PastryBag : ToolContainer
 	private PastryBagCanvas _pastryBagCanvas;
 	private Resettable _resettable;
 
+	private Dispara _dispara;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -27,6 +29,8 @@ public class PastryBag : ToolContainer
 
 		_resettable = GetComponent<Resettable>();
 		_resettable.OnObjectCreateCopy += TransferObjectData;
+
+		_dispara = GetComponent<Dispara>();
 	}
 
 	private void OnDestroy()
@@ -42,7 +46,9 @@ public class PastryBag : ToolContainer
 			return;
 
 		_remainingCream -= 1;
-		if (_remainingCream == 0)
+		_dispara.OnDispara();
+
+        if (_remainingCream == 0)
 		{
 			_recipeData = null;
 			_maxCream = 0;

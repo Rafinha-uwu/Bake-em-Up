@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 1879870708975565461}
   - component: {fileID: 4515212002657100206}
   - component: {fileID: 6984785191756090693}
+  - component: {fileID: -2175485797227203497}
   m_Layer: 6
   m_Name: Pastry Bag
   m_TagString: Untagged
@@ -252,7 +253,7 @@ MonoBehaviour:
   m_InteractionManager: {fileID: 0}
   m_Colliders: []
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 2
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
   m_FocusMode: 1
@@ -417,10 +418,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a874adb662b01409b1d26c7aaa1465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toolContainerName: 0
-  _canvasObject: {fileID: 0}
-  _transformForCanvasToFollow: {fileID: 0}
-  _canvasTransformLeftHand: {fileID: 0}
+  _toolContainerName: 3
+  _canvasObject: {fileID: 1947059706277960669, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
+  _transformForCanvasToFollow: {fileID: 6768207838278590044}
+  _canvasTransformLeftHand: {fileID: 3090809141842345407}
+--- !u!114 &-2175485797227203497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8101480082201366069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f861f1f8a5cabab4090b470691fecfac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projetil: {fileID: 3745125057616872124, guid: 524c423d8a69cb342a546ad3280170ed, type: 3}
+  Force: 500
+  CooldownTime: 0.5
 --- !u!1 &8758340870343844712
 GameObject:
   m_ObjectHideFlags: 0

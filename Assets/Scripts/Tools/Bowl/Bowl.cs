@@ -9,10 +9,6 @@ public class Bowl : ToolContainer
 	[SerializeField]
 	private GameObject _container;
 
-	public Transform hoverMeshTransformTest; //DELETE LATER
-	public Material hoverMaterial; //DELETE LATER
-	public MeshFilter objectMeshFilter; //DELETE LATER
-
 	private BowlCanvas _bowlCanvas;
 
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
@@ -34,30 +30,6 @@ public class Bowl : ToolContainer
 	private void OnDestroy()
 	{
 		_resettable.OnObjectReset -= ClearBowl;
-	}
-
-	//DELETE LATER
-	private void Update()
-	{
-		var matrix = GetMatrix();
-
-		Graphics.DrawMesh(
-			objectMeshFilter.sharedMesh,
-			matrix,
-			hoverMaterial,
-			gameObject.layer
-		);
-	}
-
-	//DELETE LATER
-	private Matrix4x4 GetMatrix()
-	{
-		Matrix4x4 matrix = Matrix4x4.TRS(
-			hoverMeshTransformTest.position,
-			Quaternion.identity,
-			objectMeshFilter.transform.lossyScale// usa a escala mundial se quiser seguir a escala de outro objeto
-		);
-		return matrix;
 	}
 
 	public bool GetRecipe(out RecipeData recipe)
