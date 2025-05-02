@@ -55,12 +55,14 @@ public class ZombieAttack : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenAttacks);
 
         isAttacking = false;
+        animator.SetBool("isAttacking", false);
 
         if (!roulotteInAttackRange)
         {
             if (obstacle != null) obstacle.enabled = false;
             if (agent != null) agent.enabled = true;
         }
+
     }
 
 

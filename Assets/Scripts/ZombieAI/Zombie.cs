@@ -18,6 +18,7 @@ public class Zombie : MonoBehaviour
     private NavMeshObstacle obstacle;
     private Rigidbody[] _ragdollRigidboddies;
     private NavMeshAgent agent;
+    private Animator animator;
 
     private void Awake()
     {
@@ -39,14 +40,17 @@ public class Zombie : MonoBehaviour
     {
         obstacle = GetComponent<NavMeshObstacle>();
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(OnDeath());
         }
+        */
     }
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
@@ -55,20 +59,42 @@ public class Zombie : MonoBehaviour
         {
             Debug.Log("LEVASTE COM UM PAO");
             hp -= damage;
+
+            // Get the limb hit
+            Collider hitCollider = sender.GetComponent<Collider>();
+            RagdollPart hitPart = hitCollider != null ? hitCollider.GetComponent<RagdollPart>() : null;
+
             if (hp < 1)
             {
-                StartCoroutine(OnDeath());
+                StartCoroutine(OnDeath(hitPart, sender));
             }
         }
     }
 
 
-    IEnumerator OnDeath()
+    IEnumerator OnDeath(RagdollPart hitPart, GameObject sender)
     {
         agent.ResetPath();
         yield return new WaitForSeconds(0.1f);
-        EnableRagdoll();
+        //EnableRagdoll();
         if (obstacle != null) obstacle.enabled = false;
+        if (animator != null)
+            animator.enabled = false;
+
+        // First, activate the hit limb and apply force
+        if (hitPart != null)
+        {
+            Vector3 direction = (hitPart.transform.position - sender.transform.position).normalized;
+            hitPart.AddHitForce(direction * 50f);
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+
+        foreach (RagdollPart part in GetComponentsInChildren<RagdollPart>())
+        {
+            part.Activate();
+        }
 
         // Trigger repath for others
         ZombieRepath.RepathNearbyZombies(transform.position, 5f);
