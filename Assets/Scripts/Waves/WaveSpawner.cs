@@ -68,9 +68,9 @@ public class WaveSpawner : MonoBehaviour
                     waveEvent?.Execute();
                 }
             }
-            yield return new WaitForSeconds(wave.startTimer);
-
             holdWaveIndex = currentWaveIndex;
+
+            yield return new WaitForSeconds(wave.startTimer);
             for (int i = 0; i < wave.numberOfEnemies; i++)
             {
                 SpawnEnemy(wave);
@@ -124,7 +124,7 @@ public class WaveSpawner : MonoBehaviour
                 return option.zombiePrefab;
         }
 
-        return options[0].zombiePrefab; // fallback
+        return options[0].zombiePrefab; 
     }
 
     private void DisplayWaveText(int waveNumber)

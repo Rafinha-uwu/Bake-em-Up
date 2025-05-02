@@ -22,7 +22,6 @@ public class WaveData : ScriptableObject
         }
     }
 
-#if UNITY_EDITOR
     private void OnValidate()
     {
         float total = 0;
@@ -32,5 +31,4 @@ public class WaveData : ScriptableObject
             Debug.LogWarning($"[WaveData] Total zombie spawn weight is 0 in '{this.name}'");
         }
     }
-#endif
 }
