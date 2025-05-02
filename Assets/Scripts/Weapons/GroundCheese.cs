@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class GroundCheese : MonoBehaviour
 {
-    [SerializeField] private float delay = 10f;
     private float countdown = 10;
     private bool countdownStarted = false;
 
