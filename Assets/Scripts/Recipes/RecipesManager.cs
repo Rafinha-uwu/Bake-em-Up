@@ -10,10 +10,7 @@ public class RecipesManager : MonoBehaviour
 	[SerializeField]
     private List<RecipeData> _recipes = new();
 	[SerializeField]
-	private GameObject _badDough;
-
-    [SerializeField]
-    private GameObject _burnedBread;
+	private RecipeData _badBread;
 
     private void Awake()
 	{
@@ -42,13 +39,8 @@ public class RecipesManager : MonoBehaviour
 		return recipe != null;
 	}
 
-	public GameObject GetBadDough()
+	public RecipeData GetBadBread()
 	{
-		return _badDough;
+		return _badBread;
 	}
-
-    public GameObject GetBurnedBread()
-    {
-        return _burnedBread;
-    }
 }
