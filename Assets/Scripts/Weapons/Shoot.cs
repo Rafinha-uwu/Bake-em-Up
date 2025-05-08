@@ -42,8 +42,8 @@ public class Dispara : MonoBehaviour
 
 
             ProjTemp.transform.SetParent(this.transform);
-            ProjTemp.transform.localPosition = new Vector3(0f, 0f, 0.188f);
-            ProjTemp.transform.rotation = this.transform.rotation;
+            ProjTemp.transform.localPosition = new Vector3(0.287f, 0f, 0f);
+            ProjTemp.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
             ProjTemp.transform.SetParent(null);
 
             ProjTemp.GetComponent<Rigidbody>().AddForce(ProjTemp.transform.forward * Force);
