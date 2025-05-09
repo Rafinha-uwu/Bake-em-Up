@@ -3,22 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] private WaveSet waveSet;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private TextMeshProUGUI waveDisplay;
+    [SerializeField] private TextMeshProUGUI timeDisplay;
 
     private int currentWaveIndex = 0;
     private bool isSpawning = false;
     private Coroutine waveCoroutine;
     private int holdWaveIndex = -1;
+    private List<GameObject> activeZombies = new List<GameObject>();
 
     public int CurrentWave => currentWaveIndex + 1;
 
     [SerializeField] private bool AutoStart = false;
+    [SerializeField] private float CountTime = 0;
+    [SerializeField] private bool CountOn = true;
+    public void Update()
+    {
+        if (CountOn)
+        {
+            if (CountTime > 0)
+            {
+                CountTime -= Time.deltaTime;
+                timeDisplay.text = $"{(int)CountTime}";
+            }
+            else if (CountTime <= 0f)
+            {
+                timeDisplay.text = $"{0}";
+                CountOn = false;
+            }
+        }
 
+    }
     private void Start()
     {
         if (AutoStart) { StartWaves(); }
@@ -71,10 +92,18 @@ public class WaveSpawner : MonoBehaviour
             holdWaveIndex = currentWaveIndex;
 
             yield return new WaitForSeconds(wave.startTimer);
+            CountTime = wave.startTimer;
+            CountOn = true;
+
             for (int i = 0; i < wave.numberOfEnemies; i++)
             {
                 SpawnEnemy(wave);
                 yield return new WaitForSeconds(wave.spawnInterval);
+            }
+
+            while (activeZombies.Count > 0)
+            {
+                yield return null;
             }
 
             currentWaveIndex++;
@@ -93,6 +122,8 @@ public class WaveSpawner : MonoBehaviour
         if (selectedPrefab == null) return;
 
         GameObject enemy = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
+        activeZombies.Add(enemy);
+        enemy.GetComponent<Zombie>()?.Died.AddListener(() => OnZombieDeath(enemy));
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
 
         if (agent != null && LevelManager.Instance != null)
@@ -124,7 +155,7 @@ public class WaveSpawner : MonoBehaviour
                 return option.zombiePrefab;
         }
 
-        return options[0].zombiePrefab; 
+        return options[0].zombiePrefab;
     }
 
     private void DisplayWaveText(int waveNumber)
@@ -133,5 +164,9 @@ public class WaveSpawner : MonoBehaviour
         {
             waveDisplay.text = $"Wave {waveNumber}";
         }
+    }
+    private void OnZombieDeath(GameObject zombie)
+    {
+        activeZombies.Remove(zombie);
     }
 }

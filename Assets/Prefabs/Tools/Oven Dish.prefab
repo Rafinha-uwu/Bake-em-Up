@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5984044115044998150}
   - component: {fileID: 936273947129858746}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 7733449388044849079}
   - component: {fileID: 1513885268376772888}
   - component: {fileID: 774249582502446259}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 1x1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8391107297590397491}
   - component: {fileID: 8397421266724858481}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 6494277326777992512}
   - component: {fileID: 7682547954094474860}
   - component: {fileID: 252230469113986053}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Oven Dish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,12 +316,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7069834, z: 0.7072302, w: 0}
   m_LocalPosition: {x: -44.35, y: 13.694, z: -5.7277}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.87037, y: 0.87037, z: 0.87037}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7762464051869068767}
   - {fileID: 3543675551002602115}
   - {fileID: 1484913515641283547}
-  - {fileID: 9166906766183687780}
   - {fileID: 432620193479917281}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 180}
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -563,7 +563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9054843321678314178}
   - component: {fileID: 260555654914928175}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -641,7 +641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 402570205187265415}
   - component: {fileID: 5035278135968294795}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -720,7 +720,7 @@ GameObject:
   - component: {fileID: 432620193479917281}
   - component: {fileID: 4897014785886100099}
   - component: {fileID: 1539262534644177826}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Shaped Dough Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -794,7 +794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6916714181730537187}
   - component: {fileID: 3397698356095677752}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 810262453109347880}
   - component: {fileID: 2143011116890199809}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -951,7 +951,7 @@ GameObject:
   - component: {fileID: 6283950654353886715}
   - component: {fileID: 9186168525465442102}
   - component: {fileID: 29828143280966250}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 2x2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1083,7 +1083,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8281663222970243616}
   - component: {fileID: 9095476010855272414}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1151,114 +1151,6 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!1 &2733997755623313279
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9166906766183687780}
-  - component: {fileID: 161906630923165046}
-  - component: {fileID: 5957968737317784328}
-  - component: {fileID: 133137228908318202}
-  m_Layer: 0
-  m_Name: Model
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9166906766183687780
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2733997755623313279}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.275, y: 0.01353426, z: 0.485}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7055479749175276451}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &161906630923165046
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2733997755623313279}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5957968737317784328
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2733997755623313279}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: b0370a7c4e4177f4c9f787edb47acf67, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &133137228908318202
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2733997755623313279}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2800613633487486731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,7 +1160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3543675551002602115}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1290,6 +1182,114 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7055479749175276451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3152490016614878928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7762464051869068767}
+  - component: {fileID: 6749198574227476531}
+  - component: {fileID: 722181868022037471}
+  - component: {fileID: 4059764074855634331}
+  m_Layer: 6
+  m_Name: Tray
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7762464051869068767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152490016614878928}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.73125875, y: 0.87037, z: 0.87037}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7055479749175276451}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6749198574227476531
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152490016614878928}
+  m_Mesh: {fileID: -3669767414114450652, guid: 6be4b7b8c82a6b1439cc24e285a35c89, type: 3}
+--- !u!23 &722181868022037471
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152490016614878928}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 637384d8a7d06f3429480bfb40977b91, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4059764074855634331
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152490016614878928}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.62225187, y: 0.01588037, z: 0.5308016}
+  m_Center: {x: -0.000000923872, y: 0.0036254618, z: -0.000001847744}
 --- !u!1 &3488000514946535898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,7 +1300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 848128683134244435}
   - component: {fileID: 4363959262323730905}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1378,7 +1378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7548513511243017935}
   - component: {fileID: 2685597723438981405}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1456,7 +1456,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4717411295496773508}
   - component: {fileID: 6373101566052676820}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1534,7 +1534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6454195492383167978}
   - component: {fileID: 8274060441682822801}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1611,7 +1611,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1484913515641283547}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attach Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1643,7 +1643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1874944260711281537}
   - component: {fileID: 4213547608641812593}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1721,7 +1721,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8365053313762645713}
   - component: {fileID: 5326297745445965043}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1799,7 +1799,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6234336951125669629}
   - component: {fileID: 6822276242610023472}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1878,7 +1878,7 @@ GameObject:
   - component: {fileID: 2738714465672430754}
   - component: {fileID: 6212255702039130668}
   - component: {fileID: 951547446078149196}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2008,7 +2008,7 @@ GameObject:
   m_Component:
   - component: {fileID: 257969632931871995}
   - component: {fileID: 8172158221181061629}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2086,7 +2086,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7686411995382627869}
   - component: {fileID: 1370092262175226328}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2164,7 +2164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3720917959212566063}
   - component: {fileID: 2709860027117620070}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2243,7 +2243,7 @@ GameObject:
   - component: {fileID: 1353789795478462120}
   - component: {fileID: 1398527608215353644}
   - component: {fileID: 8022031380798932949}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: 'Socket 3x4 '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2391,7 +2391,7 @@ GameObject:
   m_Component:
   - component: {fileID: 903376890455335410}
   - component: {fileID: 4535934359310244163}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2469,7 +2469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6217439822665841435}
   - component: {fileID: 2584093728027934095}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2547,7 +2547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6305715447495061481}
   - component: {fileID: 2616237466672506271}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}

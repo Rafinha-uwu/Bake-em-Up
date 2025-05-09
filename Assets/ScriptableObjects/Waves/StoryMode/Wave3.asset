@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5deaf06b51178f41b3835951defee0d, type: 3}
+  m_Name: Wave3
+  m_EditorClassIdentifier: 
+  numberOfEnemies: 15
+  spawnInterval: 7
+  startTimer: 30
+  waveEvents:
+  - {fileID: 11400000, guid: d51d8faabde83e143812986b4d4780ea, type: 2}
+  - {fileID: 11400000, guid: 74eb48c03fee6f24c914f454074ef0d6, type: 2}
+  - {fileID: 11400000, guid: c4f0db264adffb444aca09eaf42c08f7, type: 2}
+  - {fileID: 11400000, guid: 49ee3c3c7347b084a8b4e05325d5e222, type: 2}
+  - {fileID: 11400000, guid: f53b9b9f227b2644ab209c3dbcbd70b7, type: 2}
+  zombieSpawnOptions:
+  - zombiePrefab: {fileID: 7085024602934246232, guid: 6fa70c5506f7ade449ef1926b55a712d, type: 3}
+    weight: 50
+  - zombiePrefab: {fileID: 4147965484912393555, guid: 615dc514dba89c444a8b5e9db16741f6, type: 3}
+    weight: 50

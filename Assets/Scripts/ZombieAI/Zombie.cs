@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Zombie : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Zombie : MonoBehaviour
 
     }
     [SerializeField] private int hp = 1;
+    public UnityEvent Died;
 
     public ZombieState currentState = ZombieState.WALKING;
 
@@ -74,6 +76,8 @@ public class Zombie : MonoBehaviour
 
     IEnumerator OnDeath(RagdollPart hitPart, GameObject sender)
     {
+        Died?.Invoke();
+
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = true;
         if (obstacle != null) obstacle.enabled = false;
