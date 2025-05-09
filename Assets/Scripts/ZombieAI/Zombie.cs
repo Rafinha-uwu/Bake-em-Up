@@ -64,10 +64,12 @@ public class Zombie : MonoBehaviour
 
             // Get the limb hit
             Collider hitCollider = sender.GetComponent<Collider>();
+            Debug.Log("Collider que acertou:" + hitCollider);
             RagdollPart hitPart = hitCollider != null ? hitCollider.GetComponent<RagdollPart>() : null;
 
             if (hp < 1)
             {
+                Debug.Log("Parte que acertou:" + hitPart);
                 StartCoroutine(OnDeath(hitPart, sender));
             }
         }
@@ -101,6 +103,7 @@ public class Zombie : MonoBehaviour
 
         foreach (RagdollPart part in GetComponentsInChildren<RagdollPart>())
         {
+            Debug.Log("Acertou:" + part);
             part.Activate();
         }
 

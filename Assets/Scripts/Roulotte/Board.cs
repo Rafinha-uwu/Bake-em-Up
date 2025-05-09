@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RecipeBoardTrigger : MonoBehaviour
+public class Board : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {

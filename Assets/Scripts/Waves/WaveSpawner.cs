@@ -91,9 +91,9 @@ public class WaveSpawner : MonoBehaviour
             }
             holdWaveIndex = currentWaveIndex;
 
-            yield return new WaitForSeconds(wave.startTimer);
             CountTime = wave.startTimer;
             CountOn = true;
+            yield return new WaitForSeconds(wave.startTimer);
 
             for (int i = 0; i < wave.numberOfEnemies; i++)
             {
