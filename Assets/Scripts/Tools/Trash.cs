@@ -4,18 +4,15 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Trash : MonoBehaviour
 {
-	[SerializeField]
-	private Collider _collider;
-
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.CompareTag("Player"))
 			return;
 
-
-		if (other.transform.root.TryGetComponent<Resettable>(out var objToReset))
+		Resettable resettable = other.GetComponentInParent<Resettable>();
+		if (resettable != null)
 		{
-			objToReset.ResetObject();
+			resettable.ResetObject();
 		}
 		else
 		{

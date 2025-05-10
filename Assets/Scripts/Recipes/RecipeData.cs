@@ -9,12 +9,15 @@ public class RecipeData : ScriptableObject
     public Sprite recipeSprite;
 
     public float MixerTime;
-    public GameObject doughPrefab;
-    public int shapedDoughCount;
-    public GameObject shapedDoughPrefab;
-
     public float OvenTime;
+    public float FryingTime;
+
+    public int shapedDoughCount;
+    public GameObject doughPrefab;
+    public GameObject shapedDoughPrefab;
     public GameObject breadPrefab;
+
+    public int damage;
 
     public bool CheckIfComplete(Dictionary<IngredientName, int> ingredientsInsideBowl)
     {
