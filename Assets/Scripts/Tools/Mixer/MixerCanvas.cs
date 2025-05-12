@@ -28,6 +28,9 @@ public class MixerCanvas : ToolCanvas
 
 	public void UpdateTimer(float currentTimer, float maxTimer, float badMaxTimer)
 	{
+		if (maxTimer < 0)
+			return;
+
 		int minutes = Mathf.FloorToInt(currentTimer / 60f);
 		int seconds = Mathf.FloorToInt(currentTimer % 60f);
 

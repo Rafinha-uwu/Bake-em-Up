@@ -16,6 +16,7 @@ public class RecipeData : ScriptableObject
     public GameObject doughPrefab;
     public GameObject shapedDoughPrefab;
     public GameObject breadPrefab;
+    public GameObject burnedBreadPrefab;
 
     public int damage;
 

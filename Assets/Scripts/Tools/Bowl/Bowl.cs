@@ -100,10 +100,10 @@ public class Bowl : ToolContainer
 		SetLayerAllChildren(obj.transform, "Inside Bowl");
 		obj.transform.SetParent(_container.transform, true);
 		obj.transform.localPosition = Vector3.zero;
-		//obj.transform.SetPositionAndRotation(_container.transform.position, Quaternion.identity);
 
 		if (obj.TryGetComponent<IngredientController>(out var ingredient))
 		{
+			obj.transform.localScale *= 0.5f;
 			AddIngredient(ingredient);
 		}
 	}

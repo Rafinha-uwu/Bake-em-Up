@@ -52,6 +52,11 @@ public class MultipleSocketsManager : MonoBehaviour
 		return _socketsInteractors.Count;
 	}
 
+	public int GetSocketsInUse()
+	{
+		return _usedSockets;
+	}
+
 	public void ReleaseAllItems()
 	{
 		List<XRBaseInteractable> interactables = _interactablesAttach.Keys.ToList();
@@ -69,25 +74,27 @@ public class MultipleSocketsManager : MonoBehaviour
 		foreach (var inter in interactables)
 		{
 			//inter.interactionManager.SelectExit(inter.firstInteractorSelecting as IXRSelectInteractor, inter as IXRSelectInteractable);
-			//Destruindo após um curto periodo de tempo, pois provavelmente retornará null no metodo "InteractableRemoved"
 			Destroy(inter.gameObject);
 		}
 	}
 
-	private void OnTriggerEnter(Collider other)
+	public void OnContainerTriggerEnter(GameObject item)
 	{
-		if (_compareTag && !CompareTags(other.tag))
+		if (_compareTag && !CompareTags(item.tag))
 			return;
 
 		XRSocketInteractor socket = _socketsAvailables.FirstOrDefault(kv => kv.Value).Key;
 		if (socket == null)
 			return;
 
-		XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
+		XRBaseInteractable interactable = item.GetComponentInParent<XRBaseInteractable>();
 		if (_interactablesAttach.ContainsKey(interactable))
+		{
+			Debug.Log("Entrou duas vezes o mesmo objeto como isso é possível");
 			return;
+		}
 
-		if (!CheckValidations(other.gameObject))
+		if (!CheckValidations(item))
 			return;
 
 		socket.socketActive = true;

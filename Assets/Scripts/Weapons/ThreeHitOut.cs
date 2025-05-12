@@ -25,7 +25,6 @@ public class ThreeHitOut : MonoBehaviour
     private void OnGrab(SelectEnterEventArgs args)
     {
         isGrabbed = true;
-        Debug.Log("Baguette grabbed!");
     }
 
     private void OnRelease(SelectExitEventArgs args)

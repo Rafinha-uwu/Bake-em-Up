@@ -28,13 +28,14 @@ public class ToolCanvas : MonoBehaviour
 		//}
 		transform.position = newPosition;
 
-		transform.LookAt(_lookAt, Vector3.up);
-		transform.Rotate(0f, 180f, 0f);
+		//transform.LookAt(_lookAt, Vector3.up);
+		//transform.Rotate(0f, 180f, 0f);
 	}
 
-	public void AddTransformToFollow(Transform transform)
+	public void AddTransformToFollow(Transform canvasPoint)
 	{
-		_transformToFollow = transform;
+		_transformToFollow = canvasPoint;
+		transform.rotation = canvasPoint.rotation;
 	}
 
 	public void EnableCanvas()

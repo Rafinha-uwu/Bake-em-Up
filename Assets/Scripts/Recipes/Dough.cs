@@ -26,14 +26,14 @@ public class Dough : MonoBehaviour
 
 		if(_kneadCount == _kneadsToShape)
 		{
-			for(int i = 0; i < _recipeData.shapedDoughCount; i++)
+			Destroy(gameObject);
+
+			for (int i = 0; i < _recipeData.shapedDoughCount; i++)
 			{
 				Vector3 positionToSpawn = new Vector3(transform.position.x + Random.Range(-0.05f, 0.05f),
 					transform.position.y, transform.position.z + Random.Range(-0.05f, 0.05f));
 				Instantiate(_recipeData.shapedDoughPrefab, positionToSpawn, Quaternion.identity);
 			}
-
-			Destroy(gameObject);
 		}
 	}
 }

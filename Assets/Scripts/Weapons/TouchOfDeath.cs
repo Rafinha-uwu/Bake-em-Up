@@ -8,12 +8,7 @@ public class TouchOfDeath : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Zombie") || collision.gameObject.CompareTag("Ground"))
         {
-            Invoke(nameof(DestroySelf), destroyDelay);
+            Destroy(gameObject, destroyDelay);
         }
-    }
-
-    private void DestroySelf()
-    {
-        Destroy(gameObject);
     }
 }
