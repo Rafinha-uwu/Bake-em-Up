@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -10,22 +13,17 @@ public class OvenDish : ToolContainer
     [SerializeField]
     private ShapedDoughsSocketsManager _shapedDoughsSocketsManager;
 
-    private MixerCanvas _dishCanvas;
-
-    [HideInInspector]
+	[HideInInspector]
     public bool HasCompletedBread = false;
     [HideInInspector]
     public bool HasBurnedBread = false;
     private Resettable _resettable;
-    private bool _skipNextContainerEmptyMessage = false;
 
-    protected override void Awake()
+	protected override void Awake()
     {
         base.Awake();
-        _dishCanvas = _toolCanvas.gameObject.GetComponent<MixerCanvas>();
         _resettable = GetComponent<Resettable>();
         _resettable.OnObjectReset += ClearDish;
-        _dishCanvas.DisableCanvas();
     }
     private void OnDestroy()
     {
@@ -39,114 +37,74 @@ public class OvenDish : ToolContainer
         return recipe != null;
     }
 
-    public void MakeBread()
-    {
-        RecipeData auxRecipe = _recipeData;
-		ClearDish();
+	public void MakeBread(bool burned = false)
+	{
+		int breadCount = _shapedDoughsSocketsManager.GetSocketsInUse();
 
-        HasCompletedBread = true;
-
-        for (int i = 0; i < auxRecipe.shapedDoughCount; i++)
-        {
-            Instantiate(auxRecipe.breadPrefab, transform.position, Quaternion.identity);
-        }
-        _recipeData = auxRecipe;
-    }
-
-    public void BurnBread()
-    {
-        _skipNextContainerEmptyMessage = true;
+		RecipeData auxRecipe = _recipeData;
 
 		ClearDish();
 
-        HasBurnedBread = true;
-        _recipeData = RecipesManager.Instance.GetBadBread();
+		HasCompletedBread = true;
 
-        for (int i = 0; i < _recipeData.shapedDoughCount; i++) 
-        {
-            Instantiate(_recipeData.breadPrefab, transform.position, Quaternion.identity);
-        }
-    }
+		GameObject bread = burned ? auxRecipe.burnedBreadPrefab : auxRecipe.breadPrefab;
+
+		for (int i = 0; i < breadCount; i++)
+		{
+			Instantiate(bread, transform.position, Quaternion.identity);
+		}
+	}
 
     public void ClearDish()
     {
-        HasCompletedBread = false;
-        HasBurnedBread = false;
-
         _shapedDoughsSocketsManager.DestroyAllDough();
-
-        _dishCanvas.ClearCanvas();
-    }
-
-    public void SetCanvasRecipe(Sprite recipeSprite)
-    {
-        _dishCanvas.SetRecipe(recipeSprite);
-    }
-
-    public void UpdateCanvasTimer(float currentTimer, float maxTimer, float badMaxTimer)
-    {
-        _dishCanvas.UpdateTimer(currentTimer, maxTimer, badMaxTimer);   
-    }
-
-    public void ClearCanvas()
-    {
-        _dishCanvas.ClearCanvas();
     }
 
     public override void ContainerIsEmpty()
     {
-        if (_skipNextContainerEmptyMessage)
-        {
-            _skipNextContainerEmptyMessage = false;
-            return;
-        }
-
 		_recipeData = null;
-		_collider.enabled = true;
 
-        ClearDish();
+		HasCompletedBread = false;
+		HasBurnedBread = false;
 	}
 
-    private void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter(Collider other)
     {
-		if (!_collider.enabled)
+		GameObject item = other.gameObject;
+
+		if (!_recipeData.IsUnityNull())
+		{
+			_shapedDoughsSocketsManager.OnContainerTriggerEnter(item);
 			return;
+		}
 
 		RecipeData recipe = null;
 
-        if (other.gameObject.CompareTag("Shaped Dough"))
-        {
-			recipe = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
-            if (recipe.OvenTime == 0f)
-                return;
+		if (item.CompareTag("Shaped Dough"))
+		{
+			recipe = item.GetComponentInParent<ShapedDough>().GetRecipe();
+			if (recipe.OvenTime == 0f)
+				return;
+		}
+		else if (item.CompareTag("Bread"))
+		{
+			Bread bread = item.GetComponentInParent<Bread>();
 
-			XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
-            if (interactable.isSelected)
-            {
-                XRBaseInteractor interactor = interactable.firstInteractorSelecting as XRBaseInteractor;
-                WoodenBoard board = interactor.GetComponentInParent<WoodenBoard>();
-                if (!board)
-                    return;
+			recipe = bread.GetRecipe();
 
-                board.ReleaseAllDough();
-            }
-        }
-        else if (other.gameObject.CompareTag("Bread"))
-        {
-			recipe = other.gameObject.GetComponentInParent<Bread>().GetRecipe();
 			if (recipe.OvenTime == 0f)
 				return;
 
-			XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
-            if (interactable.isSelected)
-                return;
+			if (bread.IsBurned())
+				HasBurnedBread = true;
+			else
+				HasCompletedBread = true;
 		}
 
-        if(recipe != null)
-        {
+		if (recipe != null)
+		{
 			_recipeData = recipe;
-			_shapedDoughsSocketsManager.ReceivedItem();
-			_collider.enabled = false;
+			_shapedDoughsSocketsManager.ReceivedItem(recipe, item);
 		}
-    }
+	}
 }

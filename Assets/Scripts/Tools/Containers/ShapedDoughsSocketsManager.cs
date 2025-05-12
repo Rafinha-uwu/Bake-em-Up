@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -12,15 +14,14 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 	private Dictionary<int, MultipleSocketsManager> _socketsManagerDict = new();
 
-	private Collider _collider;
 	private WoodenBoard _woodenBoard;
 	private ToolContainer _toolContainer;
 	private RecipeData _shapedDoughRecipe;
+	private GameObject _firstItemEntered;
+	private MultipleSocketsManager _currentActiveManager;
 
 	private void Awake()
 	{
-		_collider = GetComponent<Collider>();
-
 		foreach(MultipleSocketsManager manager in _shapedDoughSocketManager)
 		{
 			_socketsManagerDict.Add(manager.GetSocketsCount(), manager);
@@ -34,7 +35,6 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 	{
 		_woodenBoard = GetComponentInParent<WoodenBoard>();
 		_toolContainer = GetComponentInParent<ToolContainer>();
-		_collider.enabled = false;
 	}
 
 	private void OnDestroy()
@@ -49,15 +49,37 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 	public void GridIsEmpty(MultipleSocketsManager manager)
 	{
+		Debug.Log($"Ficou vazio {transform.root.name}");
 		manager.gameObject.SetActive(false);
 		_shapedDoughRecipe = null;
-		_collider.enabled = false;
+		_currentActiveManager = null;
+		_firstItemEntered = null;
 		MessageContainerThatIsEmpty();
 	}
 
-	public void ReceivedItem()
+	public void ReceivedItem(RecipeData recipe, GameObject item)
 	{
-		_collider.enabled = true;
+		if (!recipe.IsUnityNull())
+		{
+			if (!ValidatePriority(item))
+			{
+				MessageContainerThatIsEmpty();
+				return;
+			}
+
+			MultipleSocketsManager manager = _socketsManagerDict[recipe.shapedDoughCount];
+			manager.gameObject.SetActive(true);
+
+			_firstItemEntered = item;
+			_currentActiveManager = manager;
+			_shapedDoughRecipe = recipe;
+			
+			OnContainerTriggerEnter(item);
+		}
+		else
+		{
+			throw new NullReferenceException($"Recipe is null on ShapedDoughManager for the container {transform.root.name}!");
+		}
 	}
 
 	public void ReleaseAllDough()
@@ -68,11 +90,28 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 	public void DestroyAllDough()
 	{
-		if (_shapedDoughRecipe)
+		if (!_shapedDoughRecipe.IsUnityNull())
 		{
 			MultipleSocketsManager manager = _socketsManagerDict[_shapedDoughRecipe.shapedDoughCount];
 			manager.DestroyAllItems();
 		}
+	}
+
+	public void OnContainerTriggerEnter(GameObject item)
+	{
+		if (!_shapedDoughRecipe.IsUnityNull())
+		{
+			_currentActiveManager.OnContainerTriggerEnter(item);
+		}
+		else
+		{
+			throw new NullReferenceException($"Recipe is null on ShapedDoughManager for the container {transform.root.name}!");
+		}
+	}
+
+	public int GetSocketsInUse()
+	{
+		return _currentActiveManager.GetSocketsInUse();
 	}
 
 	private void MessageContainerThatIsEmpty()
@@ -96,7 +135,12 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 		}
 		else if (objectToValidate.CompareTag("Bread"))
 		{
-			recipe = objectToValidate.GetComponentInParent<Bread>().GetRecipe();
+			Bread firstBread = _firstItemEntered.GetComponentInParent<Bread>();
+			Bread validateBread = objectToValidate.GetComponentInParent<Bread>();
+			if (firstBread.IsBurned() != validateBread.IsBurned())
+				return false;
+
+			recipe = validateBread.GetRecipe();
 		}
 
 		return _shapedDoughRecipe == recipe;
@@ -109,7 +153,8 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 			return true;
 
 		XRBaseInteractor interactor = interactable.firstInteractorSelecting as XRBaseInteractor;
-		if (interactor.transform.CompareTag("Player"))
+		//Provavelmente aqui da para fazer para mostrar o mesh do objeto que ta sendo segurado pelo player e colocar no meio mesmo
+		if (interactable.IsSelectedByLeft() || interactable.IsSelectedByRight())
 			return false;
 
 		if (_toolContainer == null)
@@ -117,38 +162,4 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 		return _toolContainer.HasPriorityOver(interactor.gameObject);
 	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		if (!_collider.enabled)
-			return;
-
-		RecipeData recipe = null;
-		if(other.gameObject.CompareTag("Shaped Dough"))
-		{
-			Debug.Log("rs");
-			recipe = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
-		}
-		else if (other.gameObject.CompareTag("Bread"))
-		{
-            recipe = other.gameObject.GetComponentInParent<Bread>().GetRecipe();
-        }
-
-		if(recipe != null)
-		{
-            XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
-
-            if (!ValidatePriority(interactable.gameObject))
-			{
-                return;
-			}
-
-            MultipleSocketsManager manager = _socketsManagerDict[recipe.shapedDoughCount];
-            manager.gameObject.SetActive(true);
-
-            _shapedDoughRecipe = recipe;
-            _collider.enabled = false;
-        }
-        
-    }
 }

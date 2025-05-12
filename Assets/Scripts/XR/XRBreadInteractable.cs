@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -22,6 +23,9 @@ public class XRBreadInteractable : XRGrabInteractable
 		if(args.interactorObject is XRSocketInteractor && _socketTransform != null)
 		{
 			attachTransform = _socketTransform;
+			//Debug.Log(colliders.Count);
+			//colliders[0].enabled = false;
+			transform.SetParent(args.interactorObject.transform);
 		}
 
 		base.OnSelectEntering(args);
@@ -34,6 +38,8 @@ public class XRBreadInteractable : XRGrabInteractable
 		if (_socketTransform != null && args.interactorObject is XRSocketInteractor)
 		{
 			attachTransform = _firstAttachTransform;
+			//colliders[0].enabled = true;
+			transform.SetParent(null);
 		}
 	}
 }

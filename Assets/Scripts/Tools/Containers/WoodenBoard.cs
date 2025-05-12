@@ -10,13 +10,8 @@ public class WoodenBoard : MonoBehaviour
 	[SerializeField]
 	private ShapedDoughsSocketsManager _shapedDoughsSocketsManager;
 
-	private Collider _collider;
 	private Dough _doughOnBoard;
-
-	private void Awake()
-	{
-		_collider = GetComponent<Collider>();
-	}
+	private bool _hasShapedDough;
 
 	private void Start()
 	{
@@ -35,7 +30,7 @@ public class WoodenBoard : MonoBehaviour
 
 	public void ShapedDoughsGridIsEmpty()
 	{
-		_collider.enabled = true;
+		_hasShapedDough = false;
 	}
 
 	public void ReleaseAllDough()
@@ -51,9 +46,6 @@ public class WoodenBoard : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (!_collider.enabled)
-			return;
-
 		if (other.gameObject.CompareTag("Dough Roller"))
 		{
 			if (!_doughOnBoard)
@@ -61,6 +53,12 @@ public class WoodenBoard : MonoBehaviour
 
 			_doughOnBoard.KneadDough();
 
+			return;
+		}
+
+		if (_hasShapedDough)
+		{
+			_shapedDoughsSocketsManager.OnContainerTriggerEnter(other.gameObject);
 			return;
 		}
 
@@ -85,8 +83,9 @@ public class WoodenBoard : MonoBehaviour
 		}
 		else if (other.gameObject.CompareTag("Shaped Dough"))
 		{
-			_shapedDoughsSocketsManager.ReceivedItem();
-			_collider.enabled = false;
+			_hasShapedDough = true;
+			RecipeData recipe = other.gameObject.GetComponentInParent<ShapedDough>().GetRecipe();
+			_shapedDoughsSocketsManager.ReceivedItem(recipe, other.gameObject);
 
 			return;
 		}

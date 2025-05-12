@@ -8,11 +8,17 @@ public class Oven : ToolCooker
 {
     [SerializeField]
     private XRSocketToolInteractor _socketDish2;
+	
+    [SerializeField]
+	private Transform _transformForCanvas2ToFollow;
 
-    private OvenDish _dish1;
+	private OvenDish _dish1;
     private OvenDish _dish2;
 
-    private OvenDoor _ovenDoor;
+	private MixerCanvas _dish1Canvas;
+	private MixerCanvas _dish2Canvas;
+
+	private OvenDoor _ovenDoor;
 
     private InteractionLayerMask _dishInteractionLayerMask;
 	[SerializeField]
@@ -30,7 +36,18 @@ public class Oven : ToolCooker
     private bool _burnedDish1 = false;
     private bool _burnedDish2 = false;
 
-    protected override void Start()
+	protected override void Awake()
+	{
+		base.Awake();
+		_dish1Canvas = _toolCanvas as MixerCanvas;
+
+		GameObject canvas = Instantiate(_canvasObject, transform.position, transform.rotation);
+		_dish2Canvas = canvas.GetComponent<MixerCanvas>();
+		_dish2Canvas.AddTransformToFollow(_transformForCanvas2ToFollow);
+		_dish2Canvas.DisableCanvas();
+	}
+
+	protected override void Start()
     {
         base.Start();
         _ovenDoor = GetComponentInChildren<OvenDoor>();
@@ -84,9 +101,9 @@ public class Oven : ToolCooker
                 _heatingCompleteDish1 = true;
             }
 
-            ovendish.UpdateCanvasTimer(_currentTimeDish1, _recipeDataDish1.OvenTime, _badTimerDish1);
-            ovendish.SetCanvasRecipe(_recipeDataDish1.recipeSprite);
-            ovendish.EnableCanvas();
+			_dish1Canvas.UpdateTimer(_currentTimeDish1, _recipeDataDish1.OvenTime, _badTimerDish1);
+			_dish1Canvas.SetRecipe(_recipeDataDish1.recipeSprite);
+			_dish1Canvas.EnableCanvas();
 
             _dish1 = ovendish;
 
@@ -108,9 +125,9 @@ public class Oven : ToolCooker
                 _heatingCompleteDish1 = true;
             }
 
-            ovendish.UpdateCanvasTimer(_currentTimeDish2, _recipeDataDish2.OvenTime, _badTimerDish2);
-            ovendish.SetCanvasRecipe(_recipeDataDish2.recipeSprite);
-            ovendish.EnableCanvas();
+			_dish2Canvas.UpdateTimer(_currentTimeDish2, _recipeDataDish2.OvenTime, _badTimerDish2);
+			_dish2Canvas.SetRecipe(_recipeDataDish2.recipeSprite);
+			_dish2Canvas.EnableCanvas();
 
             _dish2 = ovendish;
         }
@@ -118,9 +135,7 @@ public class Oven : ToolCooker
 
     public override void SocketSelectedExit(XRSocketToolInteractor socket)
     {
-        OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
-        ovendish.ClearCanvas();
-        ovendish.DisableCanvas();
+        
 
         if (socket == _socket)
         {
@@ -129,16 +144,21 @@ public class Oven : ToolCooker
             _badTimerDish1 = 0f;
             _burnedDish1 = false;
             _heatingCompleteDish1 = false;
-        }
+
+			_dish1Canvas.ClearCanvas();
+			_dish1Canvas.DisableCanvas();
+		}
         else if (socket == _socketDish2)
         {
             _recipeDataDish2 = null;
             _currentTimeDish2 = 0f;
             _badTimerDish2 = 0f;
             _burnedDish2 = false;
-
             _heatingCompleteDish2 = false;
-        }
+
+			_dish2Canvas.ClearCanvas();
+			_dish2Canvas.DisableCanvas();
+		}
     }
 
     protected override void TurnOff()
@@ -213,16 +233,14 @@ public class Oven : ToolCooker
     {
         _currentTimeDish1 += Time.deltaTime;
 
-        _dish1.UpdateCanvasTimer(_currentTimeDish1, _recipeDataDish1.OvenTime, _badTimerDish1);
+		_dish1Canvas.UpdateTimer(_currentTimeDish1, _recipeDataDish1.OvenTime, _badTimerDish1);
 
         if (!_burnedDish1 && _currentTimeDish1 >= _badTimerDish1)
         {
-            Debug.Log("Estragou a massa!");
 			BurnedBread(_socket);
         }
         else if (!_heatingCompleteDish1 && _currentTimeDish1 >= _recipeDataDish1.OvenTime)
         {
-            Debug.Log("Terminou de Misturar");
 			MakeBread(_socket);
 		}
     }
@@ -230,16 +248,14 @@ public class Oven : ToolCooker
     {
         _currentTimeDish2 += Time.deltaTime;
 
-        _dish2.UpdateCanvasTimer(_currentTimeDish2, _recipeDataDish2.OvenTime, _badTimerDish2);
+		_dish2Canvas.UpdateTimer(_currentTimeDish2, _recipeDataDish2.OvenTime, _badTimerDish2);
 
         if (!_burnedDish2 && _currentTimeDish2 >= _badTimerDish2)
         {
-            Debug.Log("Estragou a massa!");
             BurnedBread(_socketDish2);
         }
         else if (!_heatingCompleteDish2 && _currentTimeDish2 >= _recipeDataDish2.OvenTime)
         {
-            Debug.Log("Terminou de Misturar");
             MakeBread(_socketDish2);
         }
 
@@ -273,6 +289,6 @@ public class Oven : ToolCooker
         }
 
         OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
-        ovendish.BurnBread();
+        ovendish.MakeBread(burned: true);
     }
 }

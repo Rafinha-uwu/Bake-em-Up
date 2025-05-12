@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class ToolContainer : Tool
 {
@@ -21,9 +22,12 @@ public class ToolContainer : Tool
 	protected virtual void Awake()
 	{
 		_collider = GetComponent<Collider>();
-		GameObject canvas = Instantiate(_canvasObject, transform.position, transform.rotation);
-		_toolCanvas = canvas.GetComponent<ToolCanvas>();
-		_toolCanvas.AddTransformToFollow(_transformForCanvasToFollow);
+		if (!_canvasObject.IsUnityNull())
+		{
+			GameObject canvas = Instantiate(_canvasObject, transform.position, transform.rotation);
+			_toolCanvas = canvas.GetComponent<ToolCanvas>();
+			_toolCanvas.AddTransformToFollow(_transformForCanvasToFollow);
+		}
 	}
 
 	protected void ReleaseItem(XRGrabInteractable interactable)
@@ -36,17 +40,18 @@ public class ToolContainer : Tool
 
 	public void EnableCanvas()
 	{
-		_toolCanvas.EnableCanvas();
+		if (!_toolCanvas.IsUnityNull())
+			_toolCanvas.EnableCanvas();
 	}
 
 	public void DisableCanvas()
 	{
-		_toolCanvas.DisableCanvas();
+		if (!_toolCanvas.IsUnityNull())
+			_toolCanvas.DisableCanvas();
 	}
 
 	public virtual void ContainerIsEmpty()
 	{
-		_collider.enabled = true;
 		_recipeData = null;
 	}
 

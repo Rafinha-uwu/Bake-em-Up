@@ -47,36 +47,33 @@ public class DonutRoller : MonoBehaviour
             }
         }
     }
+	private void OnTriggerEnter(Collider other)
+	{
+		if (!isRolling && other.CompareTag("Ground"))
+		{
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (!isRolling && collision.collider.CompareTag("Ground"))
-        {
+			gameObject.GetComponent<Animator>().enabled = false;
+			isRolling = true;
 
-            gameObject.GetComponent<Animator>().enabled = false;
-            isRolling = true;
-
-            rollDirection.y = 0f;
-            rollDirection.Normalize();
-
-
-            Vector3 flatForward = new Vector3(rollDirection.x, 0f, rollDirection.z);
-            float targetY = Quaternion.LookRotation(flatForward).eulerAngles.y;
-
-            if (targetY > 180f) targetY -= 360f;
-
-            if (Mathf.Abs(targetY) >= 5f)
-            {
-                targetY *= 0.5f;
-            }
-
-            transform.rotation = Quaternion.Euler(0f, targetY, 90f);
+			rollDirection.y = 0f;
+			rollDirection.Normalize();
 
 
+			Vector3 flatForward = new Vector3(rollDirection.x, 0f, rollDirection.z);
+			float targetY = Quaternion.LookRotation(flatForward).eulerAngles.y;
 
-            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        }
-    }
+			if (targetY > 180f) targetY -= 360f;
+
+			if (Mathf.Abs(targetY) >= 5f)
+			{
+				targetY *= 0.5f;
+			}
+
+			transform.rotation = Quaternion.Euler(0f, targetY, 90f);
+
+			rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		}
+	}
 
     private void Die()
     {

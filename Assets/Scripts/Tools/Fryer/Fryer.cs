@@ -8,11 +8,8 @@ public class Fryer : ToolCooker
 	[SerializeField]
 	private XRSocketToolInteractor _socketFryerOil;
 
+	private MixerCanvas _fryerCanvas;
 	private FryerBasket _basket;
-
-	//private InteractionLayerMask _basketInteractionLayerMask;
-	//[SerializeField]
-	//private InteractionLayerMask _trackInteractionLayerMask;
 
 	private RecipeData _recipeData;
 	private bool _isHeating = false;
@@ -20,6 +17,12 @@ public class Fryer : ToolCooker
 	private float _badTimerBasket = 0f;
 	private bool _heatingCompleteBasket = false;
 	private bool _burnedBasket = false;
+
+	protected override void Awake()
+	{
+		base.Awake();
+		_fryerCanvas = _toolCanvas as MixerCanvas;
+	}
 
 	// Update is called once per frame
 	void Update()
@@ -56,9 +59,9 @@ public class Fryer : ToolCooker
 			_heatingCompleteBasket = true;
 		}
 
-		basket.UpdateCanvasTimer(_currentTimeBasket, _recipeData.FryingTime, _badTimerBasket);
-		basket.SetCanvasRecipe(_recipeData.recipeSprite);
-		basket.EnableCanvas();
+		_fryerCanvas.SetRecipe(_recipeData.recipeSprite);
+		_fryerCanvas.UpdateTimer(_currentTimeBasket, _recipeData.FryingTime, _badTimerBasket);
+		_fryerCanvas.EnableCanvas();
 
 		_basket = basket;
 
@@ -71,15 +74,15 @@ public class Fryer : ToolCooker
 		if (socket == _socketFryerOil)
 			TurnOff();
 
-		FryerBasket basket = socket.Interactable.transform.gameObject.GetComponent<FryerBasket>();
-		basket.ClearCanvas();
-		basket.DisableCanvas();
+		_fryerCanvas.ClearCanvas();
+		_fryerCanvas.DisableCanvas();
 
 		_recipeData = null;
 		_currentTimeBasket = 0f;
 		_badTimerBasket = 0f;
 		_burnedBasket = false;
 		_heatingCompleteBasket = false;
+		_basket = null;
 	}
 
 	protected override void TurnOn()
@@ -114,7 +117,7 @@ public class Fryer : ToolCooker
 	{
 		_currentTimeBasket += Time.deltaTime;
 
-		_basket.UpdateCanvasTimer(_currentTimeBasket, _recipeData.FryingTime, _badTimerBasket);
+		_fryerCanvas.UpdateTimer(_currentTimeBasket, _recipeData.FryingTime, _badTimerBasket);
 
 		if (!_burnedBasket && _currentTimeBasket >= _badTimerBasket)
 		{
@@ -139,6 +142,6 @@ public class Fryer : ToolCooker
 	{
 		_burnedBasket = true;
 
-		_basket.BurnBread();
+		_basket.MakeBread(burned: true);
 	}
 }
