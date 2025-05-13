@@ -57,19 +57,19 @@ public class Zombie : MonoBehaviour
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
     {
-        if (sender.CompareTag("Bread") && receiver.GetInstanceID() == gameObject.GetInstanceID())
+        if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
         {
             Debug.Log("LEVASTE COM UM PAO");
             hp -= damage;
 
             // Get the limb hit
-            Collider hitCollider = sender.GetComponent<Collider>();
-            Debug.Log("Collider que acertou:" + hitCollider);
+            Collider hitCollider = receiver.GetComponent<Collider>();
+            //Debug.Log("Collider que acertou:" + hitCollider.name);
             RagdollPart hitPart = hitCollider != null ? hitCollider.GetComponent<RagdollPart>() : null;
 
             if (hp < 1)
             {
-                Debug.Log("Parte que acertou:" + hitPart);
+                //Debug.Log("Parte que acertou:" + hitPart.transform.name);
                 StartCoroutine(OnDeath(hitPart, sender));
             }
         }
