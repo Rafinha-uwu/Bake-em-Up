@@ -35,6 +35,7 @@ public class Oven : ToolCooker
     private bool _heatingCompleteDish2 = false;
     private bool _burnedDish1 = false;
     private bool _burnedDish2 = false;
+    private bool _showWarning = false;
 
 	protected override void Awake()
 	{
@@ -66,6 +67,7 @@ public class Oven : ToolCooker
         if (!_isHeating)
             return;
 
+        _showWarning = false;
         if (_socket.Interactable != null)
         {
             HeatDish1();
@@ -74,6 +76,9 @@ public class Oven : ToolCooker
         {
             HeatDish2();
         }
+
+        if (_showWarning)
+            _warningHelper.Show();
     }
 
     public override void SocketSelectedEnter(XRSocketToolInteractor socket)
@@ -135,8 +140,6 @@ public class Oven : ToolCooker
 
     public override void SocketSelectedExit(XRSocketToolInteractor socket)
     {
-        
-
         if (socket == _socket)
         {
             _recipeDataDish1 = null;
@@ -183,7 +186,9 @@ public class Oven : ToolCooker
             grabInteractable.interactionLayers = _dishInteractionLayerMask;
             _isHeating = false;
         }
-    }
+
+		_warningHelper.Hide();
+	}
 
     protected override void TurnOn()
     {
@@ -235,7 +240,10 @@ public class Oven : ToolCooker
 
 		_dish1Canvas.UpdateTimer(_currentTimeDish1, _recipeDataDish1.OvenTime, _badTimerDish1);
 
-        if (!_burnedDish1 && _currentTimeDish1 >= _badTimerDish1)
+        if (_currentTimeDish1 >= _recipeDataDish1.OvenTime)
+            _showWarning = true;
+
+		if (!_burnedDish1 && _currentTimeDish1 >= _badTimerDish1)
         {
 			BurnedBread(_socket);
         }
@@ -250,7 +258,10 @@ public class Oven : ToolCooker
 
 		_dish2Canvas.UpdateTimer(_currentTimeDish2, _recipeDataDish2.OvenTime, _badTimerDish2);
 
-        if (!_burnedDish2 && _currentTimeDish2 >= _badTimerDish2)
+		if (_currentTimeDish2 >= _recipeDataDish2.OvenTime)
+			_showWarning = true;
+
+		if (!_burnedDish2 && _currentTimeDish2 >= _badTimerDish2)
         {
             BurnedBread(_socketDish2);
         }

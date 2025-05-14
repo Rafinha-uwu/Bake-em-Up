@@ -10,6 +10,8 @@ public abstract class ToolCooker : Tool
 	[SerializeField]
 	private Transform _transformForCanvasToFollow;
 	[SerializeField]
+	protected WarningHelper _warningHelper;
+	[SerializeField]
 	private int _badTimerPercent;
 	public float BadTimerMultiplier 
 	{ 
@@ -30,6 +32,8 @@ public abstract class ToolCooker : Tool
             _toolCanvas.AddTransformToFollow(_transformForCanvasToFollow);
             _toolCanvas.DisableCanvas();
         }
+
+		_warningHelper.Hide();
 		
 		if (_badTimerPercent <= 100f)
 		{

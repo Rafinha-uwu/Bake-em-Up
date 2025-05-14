@@ -100,6 +100,7 @@ public class Fryer : ToolCooker
 		Debug.Log("Desligou Fritadeira");
 		_isHeating = false;
 		_basket = null;
+		_warningHelper.Hide();
 	}
 
 	private bool IsCorrectRecipe(RecipeData recipeData)
@@ -118,6 +119,11 @@ public class Fryer : ToolCooker
 		_currentTimeBasket += Time.deltaTime;
 
 		_fryerCanvas.UpdateTimer(_currentTimeBasket, _recipeData.FryingTime, _badTimerBasket);
+
+		if (_currentTimeBasket > _recipeData.FryingTime)
+			_warningHelper.Show();
+		else 
+			_warningHelper.Hide();
 
 		if (!_burnedBasket && _currentTimeBasket >= _badTimerBasket)
 		{

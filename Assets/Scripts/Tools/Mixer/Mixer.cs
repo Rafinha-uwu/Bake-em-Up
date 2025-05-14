@@ -45,6 +45,11 @@ public class Mixer : ToolCooker
 		_currentTime += Time.deltaTime;
 		_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);
 
+		if(_currentTime >= _recipeData.MixerTime)
+			_warningHelper.Show();
+		else
+			_warningHelper.Hide();
+
 		if (!_mixingRuined && _currentTime >= _badTimer)
 		{
 			Debug.Log("Estragou a massa!");
@@ -122,6 +127,7 @@ public class Mixer : ToolCooker
 			XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
 			grabInteractable.interactionLayers = _bowlInteractionLayerMask;
 			_isMixing = false;
+			_warningHelper.Hide();
 		}
 	}
 
