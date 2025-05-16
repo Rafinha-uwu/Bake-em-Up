@@ -14,12 +14,13 @@ public class Zombie : MonoBehaviour
     }
     [SerializeField] private int hp = 1;
     public UnityEvent Died;
+    public bool death = false;
 
     public ZombieState currentState = ZombieState.WALKING;
 
     private NavMeshObstacle obstacle;
     private Rigidbody[] _ragdollRigidboddies;
-    private NavMeshAgent agent;
+    protected NavMeshAgent agent;
     private Animator animator;
 
     private void Awake()
@@ -38,7 +39,7 @@ public class Zombie : MonoBehaviour
         HitEvent.OnHit -= GetHit;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         obstacle = GetComponent<NavMeshObstacle>();
         agent = GetComponent<NavMeshAgent>();
@@ -79,7 +80,7 @@ public class Zombie : MonoBehaviour
     IEnumerator OnDeath(RagdollPart hitPart, GameObject sender)
     {
         Died?.Invoke();
-
+        death = true;
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = true;
         if (obstacle != null) obstacle.enabled = false;
