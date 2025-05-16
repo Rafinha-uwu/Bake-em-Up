@@ -16,7 +16,7 @@ public class Cream : MonoBehaviour
 
             Instantiate(GroundCream, CreamLocation, GroundCream.transform.rotation);
 
-            Destroy(gameObject);
+            Destroy(gameObject, 0.1f);
         }
         else if (other.CompareTag("Ground"))
         {

@@ -3,10 +3,10 @@ using UnityEngine;
 public class Bread : MonoBehaviour
 {
     [SerializeField]
-    private RecipeData _recipeData;
+    protected RecipeData _recipeData;
 
 	[SerializeField]
-	private bool _isBurned = false;
+	protected bool _isBurned = false;
 
 	public RecipeData GetRecipe()
     {
@@ -20,7 +20,8 @@ public class Bread : MonoBehaviour
 		// Check if the collided object is the player
 		if (collision.gameObject.CompareTag("Zombie") && !_isBurned)
 		{
-			HitEvent.GetHit(_recipeData.damage, transform.gameObject, collision.gameObject);
+			GameObject test = collision.gameObject;
+			HitEvent.GetHit(_recipeData.damage, transform.gameObject, test);
 		}
 	}
 }

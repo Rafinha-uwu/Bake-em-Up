@@ -15,6 +15,7 @@ public class Zombie : MonoBehaviour
     [SerializeField] private int hp = 1;
     public UnityEvent Died;
     public bool death = false;
+    public float force = 50f;
 
     public ZombieState currentState = ZombieState.WALKING;
 
@@ -60,7 +61,7 @@ public class Zombie : MonoBehaviour
     {
         if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
         {
-            Debug.Log("LEVASTE COM UM PAO");
+            //Debug.Log("LEVASTE COM UM PAO");
             hp -= damage;
 
             // Get the limb hit
@@ -71,13 +72,14 @@ public class Zombie : MonoBehaviour
             if (hp < 1)
             {
                 //Debug.Log("Parte que acertou:" + hitPart.transform.name);
-                StartCoroutine(OnDeath(hitPart, sender));
+
+                StartCoroutine(OnDeath(hitPart, sender.transform.position));
             }
         }
     }
 
 
-    IEnumerator OnDeath(RagdollPart hitPart, GameObject sender)
+    IEnumerator OnDeath(RagdollPart hitPart, Vector3 senderPosition)
     {
         Died?.Invoke();
         death = true;
@@ -95,8 +97,8 @@ public class Zombie : MonoBehaviour
         // First, activate the hit limb and apply force
         if (hitPart != null)
         {
-            Vector3 direction = (hitPart.transform.position - sender.transform.position).normalized;
-            hitPart.AddHitForce(direction * 50f);
+            Vector3 direction = (hitPart.transform.position - senderPosition).normalized;
+            hitPart.AddHitForce(direction * force);
         }
 
         yield return new WaitForSeconds(0.1f);
