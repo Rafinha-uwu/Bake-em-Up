@@ -723,7 +723,6 @@ GameObject:
   - component: {fileID: 7841292625592762626}
   - component: {fileID: 8046297728338043224}
   - component: {fileID: 3193672330104639156}
-  - component: {fileID: 2781972080571941195}
   - component: {fileID: 1331047205489548892}
   m_Layer: 9
   m_Name: zombie_3
@@ -799,6 +798,7 @@ MonoBehaviour:
   Died:
     m_PersistentCalls:
       m_Calls: []
+  death: 0
   currentState: 0
 --- !u!114 &7841292625592762626
 MonoBehaviour:
@@ -857,29 +857,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &2781972080571941195
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4147965484912393555}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.8544967
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.92329776, z: 0}
 --- !u!54 &1331047205489548892
 Rigidbody:
   m_ObjectHideFlags: 0
