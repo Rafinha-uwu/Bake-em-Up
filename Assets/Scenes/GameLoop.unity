@@ -2759,14 +2759,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8540517065993671326, guid: 615dc514dba89c444a8b5e9db16741f6, type: 3}
-      propertyPath: Died.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8540517065993671326, guid: 615dc514dba89c444a8b5e9db16741f6, type: 3}
-      propertyPath: Died.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8684954229768329997, guid: 615dc514dba89c444a8b5e9db16741f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.0723066
@@ -3158,6 +3150,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   death: 0
+  force: 50
   currentState: 0
 --- !u!114 &1329747127
 MonoBehaviour:
