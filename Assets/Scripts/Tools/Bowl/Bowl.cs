@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
@@ -18,6 +20,13 @@ public class Bowl : ToolContainer
 	[HideInInspector]
 	public bool HasBadDough = false;
 	private Resettable _resettable;
+
+	private int _doughCount = 0;
+
+	public delegate void BowlHandler();
+	public event BowlHandler OnRecipeReady;
+	public event BowlHandler OnRecipeNotReady;
+	public event BowlHandler OnIngredientEntered;
 
 	protected override void Awake()
 	{
@@ -41,8 +50,10 @@ public class Bowl : ToolContainer
 
 	public void MakeDough()
 	{
+		RecipeData auxRecipe = _recipeData;
 		ClearBowl();
 
+		_recipeData = auxRecipe;
 		HasCompletedDough = true;
 
 		GameObject firstDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
@@ -50,6 +61,8 @@ public class Bowl : ToolContainer
 
 		GameObject secondDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(secondDough);
+
+		_doughCount = 2;
 
 		_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 	}
@@ -64,6 +77,8 @@ public class Bowl : ToolContainer
 		GameObject badDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(badDough);
 
+		_doughCount = 1;
+
 		_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 	}
 
@@ -73,24 +88,43 @@ public class Bowl : ToolContainer
 		HasBadDough = false;
 
 		_ingredientsInside.Clear();
+		_recipeData = null;
 		foreach (Transform child in _container.transform)
 		{
 			Destroy(child.gameObject);
 		}
 		_bowlCanvas.ClearCanvas();
+
+		OnRecipeNotReady?.Invoke();
+	}
+
+	public void DoughRemoved()
+	{
+		_doughCount -= 1;
+
+		if (_doughCount == 0)
+			ClearBowl();
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
+		if (HasCompletedDough || HasBadDough)
+			return;
+
 		var interactable = other.gameObject.GetComponentInParent<XRGrabInteractable>();
+		var ingredient = other.gameObject.GetComponentInParent<IngredientController>();
 		var tool = other.gameObject.GetComponentInParent<Tool>();
 
-		if (interactable && !tool)
+		if (!interactable.IsUnityNull() && !ingredient.IsUnityNull() && tool.IsUnityNull())
 		{
-			if (interactable.isSelected && !interactable.firstInteractorSelecting.transform.CompareTag("Player"))
-				return;
+			if (interactable.isSelected)
+			{
+				if(interactable.firstInteractorSelecting.transform.CompareTag("Player"))
+					ReleaseItem(interactable);
 
-			ReleaseItem(interactable);
+				return;
+			}
+
 			InsertItem(interactable.gameObject);
 		}
 	}
@@ -110,6 +144,8 @@ public class Bowl : ToolContainer
 
 	private void AddIngredient(IngredientController ingredient)
 	{
+		OnIngredientEntered?.Invoke();
+
 		IngredientName name = ingredient.IngredientName;
 		if(_ingredientsInside.TryGetValue(name, out int value))
 		{
@@ -124,6 +160,7 @@ public class Bowl : ToolContainer
 			if (RecipesManager.Instance.GetCompleteRecipe(_ingredientsInside, out RecipeData recipe)){
 				_recipeData = recipe;
 				_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
+				OnRecipeReady?.Invoke();
 			}
 		}
 	}

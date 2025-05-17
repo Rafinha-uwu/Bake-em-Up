@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -12,6 +14,11 @@ public class WoodenBoard : MonoBehaviour
 
 	private Dough _doughOnBoard;
 	private bool _hasShapedDough;
+
+	public delegate void WoodenBoardHandler();
+	public event WoodenBoardHandler OnDoughOnBoard;
+	public event WoodenBoardHandler OnDoughRemovedFromBoard;
+	public event WoodenBoardHandler OnDoughKneaded;
 
 	private void Start()
 	{
@@ -42,7 +49,10 @@ public class WoodenBoard : MonoBehaviour
 	{
 		_doughSocket.socketActive = false;
 		_doughOnBoard = null;
+
+		StartCoroutine(DetectIfLeftSocketByPlayerHand(args.interactableObject));
 	}
+
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -51,7 +61,8 @@ public class WoodenBoard : MonoBehaviour
 			if (!_doughOnBoard)
 				return;
 
-			_doughOnBoard.KneadDough();
+			if (_doughOnBoard.KneadDough())
+				OnDoughKneaded?.Invoke();
 
 			return;
 		}
@@ -70,6 +81,12 @@ public class WoodenBoard : MonoBehaviour
 		{
 			if (_doughSocket.hasSelection)
 				return;
+
+			Bowl bowl = interactable.GetComponentInParent<Bowl>();
+			if (!bowl.IsUnityNull())
+				bowl.DoughRemoved();
+
+			OnDoughOnBoard?.Invoke();
 
 			_doughSocket.socketActive = true;
 			_doughSocket.interactionManager.SelectEnter(_doughSocket as IXRSelectInteractor, interactable as IXRSelectInteractable);
@@ -97,6 +114,16 @@ public class WoodenBoard : MonoBehaviour
 		foreach (var child in children)
 		{
 			child.gameObject.layer = LayerMask.NameToLayer(layerName);
+		}
+	}
+
+	private IEnumerator DetectIfLeftSocketByPlayerHand(IXRSelectInteractable interactable)
+	{
+		yield return new WaitForEndOfFrame();
+
+		if (!interactable.isSelected)
+		{
+			OnDoughRemovedFromBoard?.Invoke();
 		}
 	}
 }

@@ -87,7 +87,7 @@ MonoBehaviour:
   _needsCanvas: 1
   _canvasObject: {fileID: 1947059706277960669, guid: cb69f707a81372847a1c4a1461db07d0, type: 3}
   _transformForCanvasToFollow: {fileID: 2929664847748274420}
-  _warningHelper: {fileID: 8484881238263451222}
+  _transformForIndicatorHelper: {fileID: 3550778523403168987}
   _badTimerPercent: 200
   _socket: {fileID: 8599486111522289508}
   _socketDish2: {fileID: 339817580767502020}
@@ -712,8 +712,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31bf8352c0b236e42a17561c74f1434d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _indicatorImage: {fileID: 6140511187883631821}
   _pointRectTransform: {fileID: 3803878788490243156}
-  _targetPosition: {fileID: 3550778523403168987}
 --- !u!1 &4413286958375328009
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,7 +801,7 @@ GameObject:
   - component: {fileID: 6331093295640414733}
   - component: {fileID: 6140511187883631821}
   m_Layer: 11
-  m_Name: Recipe Image
+  m_Name: Indicator Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

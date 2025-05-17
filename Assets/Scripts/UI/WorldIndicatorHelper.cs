@@ -1,13 +1,19 @@
 using JetBrains.Annotations;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class WarningHelper : MonoBehaviour
+public class WorldIndicatorHelper : MonoBehaviour
 {
-    private RectTransform _canvas;
+	[SerializeField]
+	private Image _indicatorImage;
 	[SerializeField]
     private RectTransform _pointRectTransform;
 	[SerializeField]
+	private float _screenBorder = 100f;
+    
+	private RectTransform _canvas;
     private Transform _targetPosition;
 
 	private void Awake()
@@ -17,7 +23,9 @@ public class WarningHelper : MonoBehaviour
 
 	void Update()
 	{
-		float screenBorder = 100f;
+		if (_targetPosition.IsUnityNull())
+			return;
+
 		Vector3 targetViewportPoint = Camera.main.WorldToViewportPoint(_targetPosition.position);
 
 		bool isBehind = targetViewportPoint.z < 0;
@@ -37,8 +45,8 @@ public class WarningHelper : MonoBehaviour
 				capped.x = 1f;
 		}
 
-		capped.x = Mathf.Clamp(capped.x, 0f + screenBorder / Screen.width, 1f - screenBorder / Screen.width);
-		capped.y = Mathf.Clamp(capped.y, 0f + screenBorder / Screen.height, 1f - screenBorder / Screen.height);
+		capped.x = Mathf.Clamp(capped.x, 0f + _screenBorder / Screen.width, 1f - _screenBorder / Screen.width);
+		capped.y = Mathf.Clamp(capped.y, 0f + _screenBorder / Screen.height, 1f - _screenBorder / Screen.height);
 
 		Vector3 clampedScreenPos = Camera.main.ViewportToScreenPoint(capped);
 
@@ -65,9 +73,7 @@ public class WarningHelper : MonoBehaviour
 	private void RotatePointerTowardsTargetPosition(Vector3 viewPortPosition)
 	{
 		Vector3 toPosition = viewPortPosition;
-		//toPosition.z = 0f;
 		Vector3 fromPosition = new Vector3(0.5f, 0.5f, 0f);
-		//fromPosition.z = 0f;
 		Vector3 dir = (toPosition - fromPosition).normalized;
 
 		float angle = UtilsClass.GetAngleFromVectorFloat(dir);
@@ -82,5 +88,15 @@ public class WarningHelper : MonoBehaviour
 	public void Show()
 	{
 		gameObject.SetActive(true);
+	}
+
+	public void SetIndicatorImage(Sprite sprite)
+	{
+		_indicatorImage.sprite = sprite;
+	}
+
+	public void SetTargetPosition(Transform target)
+	{
+		_targetPosition = target;
 	}
 }

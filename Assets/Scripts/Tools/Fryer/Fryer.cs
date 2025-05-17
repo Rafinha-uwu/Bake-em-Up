@@ -24,6 +24,11 @@ public class Fryer : ToolCooker
 		_fryerCanvas = _toolCanvas as MixerCanvas;
 	}
 
+	protected override void Start()
+	{
+		base.Start();
+	}
+
 	// Update is called once per frame
 	void Update()
 	{

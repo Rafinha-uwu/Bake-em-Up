@@ -17,10 +17,10 @@ public class Dough : MonoBehaviour
 		return _recipeData;
 	}
 
-	public void KneadDough()
+	public bool KneadDough()
 	{
 		if (_isBadDough)
-			return;
+			return false;
 
 		_kneadCount += 1;
 
@@ -34,6 +34,10 @@ public class Dough : MonoBehaviour
 					transform.position.y, transform.position.z + Random.Range(-0.05f, 0.05f));
 				Instantiate(_recipeData.shapedDoughPrefab, positionToSpawn, Quaternion.identity);
 			}
+
+			return true;
 		}
+
+		return false;
 	}
 }

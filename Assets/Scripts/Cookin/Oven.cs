@@ -1,4 +1,5 @@
 using System.Net.Sockets;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -11,9 +12,6 @@ public class Oven : ToolCooker
 	
     [SerializeField]
 	private Transform _transformForCanvas2ToFollow;
-
-	private OvenDish _dish1;
-    private OvenDish _dish2;
 
 	private MixerCanvas _dish1Canvas;
 	private MixerCanvas _dish2Canvas;
@@ -36,6 +34,14 @@ public class Oven : ToolCooker
     private bool _burnedDish1 = false;
     private bool _burnedDish2 = false;
     private bool _showWarning = false;
+
+	public delegate void OvenHandler();
+	public event OvenHandler OnOvenTurnOn;
+	public event OvenHandler OnOvenTurnOff;
+    public event OvenHandler OnDishInOven;
+	public event OvenHandler OnDishExitedOven;
+	public event OvenHandler OnHeatingComplete;
+    public event OvenHandler OnHeatingFailed;
 
 	protected override void Awake()
 	{
@@ -68,11 +74,11 @@ public class Oven : ToolCooker
             return;
 
         _showWarning = false;
-        if (_socket.Interactable != null)
+        if (!_recipeDataDish1.IsUnityNull())
         {
             HeatDish1();
         }
-        if (_socketDish2.Interactable != null)
+        if (!_recipeDataDish2.IsUnityNull())
         {
             HeatDish2();
         }
@@ -85,6 +91,8 @@ public class Oven : ToolCooker
     {
         OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
         ovendish.GetRecipe(out RecipeData recipe);
+
+		_dishInteractionLayerMask = socket.Interactable.interactionLayers;
 
 		if (!IsCorrectRecipe(recipe))
 			return;
@@ -110,8 +118,6 @@ public class Oven : ToolCooker
 			_dish1Canvas.SetRecipe(_recipeDataDish1.recipeSprite);
 			_dish1Canvas.EnableCanvas();
 
-            _dish1 = ovendish;
-
         }
         else if (socket == _socketDish2)
         {
@@ -133,13 +139,16 @@ public class Oven : ToolCooker
 			_dish2Canvas.UpdateTimer(_currentTimeDish2, _recipeDataDish2.OvenTime, _badTimerDish2);
 			_dish2Canvas.SetRecipe(_recipeDataDish2.recipeSprite);
 			_dish2Canvas.EnableCanvas();
-
-            _dish2 = ovendish;
         }
-    }
+
+        OnDishInOven?.Invoke();
+	}
 
     public override void SocketSelectedExit(XRSocketToolInteractor socket)
     {
+        if(!_recipeDataDish1.IsUnityNull() || !_recipeDataDish2.IsUnityNull())
+            OnDishExitedOven?.Invoke();
+
         if (socket == _socket)
         {
             _recipeDataDish1 = null;
@@ -166,8 +175,6 @@ public class Oven : ToolCooker
 
     protected override void TurnOff()
     {
-        Debug.Log("Desligou");
-
         if (_socket.Interactable != null)
         {
             _socket.IsToolOn = false;
@@ -187,19 +194,18 @@ public class Oven : ToolCooker
             _isHeating = false;
         }
 
+        OnOvenTurnOff?.Invoke();
+
 		_warningHelper.Hide();
 	}
 
     protected override void TurnOn()
     {
-        Debug.Log("Ligou");
-
         if (_socket.Interactable != null)
         {
             _socket.IsToolOn = true;
 
             XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
-            _dishInteractionLayerMask = grabInteractable.interactionLayers;
             grabInteractable.interactionLayers = _trackInteractionLayerMask;
 
             if (_recipeDataDish1 != null)
@@ -210,10 +216,9 @@ public class Oven : ToolCooker
 
         if (_socketDish2.Interactable != null)
         {
-            _socketDish2.IsToolOn = true;
+			_socketDish2.IsToolOn = true;
 
             XRBaseInteractable grabInteractable = _socketDish2.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
-            _dishInteractionLayerMask = grabInteractable.interactionLayers;
             grabInteractable.interactionLayers = _trackInteractionLayerMask;
 
             if (_recipeDataDish2 != null)
@@ -221,7 +226,9 @@ public class Oven : ToolCooker
                 _isHeating = true;
             }
         }
-    }
+
+		OnOvenTurnOn?.Invoke();
+	}
 
     private bool IsCorrectRecipe(RecipeData recipeData)
     {
@@ -283,6 +290,8 @@ public class Oven : ToolCooker
             _heatingCompleteDish2 = true; 
         }
 
+        OnHeatingComplete?.Invoke();
+
         OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
         ovendish.MakeBread();
     }
@@ -298,6 +307,8 @@ public class Oven : ToolCooker
         {
             _burnedDish2 = true;
         }
+
+        OnHeatingFailed?.Invoke();
 
         OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
         ovendish.MakeBread(burned: true);

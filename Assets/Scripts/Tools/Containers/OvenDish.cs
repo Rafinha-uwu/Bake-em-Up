@@ -19,6 +19,10 @@ public class OvenDish : ToolContainer
     public bool HasBurnedBread = false;
     private Resettable _resettable;
 
+	public delegate void OvenDishHandler();
+	public event OvenDishHandler OnOvenDishHasDough;
+	public event OvenDishHandler OnOvenDishEmpty;
+
 	protected override void Awake()
     {
         base.Awake();
@@ -62,8 +66,9 @@ public class OvenDish : ToolContainer
 
     public override void ContainerIsEmpty()
     {
-		_recipeData = null;
+		OnOvenDishEmpty?.Invoke();
 
+		_recipeData = null;
 		HasCompletedBread = false;
 		HasBurnedBread = false;
 	}
@@ -85,6 +90,8 @@ public class OvenDish : ToolContainer
 			recipe = item.GetComponentInParent<ShapedDough>().GetRecipe();
 			if (recipe.OvenTime == 0f)
 				return;
+
+			OnOvenDishHasDough?.Invoke();
 		}
 		else if (item.CompareTag("Bread"))
 		{

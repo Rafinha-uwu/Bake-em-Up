@@ -270,7 +270,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3434686648225588375}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.017}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -341,8 +341,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31bf8352c0b236e42a17561c74f1434d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _indicatorImage: {fileID: 4633328668087107903}
   _pointRectTransform: {fileID: 2427877935868299686}
-  _targetPosition: {fileID: 4101588521288634495}
+  _screenBorder: 100
 --- !u!1 &3884128541173085563
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +460,7 @@ MonoBehaviour:
   _needsCanvas: 1
   _canvasObject: {fileID: 1947059706277960669, guid: cb69f707a81372847a1c4a1461db07d0, type: 3}
   _transformForCanvasToFollow: {fileID: 3002140599736775542}
-  _warningHelper: {fileID: 6970379305565760420}
+  _transformForIndicatorHelper: {fileID: 4101588521288634495}
   _badTimerPercent: 200
   _socket: {fileID: 3671289700795073015}
   _trackInteractionLayerMask:
@@ -476,7 +477,7 @@ GameObject:
   - component: {fileID: 4802832040056319999}
   - component: {fileID: 4633328668087107903}
   m_Layer: 11
-  m_Name: Recipe Image
+  m_Name: Indicator Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -752,7 +753,7 @@ Transform:
   m_GameObject: {fileID: 7042202240900485801}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.369, z: 0}
+  m_LocalPosition: {x: 0, y: 0.369, z: 0.017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
