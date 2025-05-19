@@ -13,10 +13,12 @@ public class FollowHeadsetUI : MonoBehaviour
 
         // Calculate target position in front of the headset
         Vector3 targetPosition = headset.position + headset.forward * distance;
+        Debug.Log("Posição headset:" + targetPosition);
         targetPosition.y = headset.position.y + heightOffset;
 
         // Smooth movement
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * followSpeed);
+        Debug.Log("Posição menu suposta:" + transform.position);
 
         // Smooth rotation to face the player
         Vector3 lookDirection = headset.position - transform.position;

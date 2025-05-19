@@ -36,11 +36,11 @@ public class PauseManager : MonoBehaviour
         pauseMenu.SetActive(isPaused);
         darkBackgroundPanel.SetActive(isPaused);
 
-        if (isPaused)
+        /*if (isPaused)
         {
             pauseMenu.transform.position = playerCamera.position + playerCamera.forward * 1.5f;
             pauseMenu.transform.LookAt(playerCamera);
-        }
+        }*/
     }
 
     public void ToggleOptionsMenu()
