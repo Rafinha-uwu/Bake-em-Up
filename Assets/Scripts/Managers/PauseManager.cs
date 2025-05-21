@@ -42,7 +42,6 @@ public class PauseManager : MonoBehaviour
             pauseMenu.transform.LookAt(playerCamera);
         }*/
     }
-
     public void ToggleOptionsMenu()
     {
         if (optionsMenu != null)

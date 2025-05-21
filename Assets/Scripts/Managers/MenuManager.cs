@@ -25,4 +25,12 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
 
     }
+
+    public void Continue()
+    {
+        int savedWave = GameManager.Instance.LoadSavedWave();
+        GameManager.Instance.lastWaveIndex = savedWave;
+
+        SceneManager.LoadScene("GameLoop");
+    }
 }

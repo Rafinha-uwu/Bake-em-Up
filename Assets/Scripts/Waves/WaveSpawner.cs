@@ -42,7 +42,15 @@ public class WaveSpawner : MonoBehaviour
     }
     private void Start()
     {
-        if (AutoStart) { StartWaves(); }
+        if (GameManager.Instance != null)
+        {
+            currentWaveIndex = GameManager.Instance.lastWaveIndex;
+        }
+
+        if (AutoStart)
+        {
+            StartWaves();
+        }
     }
 
     public void StartWaves()
@@ -56,11 +64,39 @@ public class WaveSpawner : MonoBehaviour
         waveCoroutine = StartCoroutine(SpawnWaveLoop());
     }
 
+
+    public void Restart()
+    {
+        StopWaves();
+        if (isSpawning) return;
+
+        // Destroy all active zombies
+        foreach (GameObject zombie in activeZombies)
+        {
+            if (zombie != null)
+                Destroy(zombie);
+        }
+        activeZombies.Clear();
+
+        /*
+        Transform playerTransform = Camera.main?.transform; // Or use a direct reference to the player object
+        if (playerTransform != null && LevelManager.Instance != null)
+        {
+            playerTransform.position = LevelManager.Instance.playerStartPosition.position;
+            playerTransform.rotation = LevelManager.Instance.playerStartPosition.rotation;
+        }*/
+
+        isSpawning = true;
+        currentWaveIndex = GameManager.Instance.lastWaveIndex;
+        waveCoroutine = StartCoroutine(SpawnWaveLoop());
+    }
+
     public void StopWaves()
     {
         isSpawning = false;
         if (waveCoroutine != null)
             StopCoroutine(waveCoroutine);
+        GameManager.Instance.SaveProgress(currentWaveIndex);
     }
 
     public void ResumeWaves()
@@ -111,7 +147,7 @@ public class WaveSpawner : MonoBehaviour
             if (!waveSet.isInfinite && currentWaveIndex >= waveSet.predefinedWaves.Length)
                 break;
         }
-
+        GameManager.Instance.SaveProgress(currentWaveIndex);
         isSpawning = false;
     }
 
