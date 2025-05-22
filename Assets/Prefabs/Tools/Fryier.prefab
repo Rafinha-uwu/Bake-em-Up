@@ -234,6 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _indicatorImage: {fileID: 5597784331968314257}
   _pointRectTransform: {fileID: 3193684146781221640}
+  _screenBorder: 100
 --- !u!1 &2503183655405315780
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +292,7 @@ MonoBehaviour:
   _badTimerPercent: 200
   _socket: {fileID: 6385011809158266631}
   _socketFryerOil: {fileID: 7519405452284945757}
+  _baketHelperMaterial: {fileID: 2100000, guid: 5894a7e091da98d47a28e1986a10ce10, type: 2}
 --- !u!1 &2713150830012859989
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +421,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.05, z: 0.1}
+  m_Size: {x: 0.3, y: 0.01, z: 0.25}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7519405452284945757
 MonoBehaviour:
@@ -526,7 +528,7 @@ Transform:
   m_GameObject: {fileID: 6138570782160887282}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.44499993, y: 0.16500005, z: 0}
+  m_LocalPosition: {x: -0.44499993, y: 0.201, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

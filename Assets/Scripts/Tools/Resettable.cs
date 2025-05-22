@@ -1,12 +1,10 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Resettable : MonoBehaviour
 {
-	[SerializeField]
-	private GameObject prefab;
-
 	private Vector3 _initialPosition;
 	private Quaternion _initialRotation;
 	private XRGrabInteractable _interactable;
@@ -14,11 +12,7 @@ public class Resettable : MonoBehaviour
 	public delegate void ObjectResetHandler();
 	public event ObjectResetHandler OnObjectReset;
 
-	public delegate void ObjectCreateCopyHandler(GameObject copy);
-	public event ObjectCreateCopyHandler OnObjectCreateCopy;
-
-	private bool createCopy = false;
-	private int createOne = 1;
+	private bool _lateReset = false;
 
 	private void Awake()
 	{
@@ -29,34 +23,39 @@ public class Resettable : MonoBehaviour
 
 	private void Update()
 	{
-		if(createCopy && !_interactable.isSelected && createOne == 1)
+		if(_lateReset && !_interactable.isSelected)
 		{
-			GameObject copy = Instantiate(prefab, _initialPosition, _initialRotation);
-			OnObjectCreateCopy?.Invoke(copy);
-			createCopy = false;
-			createOne = 0;
+			_lateReset = false;
+			StartCoroutine(ProcessReset(1.5f));
 		}
 	}
 
-	public void ResetObject(bool resetNewInstance = false)
+	public void ResetObject(bool window = false)
 	{
-		if (!resetNewInstance)
+		if (!window)
 		{
-			OnObjectReset?.Invoke();
-
-			if (_interactable.isSelected)
-				_interactable.interactionManager.SelectExit(_interactable.firstInteractorSelecting, _interactable);
-			
-			transform.SetPositionAndRotation(_initialPosition, _initialRotation);
+			StartCoroutine(ProcessReset(0f));
 		}
 		else
 		{
-			createCopy = true;
+			_lateReset = true;
 		}
 	}
 
 	public void CancelReset()
 	{
-		createCopy = false;
+		_lateReset = false;
+	}
+
+	private IEnumerator ProcessReset(float time)
+	{
+		yield return new WaitForSeconds(time);
+
+		OnObjectReset?.Invoke();
+
+		if (_interactable.isSelected)
+			_interactable.interactionManager.SelectExit(_interactable.firstInteractorSelecting, _interactable);
+
+		transform.SetPositionAndRotation(_initialPosition, _initialRotation);
 	}
 }

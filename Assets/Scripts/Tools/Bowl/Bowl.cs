@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 [RequireComponent(typeof(XRGrabInteractable)), RequireComponent(typeof(Resettable))]
 public class Bowl : ToolContainer
@@ -19,9 +17,12 @@ public class Bowl : ToolContainer
 	public bool HasCompletedDough = false;
 	[HideInInspector]
 	public bool HasBadDough = false;
+	[HideInInspector]
+	public bool HasRecipeReady = false;
 	private Resettable _resettable;
 
 	private int _doughCount = 0;
+	private GameObject _dough = null;
 
 	public delegate void BowlHandler();
 	public event BowlHandler OnRecipeReady;
@@ -39,6 +40,9 @@ public class Bowl : ToolContainer
 	private void OnDestroy()
 	{
 		_resettable.OnObjectReset -= ClearBowl;
+		OnRecipeReady = null;
+		OnRecipeNotReady = null;
+		OnIngredientEntered = null;
 	}
 
 	public bool GetRecipe(out RecipeData recipe)
@@ -54,6 +58,7 @@ public class Bowl : ToolContainer
 		ClearBowl();
 
 		_recipeData = auxRecipe;
+
 		HasCompletedDough = true;
 
 		GameObject firstDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
@@ -61,6 +66,8 @@ public class Bowl : ToolContainer
 
 		GameObject secondDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(secondDough);
+
+		_dough = firstDough;
 
 		_doughCount = 2;
 
@@ -86,9 +93,11 @@ public class Bowl : ToolContainer
 	{
 		HasCompletedDough = false;
 		HasBadDough = false;
+		HasRecipeReady = false;
 
 		_ingredientsInside.Clear();
 		_recipeData = null;
+		_dough = null;
 		foreach (Transform child in _container.transform)
 		{
 			Destroy(child.gameObject);
@@ -104,6 +113,11 @@ public class Bowl : ToolContainer
 
 		if (_doughCount == 0)
 			ClearBowl();
+	}
+
+	public GameObject GetDough()
+	{
+		return _dough;
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -161,6 +175,7 @@ public class Bowl : ToolContainer
 				_recipeData = recipe;
 				_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 				OnRecipeReady?.Invoke();
+				HasRecipeReady = true;
 			}
 		}
 	}

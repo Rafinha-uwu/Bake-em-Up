@@ -129,7 +129,6 @@ public class MultipleSocketsManager : MonoBehaviour
 		_usedSockets -= 1;
 		if(_usedSockets == 0)
 		{
-			Debug.Log("Ficou vazio");
 			OnGridEmpty?.Invoke(this);
 		}
 	}

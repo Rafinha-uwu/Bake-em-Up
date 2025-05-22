@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -26,6 +27,14 @@ public class Mixer : ToolCooker
 	public event MixerHandler OnSocketSelected;
 	public event MixerHandler OnSocketExited;
 
+	[SerializeField]
+	private Transform _socketTransform;
+	[SerializeField]
+	private Material _bowlHelperMaterial;
+	private MeshFilter _objectMeshFilter;
+	private Matrix4x4 _bowlMatrix;
+	private bool _showPutInPlaceHover = false;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -37,16 +46,32 @@ public class Mixer : ToolCooker
 		base.Start();
 		_toolButton.OnTurnOn += TurnOn;
 		_toolButton.OnTurnOff += TurnOff;
+
+		Bowl bowl = LevelManager.Instance.GetBowl();
+		bowl.OnRecipeReady += ShowBowlMeshOnSocket;
+		bowl.OnRecipeNotReady += HideBowlMeshOnSocket;
+		_socket.hoverEntered.AddListener(HoverEntered);
+		_socket.hoverExited.AddListener(HoverExited);
+
+		_objectMeshFilter = bowl.GetComponentInChildren<MeshFilter>();
+		_bowlMatrix = UtilsClass.GetHoverMeshMatrix(bowl.GetComponent<XRBaseInteractable>(), _objectMeshFilter, 1f, _socket);
 	}
 
-	private void OnDisable()
+	private void OnDestroy()
 	{
 		_toolButton.OnTurnOn -= TurnOn;
 		_toolButton.OnTurnOff -= TurnOff;
+		_socket.hoverEntered.RemoveListener(HoverEntered);
+		_socket.hoverExited.RemoveListener(HoverExited);
 	}
 
 	private void Update()
 	{
+		if (_showPutInPlaceHover)
+		{
+			DrawHelperMesh();
+		}
+
 		if (!_isMixing)
 			return;
 
@@ -71,6 +96,8 @@ public class Mixer : ToolCooker
 
 	public override void SocketSelectedEnter(XRSocketToolInteractor socket)
 	{
+		HideBowlMeshOnSocket();
+
 		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
 		if (bowl.GetRecipe(out _recipeData))
 		{
@@ -163,5 +190,36 @@ public class Mixer : ToolCooker
 		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
 		bowl.MakeBadDough();
 		OnMixingFailed?.Invoke();
+	}
+
+	private void ShowBowlMeshOnSocket()
+	{
+		_showPutInPlaceHover = true;
+	}
+
+	private void HideBowlMeshOnSocket()
+	{
+		_showPutInPlaceHover = false;
+	}
+
+	private void HoverEntered(HoverEnterEventArgs args)
+	{
+		HideBowlMeshOnSocket();
+	}
+
+	private void HoverExited(HoverExitEventArgs args)
+	{
+		if (LevelManager.Instance.GetBowl().HasRecipeReady)
+			ShowBowlMeshOnSocket();
+	}
+
+	private void DrawHelperMesh()
+	{
+		Graphics.DrawMesh(
+				_objectMeshFilter.sharedMesh,
+				_bowlMatrix,
+				_bowlHelperMaterial,
+				gameObject.layer
+		);
 	}
 }

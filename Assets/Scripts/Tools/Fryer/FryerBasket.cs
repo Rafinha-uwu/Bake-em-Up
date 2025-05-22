@@ -6,11 +6,18 @@ public class FryerBasket : ToolContainer
 	[SerializeField]
 	private ShapedDoughsSocketsManager _shapedDoughsSocketsManager;
 
-	[HideInInspector]
-	public bool HasCompletedBread = false;
-	[HideInInspector]
-	public bool HasBurnedBread = false;
+	private bool _hasCompleteBread = false;
+	private bool _hasBurnedBread = false;
+	private bool _hasDough = false;
+	public bool HasCompletedBread => _hasCompleteBread;
+	public bool HasBurnedBread => _hasBurnedBread;
+	public bool HasDough => _hasDough;
+	
 	private Resettable _resettable;
+
+	public delegate void BasketHandler();
+	public event BasketHandler OnBasketHasDough;
+	public event BasketHandler OnBasketEmpty;
 
 	protected override void Awake()
 	{
@@ -21,6 +28,8 @@ public class FryerBasket : ToolContainer
 	private void OnDestroy()
 	{
 		_resettable.OnObjectReset -= ClearBasket;
+		OnBasketHasDough = null;
+		OnBasketEmpty = null;
 	}
 
 	public bool GetRecipe(out RecipeData recipe)
@@ -38,7 +47,7 @@ public class FryerBasket : ToolContainer
 
 		ClearBasket();
 
-		HasCompletedBread = true;
+		_hasCompleteBread = true;
 
 		GameObject bread = burned ? auxRecipe.burnedBreadPrefab : auxRecipe.breadPrefab;
 
@@ -55,10 +64,13 @@ public class FryerBasket : ToolContainer
 
 	public override void ContainerIsEmpty()
 	{
+		OnBasketEmpty?.Invoke();
+
 		_recipeData = null;
 
-		HasCompletedBread = false;
-		HasBurnedBread = false;
+		_hasCompleteBread = false;
+		_hasBurnedBread = false;
+		_hasDough = false;
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -78,6 +90,9 @@ public class FryerBasket : ToolContainer
 			recipe = item.GetComponentInParent<ShapedDough>().GetRecipe();
 			if (recipe.FryingTime == 0f)
 				return;
+
+			_hasDough = true;
+			OnBasketHasDough?.Invoke();
 		}
 		else if (item.CompareTag("Bread"))
 		{
@@ -89,9 +104,9 @@ public class FryerBasket : ToolContainer
 				return;
 
 			if (bread.IsBurned())
-				HasBurnedBread = true;
+				_hasBurnedBread = true;
 			else
-				HasCompletedBread = true;
+				_hasCompleteBread = true;
 		}
 
 		if (recipe != null)

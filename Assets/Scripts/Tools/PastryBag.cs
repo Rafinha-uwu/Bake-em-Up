@@ -28,7 +28,6 @@ public class PastryBag : ToolContainer
 		_interactable.selectExited.AddListener(SelectExited);
 
 		_resettable = GetComponent<Resettable>();
-		_resettable.OnObjectCreateCopy += TransferObjectData;
 
 		_dispara = GetComponent<Dispara>();
 	}
@@ -37,7 +36,6 @@ public class PastryBag : ToolContainer
 	{
 		_interactable.selectEntered.RemoveListener(SelectEntered);
 		_interactable.selectExited.RemoveListener(SelectExited);
-		_resettable.OnObjectCreateCopy -= TransferObjectData;
 	}
 
 	public void Shot()
@@ -54,16 +52,6 @@ public class PastryBag : ToolContainer
 			_maxCream = 0;
 		}
 		_pastryBagCanvas.UpdateCounter(_remainingCream);
-	}
-
-	public void CopyData(int remainingCream, int maxCream, RecipeData recipe)
-	{
-		_remainingCream = remainingCream;
-		_maxCream = maxCream;
-		_recipeData = recipe;
-
-		if (recipe != null)
-			_pastryBagCanvas.UpdateCounter(_remainingCream);
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -112,11 +100,5 @@ public class PastryBag : ToolContainer
 		}
 
 		_pastryBagCanvas.UpdateCounter(_remainingCream);
-	}
-
-	private void TransferObjectData(GameObject copy)
-	{
-		PastryBag copyPastryBag = copy.GetComponent<PastryBag>();
-		copyPastryBag.CopyData(_remainingCream, _maxCream, _recipeData);
 	}
 }

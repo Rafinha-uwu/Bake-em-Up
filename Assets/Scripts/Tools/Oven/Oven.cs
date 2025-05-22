@@ -1,9 +1,9 @@
-using System.Net.Sockets;
+using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class Oven : ToolCooker
 {
@@ -35,6 +35,12 @@ public class Oven : ToolCooker
     private bool _burnedDish2 = false;
     private bool _showWarning = false;
 
+    [SerializeField]
+	private Material _dishHelperMaterial;
+	private MeshFilter _dishMeshFilter;
+	private Matrix4x4 _dishMatrix;
+	private bool _showDishOnOven = false;
+
 	public delegate void OvenHandler();
 	public event OvenHandler OnOvenTurnOn;
 	public event OvenHandler OnOvenTurnOff;
@@ -60,17 +66,40 @@ public class Oven : ToolCooker
         _ovenDoor = GetComponentInChildren<OvenDoor>();
         _ovenDoor.OnClose += TurnOn;
         _ovenDoor.OnOpen += TurnOff;
-    }
-    private void OnDestroy()
+
+		_socket.hoverEntered.AddListener(HoverEntered);
+		_socket.hoverExited.AddListener(HoverExited);
+		_socketDish2.hoverEntered.AddListener(HoverEntered);
+		_socketDish2.hoverExited.AddListener(HoverExited);
+
+		List<OvenDish> dishes = LevelManager.Instance.GetOvenDishes();
+        dishes[0].OnShowHelper += ShowDishMeshOnSocket;
+        dishes[0].OnOvenDishEmpty += HideDishMeshOnSocket;
+		dishes[1].OnShowHelper += ShowDishMeshOnSocket;
+		dishes[1].OnOvenDishEmpty += HideDishMeshOnSocket;
+		_dishMeshFilter = dishes[0].GetComponentInChildren<MeshFilter>();
+	}
+
+	private void OnDestroy()
     {
         _ovenDoor.OnClose -= TurnOn;
         _ovenDoor.OnOpen -= TurnOff;
-    }
+
+		_socket.hoverEntered.RemoveListener(HoverEntered);
+		_socket.hoverExited.RemoveListener(HoverExited);
+		_socketDish2.hoverEntered.RemoveListener(HoverEntered);
+		_socketDish2.hoverExited.RemoveListener(HoverExited);
+	}
 
     // Update is called once per frame
     void Update()
     {
-        if (!_isHeating)
+		if (_showDishOnOven)
+		{
+			DrawHelperMesh();
+		}
+
+		if (!_isHeating)
             return;
 
         _showWarning = false;
@@ -89,7 +118,7 @@ public class Oven : ToolCooker
 
     public override void SocketSelectedEnter(XRSocketToolInteractor socket)
     {
-        OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
+		OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
         ovendish.GetRecipe(out RecipeData recipe);
 
 		_dishInteractionLayerMask = socket.Interactable.interactionLayers;
@@ -313,4 +342,47 @@ public class Oven : ToolCooker
         OvenDish ovendish = socket.Interactable.transform.gameObject.GetComponent<OvenDish>();
         ovendish.MakeBread(burned: true);
     }
+
+	private void ShowDishMeshOnSocket(OvenDish dish)
+	{
+        XRSocketToolInteractor socket = null;
+
+        if (_socket.Interactable.IsUnityNull())
+            socket = _socket;
+        else if (_socketDish2.Interactable.IsUnityNull())
+			socket = _socketDish2;
+        else
+			throw new ArgumentException($"Oven: Both sockets are in sockets are in use but wants draw to show helper mesh");
+
+		_dishMatrix = UtilsClass.GetHoverMeshMatrix(dish.GetComponent<XRGrabInteractable>(), _dishMeshFilter, 1f, socket);
+
+		_showDishOnOven = true;
+	}
+
+	private void HideDishMeshOnSocket()
+	{
+		_showDishOnOven = false;
+	}
+
+	private void HoverEntered(HoverEnterEventArgs args)
+	{
+		HideDishMeshOnSocket();
+	}
+
+	private void HoverExited(HoverExitEventArgs args)
+	{
+        OvenDish dish = args.interactableObject.transform.gameObject.GetComponent<OvenDish>();
+        if(dish.HasDough)
+			ShowDishMeshOnSocket(dish);
+	}
+
+	private void DrawHelperMesh()
+	{
+		Graphics.DrawMesh(
+				_dishMeshFilter.sharedMesh,
+				_dishMatrix,
+				_dishHelperMaterial,
+				gameObject.layer
+		);
+	}
 }

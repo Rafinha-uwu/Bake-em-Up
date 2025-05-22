@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 [RequireComponent(typeof(Resettable))]
 public class OvenDish : ToolContainer
@@ -13,15 +8,21 @@ public class OvenDish : ToolContainer
     [SerializeField]
     private ShapedDoughsSocketsManager _shapedDoughsSocketsManager;
 
-	[HideInInspector]
-    public bool HasCompletedBread = false;
-    [HideInInspector]
-    public bool HasBurnedBread = false;
-    private Resettable _resettable;
+	private bool _hasCompletedBread = false;
+	private bool _hasBurnedBread = false;
+	private bool _hasDough = false;
+    public bool HasCompletedBread => _hasCompletedBread;
+    public bool HasBurnedBread => _hasBurnedBread;
+	public bool HasDough => _hasDough;
+	
+	private Resettable _resettable;
 
 	public delegate void OvenDishHandler();
 	public event OvenDishHandler OnOvenDishHasDough;
 	public event OvenDishHandler OnOvenDishEmpty;
+
+	public delegate void DishHelperHandler(OvenDish dish);
+	public event DishHelperHandler OnShowHelper;
 
 	protected override void Awake()
     {
@@ -32,7 +33,10 @@ public class OvenDish : ToolContainer
     private void OnDestroy()
     {
         _resettable.OnObjectReset -= ClearDish;
-    }
+		OnOvenDishHasDough = null;
+		OnOvenDishEmpty = null;
+		OnShowHelper = null;
+	}
 
     public bool GetRecipe(out RecipeData recipe)
     {
@@ -49,7 +53,7 @@ public class OvenDish : ToolContainer
 
 		ClearDish();
 
-		HasCompletedBread = true;
+		_hasCompletedBread = true;
 
 		GameObject bread = burned ? auxRecipe.burnedBreadPrefab : auxRecipe.breadPrefab;
 
@@ -69,8 +73,9 @@ public class OvenDish : ToolContainer
 		OnOvenDishEmpty?.Invoke();
 
 		_recipeData = null;
-		HasCompletedBread = false;
-		HasBurnedBread = false;
+		_hasCompletedBread = false;
+		_hasBurnedBread = false;
+		_hasDough = false;
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -91,7 +96,10 @@ public class OvenDish : ToolContainer
 			if (recipe.OvenTime == 0f)
 				return;
 
+			_hasDough = true;
+
 			OnOvenDishHasDough?.Invoke();
+			OnShowHelper?.Invoke(this);
 		}
 		else if (item.CompareTag("Bread"))
 		{
@@ -103,9 +111,9 @@ public class OvenDish : ToolContainer
 				return;
 
 			if (bread.IsBurned())
-				HasBurnedBread = true;
+				_hasBurnedBread = true;
 			else
-				HasCompletedBread = true;
+				_hasCompletedBread = true;
 		}
 
 		if (recipe != null)
