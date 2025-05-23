@@ -16,6 +16,11 @@ public static class UtilsClass
 	public static Matrix4x4 GetHoverMeshMatrix(IXRInteractable interactable, MeshFilter meshFilter, float hoverScale, IXRInteractor interactor)
 	{
 		var interactableAttachTransform = interactable.GetAttachTransform(interactor);
+		if(interactable is XRBreadInteractable)
+		{
+			XRBreadInteractable breadInteractable = interactable as XRBreadInteractable;
+			interactableAttachTransform = breadInteractable.GetSocketTransform();
+		}
 
 		var grabInteractable = interactable as XRGrabInteractable;
 

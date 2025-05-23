@@ -63,7 +63,14 @@ public class Mixer : ToolCooker
 		_toolButton.OnTurnOff -= TurnOff;
 		_socket.hoverEntered.RemoveListener(HoverEntered);
 		_socket.hoverExited.RemoveListener(HoverExited);
-	}
+
+		OnMixerTurnedOn = null;
+		OnMixerTurnedOff = null;
+		OnMixingComplete = null;
+		OnMixingFailed = null;
+		OnSocketSelected = null;
+		OnSocketExited = null;
+}
 
 	private void Update()
 	{
@@ -209,7 +216,8 @@ public class Mixer : ToolCooker
 
 	private void HoverExited(HoverExitEventArgs args)
 	{
-		if (LevelManager.Instance.GetBowl().HasRecipeReady)
+		Bowl bowl = LevelManager.Instance.GetBowl();
+		if (!bowl.IsUnityNull() && bowl.HasRecipeReady)
 			ShowBowlMeshOnSocket();
 	}
 

@@ -44,8 +44,8 @@ public class XRBreadInteractable : XRGrabInteractable
 		}
 	}
 
-	public override Transform GetAttachTransform(IXRInteractor interactor)
+	public Transform GetSocketTransform()
 	{
-		return _socketTransform.IsUnityNull() ? base.GetAttachTransform(interactor) : _socketTransform;
+		return _socketTransform;
 	}
 }

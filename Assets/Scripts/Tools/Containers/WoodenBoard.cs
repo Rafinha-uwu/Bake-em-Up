@@ -47,13 +47,6 @@ public class WoodenBoard : MonoBehaviour
 		_doughSocket.selectExited.RemoveListener(DoughRemoved);
 	}
 
-	private void OnDestroy()
-	{
-		Mixer mixer = LevelManager.Instance.GetMixer();
-		mixer.OnMixingComplete -= ShowDoughMeshOnBoard;
-		mixer.OnMixingFailed -= HideDoughMeshOnBoard;
-	}
-
 	private void Update()
 	{
 		if (_showDoughOnBoard)
@@ -78,7 +71,8 @@ public class WoodenBoard : MonoBehaviour
 		_doughOnBoard = null;
 		_doughMeshFilter = null;
 
-		StartCoroutine(DetectIfLeftSocketByPlayerHand(args.interactableObject));
+		if(!args.interactableObject.IsUnityNull())
+			StartCoroutine(DetectIfLeftSocketByPlayerHand(args.interactableObject));
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -154,6 +148,7 @@ public class WoodenBoard : MonoBehaviour
 		else
 			ShowDoughMeshOnBoard();
 	}
+
 
 	private void ShowDoughMeshOnBoard()
 	{

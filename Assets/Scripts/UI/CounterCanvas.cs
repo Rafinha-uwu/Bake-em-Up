@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class PastryBagCanvas : ToolCanvas
+public class CounterCanvas : ToolCanvas
 {
 	[SerializeField]
 	private TMP_Text _counterTMP;

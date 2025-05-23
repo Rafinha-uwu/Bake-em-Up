@@ -186,8 +186,11 @@ public class Oven : ToolCooker
             _burnedDish1 = false;
             _heatingCompleteDish1 = false;
 
-			_dish1Canvas.ClearCanvas();
-			_dish1Canvas.DisableCanvas();
+            if (!_dish1Canvas.IsUnityNull())
+            {
+			    _dish1Canvas.ClearCanvas();
+			    _dish1Canvas.DisableCanvas();
+            }
 		}
         else if (socket == _socketDish2)
         {
@@ -197,8 +200,11 @@ public class Oven : ToolCooker
             _burnedDish2 = false;
             _heatingCompleteDish2 = false;
 
-			_dish2Canvas.ClearCanvas();
-			_dish2Canvas.DisableCanvas();
+            if (!_dish2Canvas.IsUnityNull())
+            {
+                _dish2Canvas.ClearCanvas();
+                _dish2Canvas.DisableCanvas();
+            }
 		}
     }
 
@@ -372,7 +378,7 @@ public class Oven : ToolCooker
 	private void HoverExited(HoverExitEventArgs args)
 	{
         OvenDish dish = args.interactableObject.transform.gameObject.GetComponent<OvenDish>();
-        if(dish.HasDough)
+        if(!dish.IsUnityNull() && dish.HasDough)
 			ShowDishMeshOnSocket(dish);
 	}
 
