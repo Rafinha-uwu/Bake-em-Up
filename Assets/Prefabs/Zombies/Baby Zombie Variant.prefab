@@ -2276,6 +2276,10 @@ PrefabInstance:
       value: 2.4510655
       objectReference: {fileID: 0}
     - target: {fileID: 5793528091144710408, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793528091144710408, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
       propertyPath: m_Center.y
       value: 0.2255328
       objectReference: {fileID: 0}
@@ -2329,6 +2333,8 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4d8f293ff741def48a5f8252afd6b6c0, type: 2}
     m_RemovedComponents:
     - {fileID: 5811571232819400459, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
+    - {fileID: 5793528091144710408, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
+    - {fileID: 1594644689835897145, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6718195984392974360, guid: 026d110a307d92948931b45d37e2b1d4, type: 3}
     m_AddedGameObjects:
@@ -2368,6 +2374,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee707facd0187e42909bd8b45d5b8bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 1
+  Died:
+    m_PersistentCalls:
+      m_Calls: []
+  death: 0
+  currentState: 0
   zigzagDistance: 10
   zigzagSpeed: 4
   movementUpdateRate: 0.2
@@ -2411,7 +2423,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.9999999
-  m_BaseOffset: 0
+  m_Height: 2.38
+  m_BaseOffset: 0.96
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

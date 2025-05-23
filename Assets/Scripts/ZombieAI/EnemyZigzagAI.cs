@@ -1,19 +1,20 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyZigzagAI : MonoBehaviour
+public class EnemyZigzagAI : Zombie
 {
     public float zigzagDistance = 3f;
     public float zigzagSpeed = 2f;
     public float movementUpdateRate = 0.2f;
 
-    private NavMeshAgent agent;
+
     private float timer;
     private float sideWidth;
     private Vector3 randomPoint;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         Renderer roulotteRenderer = LevelManager.Instance.roulote.GetComponent<Renderer>();
         if (roulotteRenderer != null)
         {
@@ -21,14 +22,13 @@ public class EnemyZigzagAI : MonoBehaviour
             randomPoint = EnemyNavigation.GetRandomPointOnSide(LevelManager.Instance.targetZombies.position, LevelManager.Instance.targetZombies.right, sideWidth, 0f);
 
         }
-        agent = GetComponent<NavMeshAgent>();
         timer = 0f;
     }
 
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer >= movementUpdateRate)
+        if (timer >= movementUpdateRate && death)
         {
             timer = 0f;
             Vector3 directionToPlayer = (randomPoint - transform.position).normalized;

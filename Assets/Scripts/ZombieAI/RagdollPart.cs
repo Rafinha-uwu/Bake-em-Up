@@ -12,13 +12,13 @@ public class RagdollPart : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         rb.isKinematic = true;
-        col.enabled = false;
+        //col.enabled = false;
     }
 
     public void Activate()
     {
         rb.isKinematic = false;
-        col.enabled = true;
+        //col.enabled = true;
     }
 
     public void AddHitForce(Vector3 force)

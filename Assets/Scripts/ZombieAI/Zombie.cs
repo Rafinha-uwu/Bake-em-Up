@@ -14,12 +14,14 @@ public class Zombie : MonoBehaviour
     }
     [SerializeField] private int hp = 1;
     public UnityEvent Died;
+    public bool death = false;
+    public float force = 50f;
 
     public ZombieState currentState = ZombieState.WALKING;
 
     private NavMeshObstacle obstacle;
     private Rigidbody[] _ragdollRigidboddies;
-    private NavMeshAgent agent;
+    protected NavMeshAgent agent;
     private Animator animator;
 
     private void Awake()
@@ -38,7 +40,7 @@ public class Zombie : MonoBehaviour
         HitEvent.OnHit -= GetHit;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         obstacle = GetComponent<NavMeshObstacle>();
         agent = GetComponent<NavMeshAgent>();
@@ -57,29 +59,30 @@ public class Zombie : MonoBehaviour
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
     {
-        if (sender.CompareTag("Bread") && receiver.GetInstanceID() == gameObject.GetInstanceID())
+        if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
         {
-            Debug.Log("LEVASTE COM UM PAO");
+            //Debug.Log("LEVASTE COM UM PAO");
             hp -= damage;
 
             // Get the limb hit
-            Collider hitCollider = sender.GetComponent<Collider>();
-            Debug.Log("Collider que acertou:" + hitCollider);
+            Collider hitCollider = receiver.GetComponent<Collider>();
+            //Debug.Log("Collider que acertou:" + hitCollider.name);
             RagdollPart hitPart = hitCollider != null ? hitCollider.GetComponent<RagdollPart>() : null;
 
             if (hp < 1)
             {
-                Debug.Log("Parte que acertou:" + hitPart);
-                StartCoroutine(OnDeath(hitPart, sender));
+                //Debug.Log("Parte que acertou:" + hitPart.transform.name);
+
+                StartCoroutine(OnDeath(hitPart, sender.transform.position));
             }
         }
     }
 
 
-    IEnumerator OnDeath(RagdollPart hitPart, GameObject sender)
+    IEnumerator OnDeath(RagdollPart hitPart, Vector3 senderPosition)
     {
         Died?.Invoke();
-
+        death = true;
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = true;
         if (obstacle != null) obstacle.enabled = false;
@@ -94,11 +97,11 @@ public class Zombie : MonoBehaviour
         // First, activate the hit limb and apply force
         if (hitPart != null)
         {
-            Vector3 direction = (hitPart.transform.position - sender.transform.position).normalized;
-            hitPart.AddHitForce(direction * 50f);
+            Vector3 direction = (hitPart.transform.position - senderPosition).normalized;
+            hitPart.AddHitForce(direction * force);
         }
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
 
         foreach (RagdollPart part in GetComponentsInChildren<RagdollPart>())
