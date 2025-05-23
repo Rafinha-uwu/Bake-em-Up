@@ -135,8 +135,11 @@ public class Mixer : ToolCooker
 		if (!_recipeData.IsUnityNull())
 			OnSocketExited?.Invoke();
 
-		_mixerCanvas.ClearCanvas();
-		_mixerCanvas.DisableCanvas();
+		if (!_mixerCanvas.IsUnityNull())
+		{
+			_mixerCanvas.ClearCanvas();
+			_mixerCanvas.DisableCanvas();
+		}
 		
 		_recipeData = null;
 		_currentTime = 0f;

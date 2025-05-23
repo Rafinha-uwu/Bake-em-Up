@@ -51,7 +51,10 @@ public class RecipeContainer : MonoBehaviour
 
 		if (args.interactableObject.IsSelectedByLeft() || args.interactableObject.IsSelectedByRight())
 		{
-			GameObject bread = Instantiate(_breadRecipe.breadPrefab, transform.position, transform.rotation);
+			Vector3 instantiatePosition = transform.position;
+			instantiatePosition.y = transform.position.y + 0.1f;
+
+			GameObject bread = Instantiate(_breadRecipe.breadPrefab, instantiatePosition, transform.rotation);
 
 			if (bread.TryGetComponent<XRBaseInteractable>(out var breadInteractable))
 			{

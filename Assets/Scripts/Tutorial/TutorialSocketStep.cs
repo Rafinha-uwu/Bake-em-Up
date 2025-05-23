@@ -52,44 +52,6 @@ public class TutorialSocketStep : TutorialStep
 		}
 	}
 
-	private void OnDestroy()
-	{
-		switch (_containerTool)
-		{
-			case ContainerTool.Bowl:
-				Bowl bowl = TutorialManager.Instance.Bowl;
-				bowl.OnIngredientEntered -= SocketSelected;
-				return;
-
-			case ContainerTool.Mixer:
-				Mixer mixer = TutorialManager.Instance.Mixer;
-				mixer.OnSocketSelected -= SocketSelected;
-				mixer.OnSocketExited -= SocketReleased;
-				break;
-
-			case ContainerTool.WoddenBoard:
-				WoodenBoard woodenBoard = TutorialManager.Instance.WoodBoard;
-				woodenBoard.OnDoughOnBoard -= SocketSelected;
-				woodenBoard.OnDoughRemovedFromBoard -= SocketReleased;
-				break;
-
-			case ContainerTool.OvenDish:
-				break;
-
-			case ContainerTool.Oven:
-				Oven oven = TutorialManager.Instance.Oven;
-				oven.OnDishInOven -= SocketSelected;
-				oven.OnDishExitedOven -= SocketReleased;
-				break;
-
-			case ContainerTool.Balcony:
-				break;
-
-			default:
-				break;
-		}
-	}
-
 	public override void ShowStep(WorldIndicatorHelper indicatorHelper)
 	{
 		base.ShowStep(indicatorHelper);

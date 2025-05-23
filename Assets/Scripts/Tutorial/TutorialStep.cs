@@ -23,8 +23,8 @@ public class TutorialStep: MonoBehaviour
 
 	public void StepCompleted()
 	{
-		_conditionStep.TutorialStepCompleted(this);
 		_isCurrentStep = false;
+		_conditionStep.TutorialStepCompleted(this);
 	}
 
 	public void StepFailed()

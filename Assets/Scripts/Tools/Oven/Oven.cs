@@ -89,7 +89,14 @@ public class Oven : ToolCooker
 		_socket.hoverExited.RemoveListener(HoverExited);
 		_socketDish2.hoverEntered.RemoveListener(HoverEntered);
 		_socketDish2.hoverExited.RemoveListener(HoverExited);
-	}
+
+        OnOvenTurnOn = null;
+	    OnOvenTurnOff = null;
+	    OnDishInOven = null;
+	    OnDishExitedOven = null;
+	    OnHeatingComplete = null;
+	    OnHeatingFailed = null;
+}
 
     // Update is called once per frame
     void Update()

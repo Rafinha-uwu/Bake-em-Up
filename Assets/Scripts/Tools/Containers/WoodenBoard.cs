@@ -47,6 +47,13 @@ public class WoodenBoard : MonoBehaviour
 		_doughSocket.selectExited.RemoveListener(DoughRemoved);
 	}
 
+	private void OnDestroy()
+	{
+		OnDoughOnBoard = null;
+		OnDoughRemovedFromBoard = null;
+		OnDoughKneaded = null;
+}
+
 	private void Update()
 	{
 		if (_showDoughOnBoard)
