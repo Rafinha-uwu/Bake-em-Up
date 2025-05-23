@@ -101,7 +101,7 @@ public class Zombie : MonoBehaviour
             hitPart.AddHitForce(direction * force);
         }
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
 
         foreach (RagdollPart part in GetComponentsInChildren<RagdollPart>())
