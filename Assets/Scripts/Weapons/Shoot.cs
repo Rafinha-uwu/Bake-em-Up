@@ -5,11 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Dispara : MonoBehaviour
+public class Shoot : MonoBehaviour
 {
     public GameObject projetil;
-
-    [SerializeField] private float Force;
 
     private bool cooldown;
     [SerializeField] private float CooldownTime = 0.5f;
@@ -42,11 +40,9 @@ public class Dispara : MonoBehaviour
 
 
             ProjTemp.transform.SetParent(this.transform);
-            ProjTemp.transform.localPosition = new Vector3(0f, 0f, 0.227f);
+            ProjTemp.transform.localPosition = new Vector3(0.32f, 0f, 0f);
             ProjTemp.transform.rotation = this.transform.rotation;
             ProjTemp.transform.SetParent(null);
-
-            ProjTemp.GetComponent<Rigidbody>().AddForce(ProjTemp.transform.forward * Force);
 
             CoolTime = CooldownTime;
         }

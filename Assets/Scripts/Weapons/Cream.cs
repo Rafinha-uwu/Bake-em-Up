@@ -27,4 +27,24 @@ public class Cream : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("Zombie") && Zombies)
+        {
+            CreamLocation = other.transform.position;
+            CreamLocation.y -= 1.1f;
+
+            Instantiate(GroundCream, CreamLocation, GroundCream.transform.rotation);
+
+            Destroy(gameObject);
+        }
+        else if (other.CompareTag("Ground"))
+        {
+            CreamLocation = transform.position;
+            CreamLocation.y -= 0f;
+            Instantiate(GroundCream, CreamLocation, GroundCream.transform.rotation);
+
+            Destroy(gameObject);
+        }
+    }
 }

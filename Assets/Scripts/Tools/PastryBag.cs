@@ -8,14 +8,14 @@ public class PastryBag : ToolContainer
 {
 	[SerializeField]
 	private Transform _canvasTransformLeftHand; 
-	private int _remainingCream = 0;
+	public int _remainingCream = 0;
 	private int _maxCream = 0;
 
 	private XRGrabInteractable _interactable;
 	private PastryBagCanvas _pastryBagCanvas;
 	private Resettable _resettable;
 
-	private Dispara _dispara;
+	private Shoot _dispara;
 
 	protected override void Awake()
 	{
@@ -30,7 +30,7 @@ public class PastryBag : ToolContainer
 		_resettable = GetComponent<Resettable>();
 		_resettable.OnObjectCreateCopy += TransferObjectData;
 
-		_dispara = GetComponent<Dispara>();
+		_dispara = GetComponent<Shoot>();
 	}
 
 	private void OnDestroy()
