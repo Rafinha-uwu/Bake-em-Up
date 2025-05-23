@@ -9,6 +9,8 @@ public class Shoot : MonoBehaviour
 {
     public GameObject projetil;
 
+    public GameObject shootPoint;
+
     private bool cooldown;
     [SerializeField] private float CooldownTime = 0.5f;
     private float CoolTime = 0.5f;
@@ -39,9 +41,9 @@ public class Shoot : MonoBehaviour
             GameObject ProjTemp = Instantiate(projetil);
 
 
-            ProjTemp.transform.SetParent(this.transform);
-            ProjTemp.transform.localPosition = new Vector3(0.32f, 0f, 0f);
-            ProjTemp.transform.rotation = this.transform.rotation;
+            ProjTemp.transform.SetParent(shootPoint.transform);
+            ProjTemp.transform.localPosition = new Vector3(0f,0f, 0f);
+            ProjTemp.transform.rotation = shootPoint.transform.rotation;
             ProjTemp.transform.SetParent(null);
 
             CoolTime = CooldownTime;
