@@ -1,4 +1,8 @@
+using System.Collections;
+using System.Net.Sockets;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -13,9 +17,24 @@ public class WoodenBoard : MonoBehaviour
 	private Dough _doughOnBoard;
 	private bool _hasShapedDough;
 
+	public delegate void WoodenBoardHandler();
+	public event WoodenBoardHandler OnDoughOnBoard;
+	public event WoodenBoardHandler OnDoughRemovedFromBoard;
+	public event WoodenBoardHandler OnDoughKneaded;
+
+	[SerializeField]
+	private Material _doughHelperMaterial;
+	private MeshFilter _doughMeshFilter;
+	private Matrix4x4 _doughMatrix;
+	private bool _showDoughOnBoard = false;
+
 	private void Start()
 	{
 		_shapedDoughsSocketsManager = GetComponentInChildren<ShapedDoughsSocketsManager>();
+		
+		Mixer mixer = LevelManager.Instance.GetMixer();
+		mixer.OnMixingComplete += ShowDoughMeshOnBoard;
+		mixer.OnMixingFailed += HideDoughMeshOnBoard;
 	}
 
 	private void OnEnable()
@@ -26,6 +45,21 @@ public class WoodenBoard : MonoBehaviour
 	private void OnDisable()
 	{
 		_doughSocket.selectExited.RemoveListener(DoughRemoved);
+	}
+
+	private void OnDestroy()
+	{
+		OnDoughOnBoard = null;
+		OnDoughRemovedFromBoard = null;
+		OnDoughKneaded = null;
+}
+
+	private void Update()
+	{
+		if (_showDoughOnBoard)
+		{
+			DrawHelperMesh();
+		}
 	}
 
 	public void ShapedDoughsGridIsEmpty()
@@ -42,6 +76,10 @@ public class WoodenBoard : MonoBehaviour
 	{
 		_doughSocket.socketActive = false;
 		_doughOnBoard = null;
+		_doughMeshFilter = null;
+
+		if(!args.interactableObject.IsUnityNull())
+			StartCoroutine(DetectIfLeftSocketByPlayerHand(args.interactableObject));
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -51,7 +89,8 @@ public class WoodenBoard : MonoBehaviour
 			if (!_doughOnBoard)
 				return;
 
-			_doughOnBoard.KneadDough();
+			if (_doughOnBoard.KneadDough())
+				OnDoughKneaded?.Invoke();
 
 			return;
 		}
@@ -70,6 +109,13 @@ public class WoodenBoard : MonoBehaviour
 		{
 			if (_doughSocket.hasSelection)
 				return;
+
+			Bowl bowl = interactable.GetComponentInParent<Bowl>();
+			if (!bowl.IsUnityNull())
+				bowl.DoughRemoved();
+
+			HideDoughMeshOnBoard();
+			OnDoughOnBoard?.Invoke();
 
 			_doughSocket.socketActive = true;
 			_doughSocket.interactionManager.SelectEnter(_doughSocket as IXRSelectInteractor, interactable as IXRSelectInteractable);
@@ -98,5 +144,44 @@ public class WoodenBoard : MonoBehaviour
 		{
 			child.gameObject.layer = LayerMask.NameToLayer(layerName);
 		}
+	}
+
+	private IEnumerator DetectIfLeftSocketByPlayerHand(IXRSelectInteractable interactable)
+	{
+		yield return new WaitForEndOfFrame();
+
+		if (!interactable.isSelected)
+			OnDoughRemovedFromBoard?.Invoke();
+		else
+			ShowDoughMeshOnBoard();
+	}
+
+
+	private void ShowDoughMeshOnBoard()
+	{
+		if (_doughMeshFilter.IsUnityNull())
+		{
+			GameObject dough = LevelManager.Instance.GetBowl().GetDough();
+			_doughMeshFilter = dough.GetComponentInChildren<MeshFilter>();
+
+			_doughMatrix = UtilsClass.GetHoverMeshMatrix(dough.GetComponent<XRBreadInteractable>(), _doughMeshFilter, 1f, _doughSocket);
+		}
+
+		_showDoughOnBoard = true;
+	}
+
+	private void HideDoughMeshOnBoard()
+	{
+		_showDoughOnBoard = false;
+	}
+
+	private void DrawHelperMesh()
+	{
+		Graphics.DrawMesh(
+				_doughMeshFilter.sharedMesh,
+				_doughMatrix,
+				_doughHelperMaterial,
+				gameObject.layer
+		);
 	}
 }

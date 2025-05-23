@@ -10,38 +10,55 @@ public class IngredientContainerManager : MonoBehaviour
     [SerializeField]
     private GameObject _ingredient;
 
+	private XRBaseInteractable _interactable;
+
+	private TutorialGrabStep _tutorialStep;
+
 	private void Awake()
 	{
-		var interactable = GetComponent<XRSimpleInteractable>();
-		interactable.selectEntered.AddListener(ContainerSelected);
+		_interactable = GetComponent<XRSimpleInteractable>();
+		_interactable.selectEntered.AddListener(ContainerSelected);
 	}
 
-	private void OnDisable()
+	private void OnDestroy()
 	{
-		var interactable = GetComponent<XRSimpleInteractable>();
-		interactable.selectEntered.RemoveListener(ContainerSelected);
+		_interactable.selectEntered.RemoveListener(ContainerSelected);
+	}
+
+	public void SetTutorialStep(TutorialGrabStep tutorialGrabStep)
+	{
+		_tutorialStep = tutorialGrabStep;
 	}
 
 	private void ContainerSelected(SelectEnterEventArgs args)
     {
-		IXRSelectInteractor interactor = args.interactorObject;
-		XRInteractionManager interactionManager = args.manager;
-
-		if (interactor != null)
+		if (args.interactableObject.IsSelectedByLeft() || args.interactableObject.IsSelectedByRight())
 		{
-			GrabIngredient(interactor, interactionManager);
+			GameObject ingredient = Instantiate(_ingredient, transform.position, transform.rotation);
+
+			if (!_tutorialStep.IsUnityNull())
+			{
+				XRBaseInteractable ingredientInteractable = ingredient.GetComponent<XRBaseInteractable>();
+				ingredientInteractable.selectEntered.AddListener(IngredientSelected);
+				ingredientInteractable.selectExited.AddListener(IngredientReleased);
+			}
+
+			if (ingredient.TryGetComponent<XRBaseInteractable>(out var newInteractable))
+			{
+				args.manager.SelectExit(args.interactorObject, args.interactableObject);
+
+				args.manager.SelectEnter(args.interactorObject, newInteractable);
+			}
 		}
 	}
 
-	private void GrabIngredient(IXRSelectInteractor interactor, XRInteractionManager interactionManager)
+	private void IngredientSelected(SelectEnterEventArgs args)
 	{
-		GameObject ingredient = Instantiate(_ingredient, transform.position, transform.rotation);
-		
-		if (ingredient.TryGetComponent<XRGrabInteractable>(out var newInteractable))
-		{
-			interactionManager.SelectExit(interactor, interactor.firstInteractableSelected);
+		_tutorialStep.ItemGrabed(args);
+	}
 
-			interactionManager.SelectEnter(interactor, newInteractable);
-		}
+	private void IngredientReleased(SelectExitEventArgs args)
+	{
+		_tutorialStep.ItemReleased(args);
 	}
 }

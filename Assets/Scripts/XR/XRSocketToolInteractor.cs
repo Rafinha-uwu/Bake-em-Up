@@ -32,9 +32,10 @@ public class XRSocketToolInteractor : XRSocketInteractor
 
 	protected override void OnDisable()
 	{
-		base.OnDisable();
 		selectEntered.RemoveListener(SocketSelectEnter);
 		selectExited.RemoveListener(SocketSelectExit);
+
+		base.OnDisable();
 	}
 
 	public override bool CanHover(IXRHoverInteractable interactable)

@@ -13,11 +13,18 @@ public class IngredientController : MonoBehaviour
 	public Sprite IngredientIcon => _ingredientIcon;
 	public IngredientName IngredientName => _ingredientName;
 
+	private void OnDestroy()
+	{
+		var interactable = GetComponent<XRBaseInteractable>();
+		interactable.selectEntered.RemoveAllListeners();
+		interactable.selectExited.RemoveAllListeners();
+	}
+
 	private void OnCollisionEnter(Collision collision)
 	{
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Roulotte"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 1f);
         }
 	}
 }

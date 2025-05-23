@@ -239,6 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _recipeData: {fileID: 11400000, guid: 3190366478569244baadac612ad0a977, type: 2}
+  _isBurned: 0
 --- !u!1 &4432055166319878163
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,13 +390,17 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Bread
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: bcf4d0528f91f49eea094d69314e8d95, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bcf4d0528f91f49eea094d69314e8d95, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4849027460919474709}
+      addedObject: {fileID: 3935696653573831296}
   m_SourcePrefab: {fileID: 100100000, guid: bcf4d0528f91f49eea094d69314e8d95, type: 3}
 --- !u!4 &1605994700920767796 stripped
 Transform:
@@ -407,7 +412,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bcf4d0528f91f49eea094d69314e8d95, type: 3}
   m_PrefabInstance: {fileID: 1279896228032127711}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &4849027460919474709
+--- !u!64 &3935696653573831296
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -428,4 +433,4 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4493585093827132993, guid: bcf4d0528f91f49eea094d69314e8d95, type: 3}
+  m_Mesh: {fileID: 2781076595169158606, guid: 2c597381551e4554db0bc0d98a16ee27, type: 3}

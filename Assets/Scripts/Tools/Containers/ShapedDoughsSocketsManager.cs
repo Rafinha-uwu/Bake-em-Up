@@ -49,7 +49,6 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 
 	public void GridIsEmpty(MultipleSocketsManager manager)
 	{
-		Debug.Log($"Ficou vazio {transform.root.name}");
 		manager.gameObject.SetActive(false);
 		_shapedDoughRecipe = null;
 		_currentActiveManager = null;

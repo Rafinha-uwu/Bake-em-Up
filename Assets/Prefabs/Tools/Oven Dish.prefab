@@ -88,7 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7540149093897870574}
   - component: {fileID: 228070067750899593}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &5558619380359519322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1063,7 +1063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7535278306138567097}
   - component: {fileID: 3685845591401395304}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1375,7 +1375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7895690781673535378}
   - component: {fileID: 6243911511037184982}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1877,7 +1877,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7335321517293505457}
   - component: {fileID: 8632346671503738969}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 2x2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2066,7 +2066,7 @@ GameObject:
   m_Component:
   - component: {fileID: 289212761014915220}
   - component: {fileID: 8555929689385407110}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Socket 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2280,9 +2280,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 364288561864787365, guid: 6be4b7b8c82a6b1439cc24e285a35c89, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6be4b7b8c82a6b1439cc24e285a35c89, type: 3}
       propertyPath: m_Name
       value: oven
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6be4b7b8c82a6b1439cc24e285a35c89, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

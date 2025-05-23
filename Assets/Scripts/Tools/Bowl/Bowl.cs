@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 [RequireComponent(typeof(XRGrabInteractable)), RequireComponent(typeof(Resettable))]
 public class Bowl : ToolContainer
@@ -17,7 +17,17 @@ public class Bowl : ToolContainer
 	public bool HasCompletedDough = false;
 	[HideInInspector]
 	public bool HasBadDough = false;
+	[HideInInspector]
+	public bool HasRecipeReady = false;
 	private Resettable _resettable;
+
+	private int _doughCount = 0;
+	private GameObject _dough = null;
+
+	public delegate void BowlHandler();
+	public event BowlHandler OnRecipeReady;
+	public event BowlHandler OnRecipeNotReady;
+	public event BowlHandler OnIngredientEntered;
 
 	protected override void Awake()
 	{
@@ -30,6 +40,9 @@ public class Bowl : ToolContainer
 	private void OnDestroy()
 	{
 		_resettable.OnObjectReset -= ClearBowl;
+		OnRecipeReady = null;
+		OnRecipeNotReady = null;
+		OnIngredientEntered = null;
 	}
 
 	public bool GetRecipe(out RecipeData recipe)
@@ -41,7 +54,10 @@ public class Bowl : ToolContainer
 
 	public void MakeDough()
 	{
+		RecipeData auxRecipe = _recipeData;
 		ClearBowl();
+
+		_recipeData = auxRecipe;
 
 		HasCompletedDough = true;
 
@@ -50,6 +66,10 @@ public class Bowl : ToolContainer
 
 		GameObject secondDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(secondDough);
+
+		_dough = firstDough;
+
+		_doughCount = 2;
 
 		_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 	}
@@ -64,6 +84,8 @@ public class Bowl : ToolContainer
 		GameObject badDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
 		InsertItem(badDough);
 
+		_doughCount = 1;
+
 		_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 	}
 
@@ -71,26 +93,52 @@ public class Bowl : ToolContainer
 	{
 		HasCompletedDough = false;
 		HasBadDough = false;
+		HasRecipeReady = false;
 
 		_ingredientsInside.Clear();
+		_recipeData = null;
+		_dough = null;
 		foreach (Transform child in _container.transform)
 		{
 			Destroy(child.gameObject);
 		}
 		_bowlCanvas.ClearCanvas();
+
+		OnRecipeNotReady?.Invoke();
+	}
+
+	public void DoughRemoved()
+	{
+		_doughCount -= 1;
+
+		if (_doughCount == 0)
+			ClearBowl();
+	}
+
+	public GameObject GetDough()
+	{
+		return _dough;
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
+		if (HasCompletedDough || HasBadDough)
+			return;
+
 		var interactable = other.gameObject.GetComponentInParent<XRGrabInteractable>();
+		var ingredient = other.gameObject.GetComponentInParent<IngredientController>();
 		var tool = other.gameObject.GetComponentInParent<Tool>();
 
-		if (interactable && !tool)
+		if (!interactable.IsUnityNull() && !ingredient.IsUnityNull() && tool.IsUnityNull())
 		{
-			if (interactable.isSelected && !interactable.firstInteractorSelecting.transform.CompareTag("Player"))
-				return;
+			if (interactable.isSelected)
+			{
+				if(interactable.firstInteractorSelecting.transform.CompareTag("Player"))
+					ReleaseItem(interactable);
 
-			ReleaseItem(interactable);
+				return;
+			}
+
 			InsertItem(interactable.gameObject);
 		}
 	}
@@ -110,6 +158,8 @@ public class Bowl : ToolContainer
 
 	private void AddIngredient(IngredientController ingredient)
 	{
+		OnIngredientEntered?.Invoke();
+
 		IngredientName name = ingredient.IngredientName;
 		if(_ingredientsInside.TryGetValue(name, out int value))
 		{
@@ -124,6 +174,8 @@ public class Bowl : ToolContainer
 			if (RecipesManager.Instance.GetCompleteRecipe(_ingredientsInside, out RecipeData recipe)){
 				_recipeData = recipe;
 				_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
+				OnRecipeReady?.Invoke();
+				HasRecipeReady = true;
 			}
 		}
 	}

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -18,15 +17,45 @@ public class Fryer : ToolCooker
 	private bool _heatingCompleteBasket = false;
 	private bool _burnedBasket = false;
 
+	[SerializeField]
+	private Material _baketHelperMaterial;
+	private MeshFilter _basketMeshFilter;
+	private Matrix4x4 _basketMatrix;
+	private bool _showBasketOnFryer = false;
+
 	protected override void Awake()
 	{
 		base.Awake();
 		_fryerCanvas = _toolCanvas as MixerCanvas;
 	}
 
+	protected override void Start()
+	{
+		base.Start();
+
+		_socketFryerOil.hoverEntered.AddListener(HoverEntered);
+		_socketFryerOil.hoverExited.AddListener(HoverExited);
+
+		_basket = LevelManager.Instance.GetBasket();
+		_basket.OnBasketHasDough += ShowBasketMeshOnSocket;
+		_basket.OnBasketEmpty += HideBasketMeshOnSocket;
+
+		_basketMeshFilter = _basket.GetComponentInChildren<MeshFilter>();
+		_basketMatrix = UtilsClass.GetHoverMeshMatrix(_basket.GetComponent<XRGrabInteractable>(), _basketMeshFilter, 1f, _socketFryerOil);
+	}
+
+	private void OnDestroy()
+	{
+		_socketFryerOil.hoverEntered.RemoveListener(HoverEntered);
+		_socketFryerOil.hoverExited.RemoveListener(HoverExited);
+	}
+
 	// Update is called once per frame
 	void Update()
 	{
+		if(_showBasketOnFryer)
+			DrawHelperMesh();
+
 		if (!_isHeating)
 			return;
 
@@ -87,7 +116,7 @@ public class Fryer : ToolCooker
 
 	protected override void TurnOn()
 	{
-		Debug.Log("Ligou Fritadeira");
+		HideBasketMeshOnSocket();
 
 		if (_recipeData != null)
 		{
@@ -97,9 +126,9 @@ public class Fryer : ToolCooker
 
 	protected override void TurnOff()
 	{
-		Debug.Log("Desligou Fritadeira");
 		_isHeating = false;
 		_basket = null;
+		_warningHelper.Hide();
 	}
 
 	private bool IsCorrectRecipe(RecipeData recipeData)
@@ -119,14 +148,17 @@ public class Fryer : ToolCooker
 
 		_fryerCanvas.UpdateTimer(_currentTimeBasket, _recipeData.FryingTime, _badTimerBasket);
 
+		if (_currentTimeBasket > _recipeData.FryingTime)
+			_warningHelper.Show();
+		else 
+			_warningHelper.Hide();
+
 		if (!_burnedBasket && _currentTimeBasket >= _badTimerBasket)
 		{
-			Debug.Log("Estragou a massa!");
 			BurnedBread();
 		}
 		else if (!_heatingCompleteBasket && _currentTimeBasket >= _recipeData.FryingTime)
 		{
-			Debug.Log("Terminou de Misturar");
 			MakeBread();
 		}
 	}
@@ -143,5 +175,41 @@ public class Fryer : ToolCooker
 		_burnedBasket = true;
 
 		_basket.MakeBread(burned: true);
+	}
+
+	private void ShowBasketMeshOnSocket()
+	{
+		_showBasketOnFryer = true;
+	}
+
+	private void HideBasketMeshOnSocket()
+	{
+		_showBasketOnFryer = false;
+	}
+
+	private void HoverEntered(HoverEnterEventArgs args)
+	{
+		if (args.interactorObject as XRSocketToolInteractor == _socketFryerOil)
+			HideBasketMeshOnSocket();
+	}
+
+	private void HoverExited(HoverExitEventArgs args)
+	{
+		FryerBasket basket = args.interactableObject.transform.GetComponent<FryerBasket>();
+		if (args.interactorObject as XRSocketToolInteractor == _socketFryerOil && basket.HasDough)
+		{
+			ShowBasketMeshOnSocket();
+			Debug.Log(args.interactorObject.transform.name);
+		}
+	}
+
+	private void DrawHelperMesh()
+	{
+		Graphics.DrawMesh(
+				_basketMeshFilter.sharedMesh,
+				_basketMatrix,
+				_baketHelperMaterial,
+				gameObject.layer
+		);
 	}
 }

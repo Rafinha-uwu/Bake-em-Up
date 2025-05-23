@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Filtering;
@@ -41,5 +42,10 @@ public class XRBreadInteractable : XRGrabInteractable
 			//colliders[0].enabled = true;
 			transform.SetParent(null);
 		}
+	}
+
+	public Transform GetSocketTransform()
+	{
+		return _socketTransform;
 	}
 }

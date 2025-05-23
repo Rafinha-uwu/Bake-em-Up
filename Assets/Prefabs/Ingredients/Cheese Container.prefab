@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1903037020249511123}
-  - component: {fileID: 5697579373647204316}
   - component: {fileID: 608037844794587043}
   - component: {fileID: 422092216652617386}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cheese Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,33 +34,6 @@ Transform:
   - {fileID: 8555534754146232412}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &5697579373647204316
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 725906033254188664}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!114 &608037844794587043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,34 +69,10 @@ MonoBehaviour:
       m_Calls: []
   m_HoverEntered:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7417553222748525363}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_material
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: f5ccd52dc494e054fbe7d7161dcabe25, type: 2}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_HoverExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7417553222748525363}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_material
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2100000, guid: 8ae06c9573f49e9408e1cc0b6d393640, type: 2}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_FirstSelectEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -235,6 +183,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cheese_alpha
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2ba5ecbbd041748e79c7bf151e1e5c7c, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -243,11 +195,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 20405717858476204}
   m_SourcePrefab: {fileID: 100100000, guid: 2ba5ecbbd041748e79c7bf151e1e5c7c, type: 3}
---- !u!23 &7417553222748525363 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 2ba5ecbbd041748e79c7bf151e1e5c7c, type: 3}
-  m_PrefabInstance: {fileID: 8156552166343462839}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8555534754146232412 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2ba5ecbbd041748e79c7bf151e1e5c7c, type: 3}
