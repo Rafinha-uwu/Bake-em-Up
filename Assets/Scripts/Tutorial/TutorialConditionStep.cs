@@ -192,7 +192,6 @@ public class TutorialConditionStep : MonoBehaviour
 
 	private void ConditionAchieved()
 	{
-		Debug.Log("Condition Achieved");
 		_isCurrentCondition = false;
 		_conditionAchieved = true;
 		TutorialManager.Instance.TutorialConditionCompleted(this);

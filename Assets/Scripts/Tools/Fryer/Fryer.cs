@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -103,8 +104,11 @@ public class Fryer : ToolCooker
 		if (socket == _socketFryerOil)
 			TurnOff();
 
-		_fryerCanvas.ClearCanvas();
-		_fryerCanvas.DisableCanvas();
+		if (!_fryerCanvas.IsUnityNull())
+		{
+			_fryerCanvas.ClearCanvas();
+			_fryerCanvas.DisableCanvas();
+		}
 
 		_recipeData = null;
 		_currentTimeBasket = 0f;

@@ -12,22 +12,21 @@ public class PastryBag : ToolContainer
 	private int _maxCream = 0;
 
 	private XRGrabInteractable _interactable;
+	[SerializeField]
 	private CounterCanvas _pastryBagCanvas;
-	private Resettable _resettable;
 
 	private Shoot _dispara;
 
 	protected override void Awake()
 	{
 		base.Awake();
-		_pastryBagCanvas = _toolCanvas as CounterCanvas;
+		_toolCanvas = _pastryBagCanvas;
+		_pastryBagCanvas.UpdateCounter(_remainingCream);
 		DisableCanvas();
 
 		_interactable = GetComponent<XRGrabInteractable>();
 		_interactable.selectEntered.AddListener(SelectEntered);
 		_interactable.selectExited.AddListener(SelectExited);
-
-		_resettable = GetComponent<Resettable>();
 
 		_dispara = GetComponent<Shoot>();
 	}
@@ -75,7 +74,6 @@ public class PastryBag : ToolContainer
 	{
 		if (args.interactorObject.transform.CompareTag("Player"))
 		{
-			Debug.Log("Entrou");
 			Transform canvasFollow = args.interactableObject.IsSelectedByLeft() ? _canvasTransformLeftHand : _transformForCanvasToFollow;
 			_pastryBagCanvas.AddTransformToFollow(canvasFollow);
 			EnableCanvas();
