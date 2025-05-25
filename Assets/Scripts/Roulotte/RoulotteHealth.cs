@@ -3,7 +3,9 @@ using UnityEngine;
 public class RoulotteHealth : MonoBehaviour
 {
     [SerializeField] private int hp = 300;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField]
+    private TakeDamageFX _damageFX;    
+
     private void OnEnable()
     {
         HitEvent.OnHit += GetHit;
@@ -20,6 +22,7 @@ public class RoulotteHealth : MonoBehaviour
         {
             Debug.Log("LEVASTE COM UM ZOMBIE RAUUURRR");
             hp -= damage;
+            _damageFX.PlayFX();
             if (hp < 1)
             {
                 EndGame();
