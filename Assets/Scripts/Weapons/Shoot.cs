@@ -1,21 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
+﻿using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
     public GameObject projetil;
 
-    public GameObject shootPoint;
+    public Transform shootPoint;
 
     private bool cooldown;
     [SerializeField] private float CooldownTime = 0.5f;
     private float CoolTime = 0.5f;
 
-    public void Start()
+	public void Start()
     {
         CoolTime = CooldownTime;
     }
@@ -33,17 +28,15 @@ public class Shoot : MonoBehaviour
         }
     }
 
-
     public void OnDispara()
     {
         if (!cooldown)
         {
             GameObject ProjTemp = Instantiate(projetil);
 
-
-            ProjTemp.transform.SetParent(shootPoint.transform);
+            ProjTemp.transform.SetParent(shootPoint);
             ProjTemp.transform.localPosition = new Vector3(0f,0f, 0f);
-            ProjTemp.transform.rotation = shootPoint.transform.rotation;
+            ProjTemp.transform.rotation = shootPoint.rotation;
             ProjTemp.transform.SetParent(null);
 
             CoolTime = CooldownTime;

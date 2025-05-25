@@ -1,14 +1,16 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class ToolCanvas : MonoBehaviour
 {
 	private Transform _lookAt;
     private Transform _transformToFollow;
 	private Canvas _canvas;
-
-	private void Awake()
+	
+	protected virtual void Awake()
 	{
 		_canvas = GetComponent<Canvas>();
 	}
@@ -18,7 +20,7 @@ public class ToolCanvas : MonoBehaviour
 		_lookAt = Camera.main.transform;
 	}
 
-	private void LateUpdate()
+	protected virtual void LateUpdate()
 	{
 		Vector3 newPosition = _transformToFollow ? _transformToFollow.position : transform.position;
 		//if(Vector3.Distance(_transformToFollow.position, _lookAt.position) < 0.75f)

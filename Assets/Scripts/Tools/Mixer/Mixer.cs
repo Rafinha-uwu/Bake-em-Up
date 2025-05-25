@@ -6,7 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Mixer : ToolCooker
 {
-	private MixerCanvas _mixerCanvas;
+	[SerializeField]
+	private CookerCanvas _mixerCanvas;
 
 	private InteractionLayerMask _bowlInteractionLayerMask;
 	[SerializeField]
@@ -35,10 +36,13 @@ public class Mixer : ToolCooker
 	private Matrix4x4 _bowlMatrix;
 	private bool _showPutInPlaceHover = false;
 
+	private Bowl _bowl;
+
 	protected override void Awake()
 	{
 		base.Awake();
-		_mixerCanvas = _toolCanvas as MixerCanvas;
+		_toolCanvas = _mixerCanvas;
+		_mixerCanvas.DisableCanvas();
 	}
 
 	protected override void Start()
@@ -47,14 +51,14 @@ public class Mixer : ToolCooker
 		_toolButton.OnTurnOn += TurnOn;
 		_toolButton.OnTurnOff += TurnOff;
 
-		Bowl bowl = LevelManager.Instance.GetBowl();
-		bowl.OnRecipeReady += ShowBowlMeshOnSocket;
-		bowl.OnRecipeNotReady += HideBowlMeshOnSocket;
+		_bowl = LevelManager.Instance.GetBowl();
+		_bowl.OnRecipeReady += ShowBowlMeshOnSocket;
+		_bowl.OnRecipeNotReady += HideBowlMeshOnSocket;
 		_socket.hoverEntered.AddListener(HoverEntered);
 		_socket.hoverExited.AddListener(HoverExited);
 
-		_objectMeshFilter = bowl.GetComponentInChildren<MeshFilter>();
-		_bowlMatrix = UtilsClass.GetHoverMeshMatrix(bowl.GetComponent<XRBaseInteractable>(), _objectMeshFilter, 1f, _socket);
+		_objectMeshFilter = _bowl.GetComponentInChildren<MeshFilter>();
+		_bowlMatrix = UtilsClass.GetHoverMeshMatrix(_bowl.GetComponent<XRBaseInteractable>(), _objectMeshFilter, 1f, _socket);
 	}
 
 	private void OnDestroy()
@@ -126,8 +130,8 @@ public class Mixer : ToolCooker
 
 			_mixerCanvas.SetRecipe(_recipeData.recipeSprite);
 			_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);
+			_mixerCanvas.EnableCanvas();
 		}
-		_mixerCanvas.EnableCanvas();
 	}
 
 	public override void SocketSelectedExit(XRSocketToolInteractor socket)
@@ -219,8 +223,7 @@ public class Mixer : ToolCooker
 
 	private void HoverExited(HoverExitEventArgs args)
 	{
-		Bowl bowl = LevelManager.Instance.GetBowl();
-		if (!bowl.IsUnityNull() && bowl.HasRecipeReady)
+		if (!_bowl.IsUnityNull() && _bowl.HasRecipeReady)
 			ShowBowlMeshOnSocket();
 	}
 

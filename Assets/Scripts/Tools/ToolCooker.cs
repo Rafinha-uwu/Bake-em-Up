@@ -4,15 +4,10 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public abstract class ToolCooker : Tool
 {
 	[SerializeField]
-	protected bool _needsCanvas = true;
-	[SerializeField]
-	protected GameObject _canvasObject;
-	[SerializeField]
-	private Transform _transformForCanvasToFollow;
-	[SerializeField]
 	private Transform _transformForIndicatorHelper;
 	protected WorldIndicatorHelper _warningHelper;
 	[SerializeField]
+	[Range(150, 200)]
 	private int _badTimerPercent;
 	public float BadTimerMultiplier 
 	{ 
@@ -26,14 +21,6 @@ public abstract class ToolCooker : Tool
 
 	protected virtual void Awake()
 	{
-		if (_needsCanvas)
-		{
-			GameObject canvas = Instantiate(_canvasObject, transform.position, transform.rotation);
-			_toolCanvas = canvas.GetComponent<ToolCanvas>();
-			_toolCanvas.AddTransformToFollow(_transformForCanvasToFollow);
-			_toolCanvas.DisableCanvas();
-		}
-
 		if (_badTimerPercent <= 100f)
 		{
 			throw new System.NotSupportedException($"Bad Timer Percent is {_badTimerPercent}%, needs to be more than 100%");

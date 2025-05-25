@@ -9,12 +9,11 @@ public class Oven : ToolCooker
 {
     [SerializeField]
     private XRSocketToolInteractor _socketDish2;
-	
-    [SerializeField]
-	private Transform _transformForCanvas2ToFollow;
 
-	private MixerCanvas _dish1Canvas;
-	private MixerCanvas _dish2Canvas;
+    [SerializeField]
+	private CookerCanvas _dish1Canvas;
+    [SerializeField]
+	private CookerCanvas _dish2Canvas;
 
 	private OvenDoor _ovenDoor;
 
@@ -52,11 +51,9 @@ public class Oven : ToolCooker
 	protected override void Awake()
 	{
 		base.Awake();
-		_dish1Canvas = _toolCanvas as MixerCanvas;
+        _toolCanvas = _dish1Canvas;
+        _dish1Canvas.DisableCanvas();
 
-		GameObject canvas = Instantiate(_canvasObject, transform.position, transform.rotation);
-		_dish2Canvas = canvas.GetComponent<MixerCanvas>();
-		_dish2Canvas.AddTransformToFollow(_transformForCanvas2ToFollow);
 		_dish2Canvas.DisableCanvas();
 	}
 

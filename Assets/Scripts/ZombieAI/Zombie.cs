@@ -78,7 +78,6 @@ public class Zombie : MonoBehaviour
         }
     }
 
-
     IEnumerator OnDeath(RagdollPart hitPart, Vector3 senderPosition)
     {
         Died?.Invoke();
@@ -106,7 +105,6 @@ public class Zombie : MonoBehaviour
 
         foreach (RagdollPart part in GetComponentsInChildren<RagdollPart>())
         {
-            Debug.Log("Acertou:" + part);
             part.Activate();
         }
 

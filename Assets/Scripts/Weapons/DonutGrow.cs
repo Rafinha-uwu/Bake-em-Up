@@ -9,6 +9,8 @@ public class DonutRoller : MonoBehaviour
 
     private bool isRolling = false;
     private Rigidbody rb;
+    [SerializeField]
+    private BoxCollider _triggerCollider;
     private float nextGrowTime = 0f;
     private Vector3 rollDirection;
     private Vector3 lastPosition;
@@ -47,11 +49,11 @@ public class DonutRoller : MonoBehaviour
             }
         }
     }
-	private void OnTriggerEnter(Collider other)
+	private void OnCollisionEnter(Collision collision)
 	{
-		if (!isRolling && other.CompareTag("Ground"))
+		if (!isRolling && collision.gameObject.CompareTag("Ground"))
 		{
-
+            _triggerCollider.enabled = true;
 			gameObject.GetComponent<Animator>().enabled = false;
 			isRolling = true;
 

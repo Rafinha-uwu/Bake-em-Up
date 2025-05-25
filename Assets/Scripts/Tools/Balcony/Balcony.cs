@@ -23,6 +23,8 @@ public class Balcony : MonoBehaviour
 
 			RecipeData recipe = bread.GetRecipe();
 
+			Debug.Log(recipe.name);
+
 			if(!_containerAux.IsUnityNull() && _containerAux.GetRecipe() == recipe)
 			{
 				AddBreadInContainer(_containerAux, bread.gameObject);

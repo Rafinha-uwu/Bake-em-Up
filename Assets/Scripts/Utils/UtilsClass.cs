@@ -13,6 +13,14 @@ public static class UtilsClass
 		return n;
 	}
 
+	public static float InverseLerpFast(Vector3 a, Vector3 b, Vector3 value)
+	{
+		Vector3 ab = b - a;
+		Vector3 av = value - a;
+		float t = Vector3.Dot(av, ab) / Vector3.Dot(ab, ab);
+		return Mathf.Clamp01(t);
+	}
+
 	public static Matrix4x4 GetHoverMeshMatrix(IXRInteractable interactable, MeshFilter meshFilter, float hoverScale, IXRInteractor interactor)
 	{
 		var interactableAttachTransform = interactable.GetAttachTransform(interactor);

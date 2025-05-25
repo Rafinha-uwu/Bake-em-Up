@@ -24,9 +24,9 @@ public class DetailCheese : MonoBehaviour
         return lowestPoint;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Roulotte") && smallCheese != null)
+    private void OnCollisionEnter(Collision collision)
+	{
+        if (collision.gameObject.CompareTag("Roulotte") && smallCheese != null)
         {
             StartCoroutine(SpawnCheeses());
         }

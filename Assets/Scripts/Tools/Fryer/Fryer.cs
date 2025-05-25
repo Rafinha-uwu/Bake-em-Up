@@ -8,7 +8,8 @@ public class Fryer : ToolCooker
 	[SerializeField]
 	private XRSocketToolInteractor _socketFryerOil;
 
-	private MixerCanvas _fryerCanvas;
+	[SerializeField]
+	private CookerCanvas _fryerCanvas;
 	private FryerBasket _basket;
 
 	private RecipeData _recipeData;
@@ -27,7 +28,8 @@ public class Fryer : ToolCooker
 	protected override void Awake()
 	{
 		base.Awake();
-		_fryerCanvas = _toolCanvas as MixerCanvas;
+		_toolCanvas = _fryerCanvas;
+		_fryerCanvas.DisableCanvas();
 	}
 
 	protected override void Start()
