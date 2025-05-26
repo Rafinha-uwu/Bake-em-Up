@@ -1227,7 +1227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3586,6 +3586,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roulote: {fileID: 38384281}
   targetZombies: {fileID: 38384281}
+  _mixer: {fileID: 0}
+  _bowl: {fileID: 0}
+  _dish1: {fileID: 0}
+  _dish2: {fileID: 0}
+  _basket: {fileID: 0}
 --- !u!1 &1460014792
 GameObject:
   m_ObjectHideFlags: 0
@@ -5635,6 +5640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 300
+  _damageFX: {fileID: 0}
 --- !u!1 &7066098064394185496
 GameObject:
   m_ObjectHideFlags: 0
