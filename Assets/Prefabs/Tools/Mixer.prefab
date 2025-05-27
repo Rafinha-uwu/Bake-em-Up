@@ -241,6 +241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7457528495563492411}
   - component: {fileID: 6190368990268054910}
+  - component: {fileID: 1971311452146391785}
   m_Layer: 0
   m_Name: Mixer
   m_TagString: Untagged
@@ -258,7 +259,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1338863089116072291}
@@ -285,8 +286,32 @@ MonoBehaviour:
   _transformForCanvasToFollow: {fileID: 3002140599736775542}
   _badTimerPercent: 200
   _socket: {fileID: 3671289700795073015}
+  _particles: {fileID: 6394728610415109627}
   _trackInteractionLayerMask:
     m_Bits: 16
+  _isMixing: 0
+--- !u!95 &1971311452146391785
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5716552663768887694}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0122372cbdc4063409de56e1ed5d25d0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7015154834784601507
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,15 +616,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7899099928202489408, guid: f2c3d481e5b272343b6634c143d66f00, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.014999568
+      value: -0.016665325
       objectReference: {fileID: 0}
     - target: {fileID: 7899099928202489408, guid: f2c3d481e5b272343b6634c143d66f00, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.000000461936
+      value: 0.00000025331974
       objectReference: {fileID: 0}
     - target: {fileID: 7899099928202489408, guid: f2c3d481e5b272343b6634c143d66f00, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.000000014901161
+      value: -0.00000017881393
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -740,6 +765,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1917833427108029344, guid: 25ced15f393ee374297574143163913f, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1917833427108029344, guid: 25ced15f393ee374297574143163913f, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].cycleCount
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3745125057616872124, guid: 25ced15f393ee374297574143163913f, type: 3}
       propertyPath: m_Name
       value: Detail - Dough
@@ -753,6 +786,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25ced15f393ee374297574143163913f, type: 3}
+--- !u!1 &6394728610415109627 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3745125057616872124, guid: 25ced15f393ee374297574143163913f, type: 3}
+  m_PrefabInstance: {fileID: 7730420719673861959}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8737358136074223702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1298914938930603793, guid: 25ced15f393ee374297574143163913f, type: 3}

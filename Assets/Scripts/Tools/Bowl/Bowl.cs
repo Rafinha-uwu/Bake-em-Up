@@ -9,7 +9,7 @@ public class Bowl : ToolContainer
 	[SerializeField]
 	private GameObject _container;
 
-	private BowlCanvas _bowlCanvas;
+    private BowlCanvas _bowlCanvas;
 
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
 
@@ -25,14 +25,14 @@ public class Bowl : ToolContainer
 		_bowlCanvas = _toolCanvas.gameObject.GetComponent<BowlCanvas>();
 		_resettable = GetComponent<Resettable>();
 		_resettable.OnObjectReset += ClearBowl;
-	}
+    }
 
-	private void OnDestroy()
+    private void OnDestroy()
 	{
 		_resettable.OnObjectReset -= ClearBowl;
 	}
 
-	public bool GetRecipe(out RecipeData recipe)
+    public bool GetRecipe(out RecipeData recipe)
 	{
 		recipe = _recipeData;
 

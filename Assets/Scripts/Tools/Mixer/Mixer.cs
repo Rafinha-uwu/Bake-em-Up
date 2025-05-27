@@ -5,14 +5,18 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Mixer : ToolCooker
 {
-	private MixerCanvas _mixerCanvas;
+
+	[SerializeField]
+	private GameObject _particles;
+
+    private MixerCanvas _mixerCanvas;
 
 	private InteractionLayerMask _bowlInteractionLayerMask;
 	[SerializeField]
 	private InteractionLayerMask _trackInteractionLayerMask;
 
 	private RecipeData _recipeData;
-	private bool _isMixing = false;
+	public bool _isMixing = false;
 	private float _currentTime = 0f;
 	private float _badTimer = 0f;
 	private bool _mixingComplete = false;
@@ -98,7 +102,7 @@ public class Mixer : ToolCooker
 	{
 		Debug.Log("Ligou");
 
-		if (_socket.Interactable != null)
+        if (_socket.Interactable != null)
 		{
 			_socket.IsToolOn = true;
 			XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
@@ -108,21 +112,27 @@ public class Mixer : ToolCooker
 			if (_recipeData != null)
 			{
 				_isMixing = true;
-			}
-		}
+                GetComponent<Animator>().Play("Shake_Mix");
+                _socket.Interactable.transform.gameObject.GetComponent<Animator>().SetBool("Shake", true);
+                _particles.gameObject.SetActive(true);
+            }
+        }
 	}
 
 	protected override void TurnOff()
 	{
 		Debug.Log("Desligou");
 
-		if (_socket.Interactable != null)
+        if (_socket.Interactable != null)
 		{
 			_socket.IsToolOn = false;
 			XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
 			grabInteractable.interactionLayers = _bowlInteractionLayerMask;
 			_isMixing = false;
-		}
+
+            GetComponent<Animator>().Play("Stop_Mix");
+            _particles.gameObject.SetActive(false);
+        }
 	}
 
 	private void MakeDough()

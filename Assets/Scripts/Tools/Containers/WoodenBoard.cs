@@ -10,7 +10,10 @@ public class WoodenBoard : MonoBehaviour
 	[SerializeField]
 	private ShapedDoughsSocketsManager _shapedDoughsSocketsManager;
 
-	private Dough _doughOnBoard;
+    [SerializeField]
+    private ParticleSystem particles;
+
+    private Dough _doughOnBoard;
 	private bool _hasShapedDough;
 
 	private void Start()
@@ -52,8 +55,9 @@ public class WoodenBoard : MonoBehaviour
 				return;
 
 			_doughOnBoard.KneadDough();
+			particles.Play();
 
-			return;
+            return;
 		}
 
 		if (_hasShapedDough)
