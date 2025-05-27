@@ -16,12 +16,14 @@ public class ZombieAttack : MonoBehaviour
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
     private Animator animator;
+    private Rigidbody rb;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
         if (obstacle != null) obstacle.enabled = false; // Start disabled
     }
 
@@ -40,10 +42,17 @@ public class ZombieAttack : MonoBehaviour
         isAttacking = true;
         animator.SetBool("isWalking", false);
         animator.SetBool("isAttacking", true);
+        animator.applyRootMotion = false;
 
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = false;
         if (obstacle != null) obstacle.enabled = true;
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            //rb.isKinematic = true; // Only if you don't need physics anymore
+        }
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, whatIsRoulotte);
         foreach (var hitCollider in hitColliders)
@@ -60,7 +69,27 @@ public class ZombieAttack : MonoBehaviour
         if (!roulotteInAttackRange)
         {
             if (obstacle != null) obstacle.enabled = false;
-            if (agent != null) agent.enabled = true;
+
+            // Project zombie back onto NavMesh (in case it drifted off)
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(transform.position, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                transform.position = hit.position;
+            }
+
+            if (agent != null)
+            {
+                agent.enabled = true;
+
+                // Reset destination if needed
+                EnemyNavigation navScript = GetComponent<EnemyNavigation>();
+                if (navScript != null)
+                {
+                    agent.SetDestination(navScript.GetDestination());
+                }
+            }
+
+            Debug.Log("Agent re-enabled. OnNavMesh: " + agent.isOnNavMesh + " Destination: " + agent.destination);
         }
 
     }
