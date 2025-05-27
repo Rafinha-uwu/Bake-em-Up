@@ -191,9 +191,9 @@ public class Oven : ToolCooker
             _isHeating = false;
 
             GetComponent<Animator>().Play("Stop_Oven");
-            Smoke.SetActive(false);
-            Burned.SetActive(false);
         }
+        Smoke.SetActive(false);
+        Burned.SetActive(false);
     }
 
     protected override void TurnOn()

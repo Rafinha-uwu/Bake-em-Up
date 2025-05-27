@@ -53,7 +53,7 @@ public class Mixer : ToolCooker
 		{
 			Debug.Log("Estragou a massa!");
 			MakeBadDough();
-			
+				
 		}
 		else if(!_mixingComplete && _currentTime >= _recipeData.MixerTime)
 		{
