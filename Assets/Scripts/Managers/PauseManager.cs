@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit.UI;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
@@ -11,16 +15,29 @@ public class PauseManager : MonoBehaviour
     public GameObject darkBackgroundPanel;
     [SerializeField] private GameObject optionsMenu;
 
+    [Header("Near-Far Interactors")]
+    public NearFarInteractor[] interactors; // Group that wraps direct + ray
+    private InteractionLayerMask savedInteractorLayers;
+
+    [SerializeField]
+    private InteractionLayerMask nothingLayer;
+    [SerializeField]
+    private GameObject tv;
+
     void OnEnable()
     {
         pauseAction.action.Enable();
     }
 
+    private void Start()
+    {
+        savedInteractorLayers = interactors[0].interactionLayers;
+        Debug.Log(nothingLayer.value);
+    }
     void OnDisable()
     {
         pauseAction.action.Disable();
     }
-
     void Update()
     {
         if (pauseAction.action.WasPressedThisFrame())
@@ -36,11 +53,22 @@ public class PauseManager : MonoBehaviour
         pauseMenu.SetActive(isPaused);
         darkBackgroundPanel.SetActive(isPaused);
 
-        /*if (isPaused)
+        if (isPaused)
         {
-            pauseMenu.transform.position = playerCamera.position + playerCamera.forward * 1.5f;
-            pauseMenu.transform.LookAt(playerCamera);
-        }*/
+            foreach (var interactor in interactors)
+            {
+                interactor.interactionLayers = nothingLayer;
+            }
+            DisableAllButtonsInTV();
+        }
+        else
+        {
+            foreach (var interactor in interactors)
+            {
+                interactor.interactionLayers = savedInteractorLayers;
+            }
+            EnableAllButtonsInTV();
+        }
     }
     public void ToggleOptionsMenu()
     {
@@ -53,5 +81,23 @@ public class PauseManager : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene("Main Menu");
+    }
+
+    void DisableAllButtonsInTV()
+    {
+        Button[] buttons = tv.GetComponentsInChildren<Button>(true);
+        foreach (var button in buttons)
+        {
+            button.interactable = false;
+        }
+    }
+
+    void EnableAllButtonsInTV()
+    {
+        Button[] buttons = tv.GetComponentsInChildren<Button>(true);
+        foreach (var button in buttons)
+        {
+            button.interactable = true;
+        }
     }
 }

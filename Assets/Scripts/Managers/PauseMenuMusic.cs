@@ -13,6 +13,7 @@ public class PauseMenuMusic : MonoBehaviour
     {
         if (_audioSource && !_audioSource.isPlaying)
         {
+            Debug.Log("Vou começar a tocar!!!!");
             _audioSource.Play();
         }
     }
