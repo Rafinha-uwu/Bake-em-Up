@@ -78,9 +78,9 @@ public class PauseManager : MonoBehaviour
         }
     }
 
-    public void MainMenu()
+    public void Quit()
     {
-        SceneManager.LoadScene("Main Menu");
+        Application.Quit();
     }
 
     void DisableAllButtonsInTV()
