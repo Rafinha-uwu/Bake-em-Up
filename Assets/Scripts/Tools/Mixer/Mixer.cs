@@ -42,7 +42,6 @@ public class Mixer : ToolCooker
 	{
 		base.Awake();
 		_toolCanvas = _mixerCanvas;
-		_mixerCanvas.DisableCanvas();
 	}
 
 	protected override void Start()

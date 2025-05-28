@@ -37,7 +37,6 @@ public class PastryBag : ToolContainer
 	{
 		base.Awake();
 		_pastryBagCanvas.UpdateCounter(_remainingCream);
-		DisableCanvas();
 
 		_interactable = GetComponent<XRGrabInteractable>();
 		_interactable.selectEntered.AddListener(SelectEntered);

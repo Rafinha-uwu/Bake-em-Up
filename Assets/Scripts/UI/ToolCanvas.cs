@@ -13,6 +13,7 @@ public class ToolCanvas : MonoBehaviour
 	protected virtual void Awake()
 	{
 		_canvas = GetComponent<Canvas>();
+		DisableCanvas();
 	}
 
 	private void Start()

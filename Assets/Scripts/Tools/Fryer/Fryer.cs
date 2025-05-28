@@ -29,7 +29,6 @@ public class Fryer : ToolCooker
 	{
 		base.Awake();
 		_toolCanvas = _fryerCanvas;
-		_fryerCanvas.DisableCanvas();
 	}
 
 	protected override void Start()

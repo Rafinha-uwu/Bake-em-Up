@@ -52,9 +52,6 @@ public class Oven : ToolCooker
 	{
 		base.Awake();
         _toolCanvas = _dish1Canvas;
-        _dish1Canvas.DisableCanvas();
-
-		_dish2Canvas.DisableCanvas();
 	}
 
 	protected override void Start()
