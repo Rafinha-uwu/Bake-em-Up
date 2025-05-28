@@ -110,6 +110,8 @@ public class Mixer : ToolCooker
 		HideBowlMeshOnSocket();
 
 		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
+		bowl.DisableCanvas();
+
 		if (bowl.GetRecipe(out _recipeData))
 		{
 			_badTimer = _recipeData.MixerTime * BadTimerMultiplier;
@@ -136,6 +138,9 @@ public class Mixer : ToolCooker
 
 	public override void SocketSelectedExit(XRSocketToolInteractor socket)
 	{
+		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
+		bowl.EnableCanvas();
+
 		if (!_recipeData.IsUnityNull())
 			OnSocketExited?.Invoke();
 
@@ -235,5 +240,5 @@ public class Mixer : ToolCooker
 				_bowlHelperMaterial,
 				gameObject.layer
 		);
-	}
+	}	
 }

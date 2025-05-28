@@ -9,6 +9,7 @@ public class Bowl : ToolContainer
 	[SerializeField]
 	private GameObject _container;
 
+	[SerializeField]
 	private BowlCanvas _bowlCanvas;
 
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
@@ -32,7 +33,6 @@ public class Bowl : ToolContainer
 	protected override void Awake()
 	{
 		base.Awake();
-		_bowlCanvas = _toolCanvas.gameObject.GetComponent<BowlCanvas>();
 		_resettable = GetComponent<Resettable>();
 		_resettable.OnObjectReset += ClearBowl;
 	}
@@ -120,6 +120,18 @@ public class Bowl : ToolContainer
 		return _dough;
 	}
 
+	public void EnableCanvas()
+	{
+		if (!_bowlCanvas.IsUnityNull())
+			_bowlCanvas.EnableCanvas();
+	}
+
+	public void DisableCanvas()
+	{
+		if (!_bowlCanvas.IsUnityNull())
+			_bowlCanvas.DisableCanvas();
+	}
+
 	private void OnTriggerEnter(Collider other)
 	{
 		if (HasCompletedDough || HasBadDough)
@@ -161,17 +173,13 @@ public class Bowl : ToolContainer
 		OnIngredientEntered?.Invoke();
 
 		IngredientName name = ingredient.IngredientName;
-		if(_ingredientsInside.TryGetValue(name, out int value))
-		{
-			_ingredientsInside[name] += 1;
-			_bowlCanvas.UpdateIngredient(name, _ingredientsInside[name]);
-		}
-		else
+		if (!_ingredientsInside.ContainsKey(name))
 		{
 			_ingredientsInside.Add(name, 1);
 			_bowlCanvas.AddIngredient(ingredient);
-			
-			if (RecipesManager.Instance.GetCompleteRecipe(_ingredientsInside, out RecipeData recipe)){
+
+			if (RecipesManager.Instance.GetCompleteRecipe(_ingredientsInside, out RecipeData recipe))
+			{
 				_recipeData = recipe;
 				_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 				OnRecipeReady?.Invoke();

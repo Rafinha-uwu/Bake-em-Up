@@ -30,11 +30,6 @@ public class BowlCanvas : ToolCanvas
 		}
 	}
 
-	public void UpdateIngredient(IngredientName name, int value)
-	{
-		_ingredientsInCanvas[name].UpdateCount(value);
-	}
-
 	public void UpdateRecipe(Sprite recipeSprite)
 	{
 		_recipeImage.sprite = recipeSprite;

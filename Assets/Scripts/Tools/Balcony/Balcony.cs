@@ -11,6 +11,14 @@ public class Balcony : MonoBehaviour
 
 	private RecipeContainer _containerAux;
 
+	public delegate void BalconyHandler();
+	public event BalconyHandler OnBreadOnBalcony;
+
+	private void OnDestroy()
+	{
+		OnBreadOnBalcony = null;
+	}
+
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.CompareTag("Bread"))
@@ -18,6 +26,8 @@ public class Balcony : MonoBehaviour
 			XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
 			if (interactable.IsSelectedByLeft() || interactable.IsSelectedByRight())
 				return;
+
+			OnBreadOnBalcony?.Invoke();
 
 			Bread bread = other.gameObject.GetComponentInParent<Bread>();
 

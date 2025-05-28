@@ -146,7 +146,12 @@ public class TutorialConditionStep : MonoBehaviour
 		
 		if (_condition.tool == ConditionToolName.Balcony)
 		{
-
+			Balcony balcony = TutorialManager.Instance.Balcony;
+			if (_condition.balcony == BalconyConditions.BreadOnBalcony)
+			{
+				balcony.OnBreadOnBalcony += ConditionAchieved;
+				return;
+			}
 		}
 	}
 

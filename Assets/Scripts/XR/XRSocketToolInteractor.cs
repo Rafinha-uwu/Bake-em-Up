@@ -72,11 +72,8 @@ public class XRSocketToolInteractor : XRSocketInteractor
 			return;
 
 		_interactable = args.interactableObject;
-		if (_interactable.transform.gameObject.TryGetComponent<ToolContainer>(out var container))
-		{
-			container.DisableCanvas();
-			_cooker.SocketSelectedEnter(this);
-		}
+		
+		_cooker.SocketSelectedEnter(this);
 	}
 
 	private void SocketSelectExit(SelectExitEventArgs args)
@@ -84,11 +81,7 @@ public class XRSocketToolInteractor : XRSocketInteractor
 		if (_cooker == null || _interactable == null || IsToolOn)
 			return;
 
-		if (_interactable.transform.gameObject.TryGetComponent<ToolContainer>(out var container))
-		{
-			container.EnableCanvas();
-			_cooker.SocketSelectedExit(this);
-		}
+		_cooker.SocketSelectedExit(this);
 
 		_interactable = null;
 	}

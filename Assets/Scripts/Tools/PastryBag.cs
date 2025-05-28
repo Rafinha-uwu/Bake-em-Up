@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -6,6 +7,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 [RequireComponent(typeof(XRGrabInteractable)), RequireComponent(typeof(Resettable))]
 public class PastryBag : ToolContainer
 {
+	[SerializeField]
+	private Transform _canvasTransformRightHand;
 	[SerializeField]
 	private Transform _canvasTransformLeftHand; 
 	public int _remainingCream = 0;
@@ -33,7 +36,6 @@ public class PastryBag : ToolContainer
 	protected override void Awake()
 	{
 		base.Awake();
-		_toolCanvas = _pastryBagCanvas;
 		_pastryBagCanvas.UpdateCounter(_remainingCream);
 		DisableCanvas();
 
@@ -61,8 +63,10 @@ public class PastryBag : ToolContainer
 		if (_remainingCream == 0)
 			return;
 
+		if (!_dispara.OnDispara())
+			return;
+
 		_remainingCream -= 1;
-		_dispara.OnDispara();
 
         if (_remainingCream == 0)
 		{
@@ -70,6 +74,18 @@ public class PastryBag : ToolContainer
 			_maxCream = 0;
 		}
 		_pastryBagCanvas.UpdateCounter(_remainingCream);
+	}
+
+	public void EnableCanvas()
+	{
+		if (!_pastryBagCanvas.IsUnityNull())
+			_pastryBagCanvas.EnableCanvas();
+	}
+
+	public void DisableCanvas()
+	{
+		if (!_pastryBagCanvas.IsUnityNull())
+			_pastryBagCanvas.DisableCanvas();
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -94,7 +110,7 @@ public class PastryBag : ToolContainer
 		if (args.interactorObject.transform.CompareTag("Player"))
 		{
 			_grabbed = true;
-			Transform canvasFollow = args.interactableObject.IsSelectedByLeft() ? _canvasTransformLeftHand : _transformForCanvasToFollow;
+			Transform canvasFollow = args.interactableObject.IsSelectedByLeft() ? _canvasTransformLeftHand : _canvasTransformRightHand;
 			_pastryBagCanvas.AddTransformToFollow(canvasFollow);
 			EnableCanvas();
 		}

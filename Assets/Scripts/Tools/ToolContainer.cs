@@ -9,25 +9,13 @@ public class ToolContainer : Tool
     [SerializeField]
     private ToolContainerName _toolContainerName;
 	public ToolContainerName ToolContainerName => _toolContainerName;
-
-	[SerializeField]
-	protected GameObject _canvasObject;
-	[SerializeField]
-	protected Transform _transformForCanvasToFollow;
 	
-	protected ToolCanvas _toolCanvas;
 	protected Collider _collider;
 	protected RecipeData _recipeData;
 
 	protected virtual void Awake()
 	{
 		_collider = GetComponent<Collider>();
-		if (!_canvasObject.IsUnityNull())
-		{
-			GameObject canvas = Instantiate(_canvasObject, transform.position, transform.rotation);
-			_toolCanvas = canvas.GetComponent<ToolCanvas>();
-			_toolCanvas.AddTransformToFollow(_transformForCanvasToFollow);
-		}
 	}
 
 	protected void ReleaseItem(XRGrabInteractable interactable)
@@ -36,18 +24,6 @@ public class ToolContainer : Tool
 			return;
 
 		interactable.interactionManager.SelectExit(interactable.firstInteractorSelecting, interactable);
-	}
-
-	public void EnableCanvas()
-	{
-		if (!_toolCanvas.IsUnityNull())
-			_toolCanvas.EnableCanvas();
-	}
-
-	public void DisableCanvas()
-	{
-		if (!_toolCanvas.IsUnityNull())
-			_toolCanvas.DisableCanvas();
 	}
 
 	public virtual void ContainerIsEmpty()

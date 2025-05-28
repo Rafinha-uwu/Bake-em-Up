@@ -49,9 +49,9 @@ public class TutorialManager : MonoBehaviour
 	private GameObject _overDoor;
 	public GameObject OverDoor => _overDoor;
 
-	//[SerializeField]
-	//private Balcony _balcony;
-	//public Balcony Balcony => _balcony;
+	[SerializeField]
+	private Balcony _balcony;
+	public Balcony Balcony => _balcony;
 
 	private int _currentTutorialCondition = 0;
 

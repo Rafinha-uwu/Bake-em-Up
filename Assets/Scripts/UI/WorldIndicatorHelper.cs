@@ -9,7 +9,7 @@ public class WorldIndicatorHelper : MonoBehaviour
 	[SerializeField]
 	private Image _indicatorImage;
 	[SerializeField]
-    private RectTransform _pointRectTransform;
+    private RectTransform _backgroundTransform;
 	[SerializeField]
 	private float _screenBorder = 100f;
     
@@ -46,7 +46,7 @@ public class WorldIndicatorHelper : MonoBehaviour
 		}
 
 		capped.x = Mathf.Clamp(capped.x, 0f + _screenBorder / Screen.width, 1f - _screenBorder / Screen.width);
-		capped.y = Mathf.Clamp(capped.y, 0f + _screenBorder / Screen.height, 1f - _screenBorder / Screen.height);
+		capped.y = Mathf.Clamp(capped.y, 0f + (_screenBorder/2) / Screen.height, 1f - (_screenBorder/2) / Screen.height);
 
 		Vector3 clampedScreenPos = Camera.main.ViewportToScreenPoint(capped);
 
@@ -58,7 +58,7 @@ public class WorldIndicatorHelper : MonoBehaviour
 		}
 		else
 		{
-			_pointRectTransform.localEulerAngles = Vector3.zero;
+			_backgroundTransform.localEulerAngles = new Vector3(0, 0, -90f);
 		}
 
 		Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clampedScreenPos);			
@@ -77,7 +77,7 @@ public class WorldIndicatorHelper : MonoBehaviour
 		Vector3 dir = (toPosition - fromPosition).normalized;
 
 		float angle = UtilsClass.GetAngleFromVectorFloat(dir);
-		_pointRectTransform.localEulerAngles = new Vector3(0, 0, angle);
+		_backgroundTransform.localEulerAngles = new Vector3(0, 0, angle);
 	}
 
 	public void Hide()

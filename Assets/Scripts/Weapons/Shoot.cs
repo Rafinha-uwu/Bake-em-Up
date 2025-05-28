@@ -28,7 +28,7 @@ public class Shoot : MonoBehaviour
         }
     }
 
-    public void OnDispara()
+    public bool OnDispara()
     {
         if (!cooldown)
         {
@@ -40,6 +40,8 @@ public class Shoot : MonoBehaviour
             ProjTemp.transform.SetParent(null);
 
             CoolTime = CooldownTime;
+            return true;
         }
+        return false;
     }
 }
