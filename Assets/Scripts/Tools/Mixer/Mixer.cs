@@ -9,12 +9,15 @@ public class Mixer : ToolCooker
 	[SerializeField]
 	private CookerCanvas _mixerCanvas;
 
+	[SerializeField]
+	private GameObject _particles;
+
 	private InteractionLayerMask _bowlInteractionLayerMask;
 	[SerializeField]
 	private InteractionLayerMask _trackInteractionLayerMask;
 
 	private RecipeData _recipeData;
-	private bool _isMixing = false;
+	public bool _isMixing = false;
 	private float _currentTime = 0f;
 	private float _badTimer = 0f;
 	private bool _mixingComplete = false;
@@ -96,7 +99,7 @@ public class Mixer : ToolCooker
 		if (!_mixingRuined && _currentTime >= _badTimer)
 		{
 			MakeBadDough();
-			
+				
 		}
 		else if(!_mixingComplete && _currentTime >= _recipeData.MixerTime)
 		{
@@ -169,8 +172,12 @@ public class Mixer : ToolCooker
 			{
 				_isMixing = true;
 				OnMixerTurnedOn?.Invoke();
-			}
-		}
+				
+                GetComponent<Animator>().Play("Shake_Mix");
+                _socket.Interactable.transform.gameObject.GetComponent<Animator>().SetBool("Shake", true);
+                _particles.gameObject.SetActive(true);
+            }
+        }
 	}
 
 	protected override void TurnOff()
@@ -183,7 +190,10 @@ public class Mixer : ToolCooker
 			_isMixing = false;
 			_warningHelper.Hide();
 			OnMixerTurnedOff?.Invoke();
-		}
+
+            GetComponent<Animator>().Play("Stop_Mix");
+            _particles.gameObject.SetActive(false);
+        }
 	}
 
 	private void MakeDough()

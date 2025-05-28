@@ -14,6 +14,12 @@ public class Oven : ToolCooker
 	private CookerCanvas _dish1Canvas;
     [SerializeField]
 	private CookerCanvas _dish2Canvas;
+    
+    [SerializeField]
+    private GameObject Smoke;
+
+    [SerializeField]
+    private GameObject Burned;
 
 	private OvenDoor _ovenDoor;
 
@@ -228,12 +234,17 @@ public class Oven : ToolCooker
             XRBaseInteractable grabInteractable = _socketDish2.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
             grabInteractable.interactionLayers = _dishInteractionLayerMask;
             _isHeating = false;
+
+            GetComponent<Animator>().Play("Stop_Oven");
         }
 
         OnOvenTurnOff?.Invoke();
 
 		_warningHelper.Hide();
-	}
+
+        Smoke.SetActive(false);
+        Burned.SetActive(false);
+    }
 
     protected override void TurnOn()
     {
@@ -247,6 +258,8 @@ public class Oven : ToolCooker
             if (_recipeDataDish1 != null)
             {
                 _isHeating = true;
+                GetComponent<Animator>().Play("Shake_Oven");
+                Smoke.SetActive(true);
             }
         }
 
@@ -260,6 +273,8 @@ public class Oven : ToolCooker
             if (_recipeDataDish2 != null)
             {
                 _isHeating = true;
+                GetComponent<Animator>().Play("Shake_Oven");
+                Smoke.SetActive(true);
             }
         }
 
@@ -289,11 +304,13 @@ public class Oven : ToolCooker
 		if (!_burnedDish1 && _currentTimeDish1 >= _badTimerDish1)
         {
 			BurnedBread(_socket);
+            Smoke.SetActive(false);
+            Burned.SetActive(true);
         }
         else if (!_heatingCompleteDish1 && _currentTimeDish1 >= _recipeDataDish1.OvenTime)
         {
 			MakeBread(_socket);
-		}
+        }
     }
     private void HeatDish2()
     {
@@ -307,6 +324,8 @@ public class Oven : ToolCooker
 		if (!_burnedDish2 && _currentTimeDish2 >= _badTimerDish2)
         {
             BurnedBread(_socketDish2);
+            Smoke.SetActive(false);
+            Burned.SetActive(true);
         }
         else if (!_heatingCompleteDish2 && _currentTimeDish2 >= _recipeDataDish2.OvenTime)
         {

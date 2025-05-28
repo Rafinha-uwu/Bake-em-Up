@@ -24,6 +24,15 @@ public class Zombie : MonoBehaviour
     protected NavMeshAgent agent;
     private Animator animator;
 
+    [SerializeField]
+    private GameObject HIT;
+
+    [SerializeField]
+    private GameObject EP;
+
+    [SerializeField]
+    private GameObject POW;
+
     private void Awake()
     {
         _ragdollRigidboddies = GetComponentsInChildren<Rigidbody>();
@@ -68,6 +77,16 @@ public class Zombie : MonoBehaviour
             Collider hitCollider = receiver.GetComponent<Collider>();
             //Debug.Log("Collider que acertou:" + hitCollider.name);
             RagdollPart hitPart = hitCollider != null ? hitCollider.GetComponent<RagdollPart>() : null;
+
+            // Array of your object options
+            GameObject[] options = new GameObject[] { HIT, EP, POW };
+
+            // Choose one at random
+            int index = Random.Range(0, options.Length);
+            GameObject chosenPrefab = options[index];
+
+            // Instantiate it at hitPart's position
+            Instantiate(chosenPrefab, hitPart.transform.position, Quaternion.identity);
 
             if (hp < 1)
             {

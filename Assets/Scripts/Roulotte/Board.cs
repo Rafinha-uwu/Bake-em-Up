@@ -6,25 +6,9 @@ public class Board : MonoBehaviour
     {
         if (other.CompareTag("Recipe"))
         {
-            Rigidbody rb = other.attachedRigidbody;
-            if (rb != null)
-            {
-                other.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
-                rb.isKinematic = true;
-            }
-        }
-    }
+            other.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Recipe"))
-        {
-            Rigidbody rb = other.attachedRigidbody;
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-            }
         }
     }
 }

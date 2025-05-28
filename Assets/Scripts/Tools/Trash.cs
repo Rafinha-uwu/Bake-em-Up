@@ -9,6 +9,8 @@ public class Trash : MonoBehaviour
 		if (other.CompareTag("Player"))
 			return;
 
+		GetComponent<Animator>().Play("Shake_Trash");
+
 		Resettable resettable = other.GetComponentInParent<Resettable>();
 		if (resettable != null)
 		{

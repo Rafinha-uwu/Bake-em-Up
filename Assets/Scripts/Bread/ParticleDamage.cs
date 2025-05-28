@@ -3,12 +3,7 @@ using UnityEngine;
 public class ParticleDamage : MonoBehaviour
 {
     [SerializeField]
-    protected RecipeData _recipeData;
-
-    public RecipeData GetRecipe()
-    {
-        return _recipeData;
-    }
+    protected int damage;
 
     void OnParticleCollision(GameObject other)
     {
@@ -16,7 +11,7 @@ public class ParticleDamage : MonoBehaviour
         if (other.gameObject.CompareTag("Zombie"))
         {
             GameObject test = other.gameObject;
-            HitEvent.GetHit(_recipeData.damage, transform.gameObject, test);
+            HitEvent.GetHit(damage, transform.gameObject, test);
         }
     }
 }

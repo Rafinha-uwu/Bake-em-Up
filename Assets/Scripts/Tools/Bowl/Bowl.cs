@@ -35,9 +35,9 @@ public class Bowl : ToolContainer
 		base.Awake();
 		_resettable = GetComponent<Resettable>();
 		_resettable.OnObjectReset += ClearBowl;
-	}
+    }
 
-	private void OnDestroy()
+    private void OnDestroy()
 	{
 		_resettable.OnObjectReset -= ClearBowl;
 		OnRecipeReady = null;
@@ -45,7 +45,7 @@ public class Bowl : ToolContainer
 		OnIngredientEntered = null;
 	}
 
-	public bool GetRecipe(out RecipeData recipe)
+    public bool GetRecipe(out RecipeData recipe)
 	{
 		recipe = _recipeData;
 
