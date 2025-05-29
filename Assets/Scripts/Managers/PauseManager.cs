@@ -12,7 +12,7 @@ public class PauseManager : MonoBehaviour
     public InputActionProperty pauseAction; // Drag your Pause action here in Inspector
     private bool isPaused = false;
     public Transform playerCamera;
-    public GameObject darkBackgroundPanel;
+    //public GameObject darkBackgroundPanel;
     [SerializeField] private GameObject optionsMenu;
 
     [Header("Near-Far Interactors")]
@@ -51,7 +51,7 @@ public class PauseManager : MonoBehaviour
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
         pauseMenu.SetActive(isPaused);
-        darkBackgroundPanel.SetActive(isPaused);
+        //darkBackgroundPanel.SetActive(isPaused);
 
         if (isPaused)
         {

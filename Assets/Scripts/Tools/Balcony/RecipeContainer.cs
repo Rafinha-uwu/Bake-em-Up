@@ -23,8 +23,7 @@ public class RecipeContainer : MonoBehaviour
 		_interactable.selectEntered.AddListener(ContainerSelected);
 		_containerCanvas.EnableCanvas();
 
-		if (_recipeCount == 0)
-            HideContainer();
+        HideContainer();
     }
 
 	private void OnDestroy()

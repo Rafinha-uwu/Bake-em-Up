@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("GameLoop");
+        SceneManager.LoadScene("Main");
     }
 
 
@@ -31,6 +31,6 @@ public class MenuManager : MonoBehaviour
         int savedWave = GameManager.Instance.LoadSavedWave();
         GameManager.Instance.lastWaveIndex = savedWave;
 
-        SceneManager.LoadScene("GameLoop");
+        SceneManager.LoadScene("Main");
     }
 }
