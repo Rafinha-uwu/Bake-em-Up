@@ -11,6 +11,8 @@ public class RecipeContainer : MonoBehaviour
 	private RecipeData _breadRecipe;
 	[SerializeField]
 	private CounterCanvas _containerCanvas;
+	[SerializeField]
+	private GameObject _visuals;
 
 	private XRBaseInteractable _interactable;
 
@@ -72,11 +74,13 @@ public class RecipeContainer : MonoBehaviour
 
 	private void ShowContainer()
     {
-        gameObject.SetActive(true);
+        _visuals.SetActive(true);
+		_containerCanvas.EnableCanvas();
     }
 
     private void HideContainer()
     {
-        gameObject.SetActive(false);
+        _visuals.SetActive(false);
+		_containerCanvas.DisableCanvas();
     }
 }
