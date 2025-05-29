@@ -12,6 +12,8 @@ public class EnemyZigzagAI : Zombie
     private float sideWidth;
     private Vector3 randomPoint;
 
+    private ZombieAttack zombieAttack;
+
     protected override void Start()
     {
         base.Start();
@@ -23,12 +25,14 @@ public class EnemyZigzagAI : Zombie
 
         }
         timer = 0f;
+
+        zombieAttack = GetComponent<ZombieAttack>();
     }
 
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer >= movementUpdateRate)
+        if (timer >= movementUpdateRate && !death && !zombieAttack.isAttacking)
         {
             timer = 0f;
             Vector3 directionToPlayer = (randomPoint - transform.position).normalized;

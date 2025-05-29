@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class ZombieAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 2f;
-    private bool isAttacking;
+    public bool isAttacking;
 
     public float attackRange = 2f;
     public bool roulotteInAttackRange;
