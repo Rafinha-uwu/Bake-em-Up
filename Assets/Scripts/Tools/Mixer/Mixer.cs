@@ -192,7 +192,9 @@ public class Mixer : ToolCooker
 			OnMixerTurnedOff?.Invoke();
 
             GetComponent<Animator>().Play("Stop_Mix");
+            _socket.Interactable.transform.gameObject.GetComponent<Animator>().SetBool("Shake", false);
             _particles.gameObject.SetActive(false);
+
         }
 	}
 
