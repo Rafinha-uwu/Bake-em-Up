@@ -27,6 +27,8 @@ public class Oven : ToolCooker
 	[SerializeField]
 	private InteractionLayerMask _trackInteractionLayerMask;
 
+    private AudioSource _audioSource;
+
     private RecipeData _recipeDataDish1;
     private RecipeData _recipeDataDish2;
     private bool _isHeating = false;
@@ -78,9 +80,11 @@ public class Oven : ToolCooker
 		dishes[1].OnShowHelper += ShowDishMeshOnSocket;
 		dishes[1].OnOvenDishEmpty += HideDishMeshOnSocket;
 		_dishMeshFilter = dishes[0].GetComponentInChildren<MeshFilter>();
+
+        _audioSource = GetComponent<AudioSource>();
 	}
 
-	private void OnDestroy()
+    private void OnDestroy()
     {
         _ovenDoor.OnClose -= TurnOn;
         _ovenDoor.OnOpen -= TurnOff;
@@ -95,8 +99,8 @@ public class Oven : ToolCooker
 	    OnDishInOven = null;
 	    OnDishExitedOven = null;
 	    OnHeatingComplete = null;
-	    OnHeatingFailed = null;
-}
+	    OnHeatingFailed = null; 
+    }
 
     // Update is called once per frame
     void Update()
@@ -310,7 +314,9 @@ public class Oven : ToolCooker
         else if (!_heatingCompleteDish1 && _currentTimeDish1 >= _recipeDataDish1.OvenTime)
         {
 			MakeBread(_socket);
-        }
+            _audioSource.Play();
+
+		}
     }
     private void HeatDish2()
     {
@@ -330,6 +336,7 @@ public class Oven : ToolCooker
         else if (!_heatingCompleteDish2 && _currentTimeDish2 >= _recipeDataDish2.OvenTime)
         {
             MakeBread(_socketDish2);
+            _audioSource.Play();
         }
 
     }

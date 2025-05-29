@@ -24,6 +24,13 @@ public class EnemyNavigation : MonoBehaviour
         }
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+
+        // Start walk animation at random point
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        animator.Play(state.fullPathHash, 0, Random.Range(0f, 1f));
+
+        // Slight variation in animation speed
+        animator.speed = Random.Range(0.95f, 1.05f);
         agent.SetDestination(randomPoint);
 
     }

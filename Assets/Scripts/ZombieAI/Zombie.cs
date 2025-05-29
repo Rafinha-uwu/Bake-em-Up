@@ -23,6 +23,7 @@ public class Zombie : MonoBehaviour
     private Rigidbody[] _ragdollRigidboddies;
     protected NavMeshAgent agent;
     private Animator animator;
+    private AudioSource _audioSource;
 
     [SerializeField]
     private GameObject HIT;
@@ -51,6 +52,7 @@ public class Zombie : MonoBehaviour
 
     protected virtual void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         obstacle = GetComponent<NavMeshObstacle>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -72,6 +74,8 @@ public class Zombie : MonoBehaviour
         {
             //Debug.Log("LEVASTE COM UM PAO");
             hp -= damage;
+
+            _audioSource.Play();
 
             // Get the limb hit
             Collider hitCollider = receiver.GetComponent<Collider>();

@@ -13,10 +13,12 @@ public class Homing : MonoBehaviour
     private bool isHomingActive = true;
     private Transform player;
 
+    private AudioSource _audioSource;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         grabInteractable = GetComponent<XRGrabInteractable>();
+        _audioSource = GetComponent<AudioSource>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj)
@@ -31,6 +33,8 @@ public class Homing : MonoBehaviour
     private void OnRelease(SelectExitEventArgs args)
     {
         isThrown = true;
+        _audioSource.Play();
+
     }
 
     void FixedUpdate()
