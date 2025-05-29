@@ -91,10 +91,10 @@ public class WoodenBoard : MonoBehaviour
 		{
 			if (!_doughOnBoard)
 				return;
+            particles.Play();
 
-			if (_doughOnBoard.KneadDough()){
-				OnDoughKneaded?.Invoke();
-				particles.Play();
+            if (_doughOnBoard.KneadDough()){
+				OnDoughKneaded?.Invoke();	
 			}
 
             return;

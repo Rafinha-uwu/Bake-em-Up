@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6086477975796491498}
   - component: {fileID: 2807309370763679269}
   - component: {fileID: 8804152392422676134}
+  - component: {fileID: 3801308122329891698}
   m_Layer: 6
   m_Name: Cheese Bread
   m_TagString: Bread
@@ -255,6 +256,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smallCheese: {fileID: 7963640619984146696, guid: 0fc15a5c87a0f0d41aca085bd2c451d3, type: 3}
+--- !u!136 &3801308122329891698
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871263041570476209}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.048388362
+  m_Height: 0.1016078
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.00053322315, z: 0.0016354322}
 --- !u!1 &4433480036419701829
 GameObject:
   m_ObjectHideFlags: 0
