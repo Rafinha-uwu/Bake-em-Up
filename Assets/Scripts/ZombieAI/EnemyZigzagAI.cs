@@ -28,7 +28,7 @@ public class EnemyZigzagAI : Zombie
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer >= movementUpdateRate && death)
+        if (timer >= movementUpdateRate)
         {
             timer = 0f;
             Vector3 directionToPlayer = (randomPoint - transform.position).normalized;
