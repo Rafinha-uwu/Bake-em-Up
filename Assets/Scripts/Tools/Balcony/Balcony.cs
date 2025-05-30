@@ -6,54 +6,64 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Balcony : MonoBehaviour
 {
-	[SerializeField]
-	private List<RecipeContainer> _breadContainers;
+    [SerializeField]
+    private List<RecipeContainer> _breadContainers;
 
-	private RecipeContainer _containerAux;
+    private RecipeContainer _containerAux;
 
-	public delegate void BalconyHandler();
-	public event BalconyHandler OnBreadOnBalcony;
+    public delegate void BalconyHandler();
+    public event BalconyHandler OnBreadOnBalcony;
 
-	private void OnDestroy()
-	{
-		OnBreadOnBalcony = null;
-	}
+    private bool gamestart = true;
+    public GameObject waveSpawner;
 
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.CompareTag("Bread"))
-		{
-			XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
-			if (interactable.IsSelectedByLeft() || interactable.IsSelectedByRight())
-				return;
+    private void OnDestroy()
+    {
+        OnBreadOnBalcony = null;
+    }
 
-			OnBreadOnBalcony?.Invoke();
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Bread"))
+        {
+            if (gamestart == true)
+            {
+                waveSpawner.GetComponent<WaveSpawner>().StartWaves();
+                gamestart = false;
+            }
 
-			Bread bread = other.gameObject.GetComponentInParent<Bread>();
 
-			RecipeData recipe = bread.GetRecipe();
+            XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
+            if (interactable.IsSelectedByLeft() || interactable.IsSelectedByRight())
+                return;
 
-			if(!_containerAux.IsUnityNull() && _containerAux.GetRecipe() == recipe)
-			{
-				AddBreadInContainer(_containerAux, bread.gameObject);
-				return;
-			}
+            OnBreadOnBalcony?.Invoke();
 
-			foreach(RecipeContainer container in _breadContainers)
-			{
-				if(container.GetRecipe() == recipe)
-				{
-					_containerAux = container;
-					AddBreadInContainer(_containerAux, bread.gameObject);
-					return;
-				}
-			}
-		}
-	}
+            Bread bread = other.gameObject.GetComponentInParent<Bread>();
 
-	private void AddBreadInContainer(RecipeContainer container, GameObject bread)
-	{
-		container.AddRecipe();
-		Destroy(bread);
-	}
+            RecipeData recipe = bread.GetRecipe();
+
+            if (!_containerAux.IsUnityNull() && _containerAux.GetRecipe() == recipe)
+            {
+                AddBreadInContainer(_containerAux, bread.gameObject);
+                return;
+            }
+
+            foreach (RecipeContainer container in _breadContainers)
+            {
+                if (container.GetRecipe() == recipe)
+                {
+                    _containerAux = container;
+                    AddBreadInContainer(_containerAux, bread.gameObject);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void AddBreadInContainer(RecipeContainer container, GameObject bread)
+    {
+        container.AddRecipe();
+        Destroy(bread);
+    }
 }

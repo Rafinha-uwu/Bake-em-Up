@@ -20,6 +20,8 @@ public class WaveSpawner : MonoBehaviour
 
     public int CurrentWave => currentWaveIndex + 1;
 
+    public GameObject garageDoor;
+
     [SerializeField] private bool AutoStart = false;
     [SerializeField] private float CountTime = 0;
     [SerializeField] private bool CountOn = true;
@@ -55,8 +57,10 @@ public class WaveSpawner : MonoBehaviour
 
     public void StartWaves()
     {
-        StopWaves();
-
+        if (GameManager.Instance != null)
+        {
+            StopWaves();
+        }
         if (isSpawning) return;
 
         isSpawning = true;
@@ -131,6 +135,8 @@ public class WaveSpawner : MonoBehaviour
             CountOn = true;
             yield return new WaitForSeconds(wave.startTimer);
 
+            OpenDoor();
+
             for (int i = 0; i < wave.numberOfEnemies; i++)
             {
                 SpawnEnemy(wave);
@@ -143,9 +149,13 @@ public class WaveSpawner : MonoBehaviour
             }
 
             currentWaveIndex++;
+            CloseDoor();
 
             if (!waveSet.isInfinite && currentWaveIndex >= waveSet.predefinedWaves.Length)
+            {
+                garageDoor.GetComponentInChildren<Canvas>().enabled = true;
                 break;
+            }
         }
         GameManager.Instance.SaveProgress(currentWaveIndex);
         isSpawning = false;
@@ -204,5 +214,15 @@ public class WaveSpawner : MonoBehaviour
     private void OnZombieDeath(GameObject zombie)
     {
         activeZombies.Remove(zombie);
+    }
+
+    public void OpenDoor()
+    {
+        garageDoor.GetComponent<Animator>().SetBool("Open", true);
+    }
+
+    public void CloseDoor()
+    {
+        garageDoor.GetComponent<Animator>().SetBool("Open", false);
     }
 }
