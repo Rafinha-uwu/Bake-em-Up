@@ -27,7 +27,7 @@ public class WoodenBoard : MonoBehaviour
 
 	[SerializeField]
 	private Material _doughHelperMaterial;
-	private MeshFilter _doughMeshFilter;
+	private Mesh _doughMesh;
 	private Matrix4x4 _doughMatrix;
 	private bool _showDoughOnBoard = false;
 
@@ -79,7 +79,6 @@ public class WoodenBoard : MonoBehaviour
 	{
 		_doughSocket.socketActive = false;
 		_doughOnBoard = null;
-		_doughMeshFilter = null;
 
 		if(!args.interactableObject.IsUnityNull())
 			StartCoroutine(DetectIfLeftSocketByPlayerHand(args.interactableObject));
@@ -115,12 +114,10 @@ public class WoodenBoard : MonoBehaviour
 			if (_doughSocket.hasSelection)
 				return;
 
-			Bowl bowl = interactable.GetComponentInParent<Bowl>();
-			if (!bowl.IsUnityNull())
-				bowl.DoughRemoved();
-
 			HideDoughMeshOnBoard();
 			OnDoughOnBoard?.Invoke();
+			
+			Bowl bowl = interactable.GetComponentInParent<Bowl>();
 
 			_doughSocket.socketActive = true;
 			_doughSocket.interactionManager.SelectEnter(_doughSocket as IXRSelectInteractor, interactable as IXRSelectInteractable);
@@ -129,6 +126,9 @@ public class WoodenBoard : MonoBehaviour
 			_doughOnBoard.transform.SetParent(null, true);
 
 			SetLayerAllChildren(_doughOnBoard.transform, "Grabbable");
+
+			if (!bowl.IsUnityNull())
+				bowl.DoughRemoved();
 
 			return;
 		}
@@ -164,12 +164,13 @@ public class WoodenBoard : MonoBehaviour
 
 	private void ShowDoughMeshOnBoard()
 	{
-		if (_doughMeshFilter.IsUnityNull())
+		if (_doughMesh.IsUnityNull())
 		{
 			GameObject dough = LevelManager.Instance.GetBowl().GetDough();
-			_doughMeshFilter = dough.GetComponentInChildren<MeshFilter>();
+			MeshFilter meshFilter = dough.GetComponentInChildren<MeshFilter>();
+			_doughMesh = meshFilter.sharedMesh;
 
-			_doughMatrix = UtilsClass.GetHoverMeshMatrix(dough.GetComponent<XRBreadInteractable>(), _doughMeshFilter, 1f, _doughSocket);
+			_doughMatrix = UtilsClass.GetHoverMeshMatrix(dough.GetComponent<XRBreadInteractable>(), meshFilter, 1f, _doughSocket);
 		}
 
 		_showDoughOnBoard = true;
@@ -183,7 +184,7 @@ public class WoodenBoard : MonoBehaviour
 	private void DrawHelperMesh()
 	{
 		Graphics.DrawMesh(
-				_doughMeshFilter.sharedMesh,
+				_doughMesh,
 				_doughMatrix,
 				_doughHelperMaterial,
 				gameObject.layer
