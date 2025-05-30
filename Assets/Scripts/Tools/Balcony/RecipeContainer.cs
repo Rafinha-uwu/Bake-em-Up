@@ -23,10 +23,13 @@ public class RecipeContainer : MonoBehaviour
     {
         _interactable = GetComponent<XRSimpleInteractable>();
 		_interactable.selectEntered.AddListener(ContainerSelected);
-		_containerCanvas.EnableCanvas();
-
-        HideContainer();
     }
+
+	private void Start()
+	{
+		//_containerCanvas.EnableCanvas();
+		HideContainer();
+	}
 
 	private void OnDestroy()
 	{
