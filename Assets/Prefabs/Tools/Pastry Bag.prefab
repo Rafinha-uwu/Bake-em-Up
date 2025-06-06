@@ -287,6 +287,7 @@ GameObject:
   - component: {fileID: 4515212002657100206}
   - component: {fileID: 6984785191756090693}
   - component: {fileID: -2175485797227203497}
+  - component: {fileID: 5246045219633505343}
   m_Layer: 6
   m_Name: Pastry Bag
   m_TagString: Untagged
@@ -526,6 +527,27 @@ MonoBehaviour:
   projetil: {fileID: 3745125057616872124, guid: 524c423d8a69cb342a546ad3280170ed, type: 3}
   shootPoint: {fileID: 3978631360038128934}
   CooldownTime: 0.5
+--- !u!65 &5246045219633505343
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8101480082201366069}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6, y: 0.25, z: 0.25}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &6958921189827973099
 PrefabInstance:
   m_ObjectHideFlags: 0

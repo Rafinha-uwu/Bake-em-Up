@@ -100,4 +100,10 @@ public class PauseManager : MonoBehaviour
             button.interactable = true;
         }
     }
+
+    public void WaveRestart()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
 }
