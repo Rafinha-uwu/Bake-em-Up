@@ -258,29 +258,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1195303707}
     m_Modifications:
-    - target: {fileID: 1295935099760156932, guid: d4f8e4faa6a1aef45a5d0aef35c8a786, type: 3}
-      propertyPath: _screenBorder
-      value: 1500
-      objectReference: {fileID: 0}
-    - target: {fileID: 1702046406667702745, guid: d4f8e4faa6a1aef45a5d0aef35c8a786, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1702046406667702745, guid: d4f8e4faa6a1aef45a5d0aef35c8a786, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2503183655405315780, guid: d4f8e4faa6a1aef45a5d0aef35c8a786, type: 3}
       propertyPath: m_Name
       value: Fryier
-      objectReference: {fileID: 0}
-    - target: {fileID: 3465678703927947143, guid: d4f8e4faa6a1aef45a5d0aef35c8a786, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3465678703927947143, guid: d4f8e4faa6a1aef45a5d0aef35c8a786, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5716857919716126986, guid: d4f8e4faa6a1aef45a5d0aef35c8a786, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4583,10 +4563,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1195303707}
     m_Modifications:
-    - target: {fileID: 454473288026470120, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
-      propertyPath: _screenBorder
-      value: 1500
-      objectReference: {fileID: 0}
     - target: {fileID: 2075728004756260749, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4619,14 +4595,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mixer
       objectReference: {fileID: 0}
-    - target: {fileID: 6190368990268054910, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
-      propertyPath: end_sound
-      value: 
-      objectReference: {fileID: 8300000, guid: 32e4b2a0e7084844fafb28ce38a10e8e, type: 3}
-    - target: {fileID: 6190368990268054910, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
-      propertyPath: mixing_sound
-      value: 
-      objectReference: {fileID: 8300000, guid: 0550528f0beca254f8662f1fb9cad24c, type: 3}
     - target: {fileID: 7457528495563492411, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.818
@@ -4670,124 +4638,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5716552663768887694, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 895097619}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
 --- !u!114 &895097617 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6190368990268054910, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
   m_PrefabInstance: {fileID: 895097616}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 895097618}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21372017f2c702d4e91cd042dfa5b51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &895097618 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5716552663768887694, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
-  m_PrefabInstance: {fileID: 895097616}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &895097619
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 895097618}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -5194762260383066380, guid: d3f364868a69e4c4ab6ed4b38e697ddc, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0550528f0beca254f8662f1fb9cad24c, type: 3}
-  m_Resource: {fileID: 8300000, guid: 0550528f0beca254f8662f1fb9cad24c, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 250
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1001 &902523903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7167,6 +7030,8 @@ MonoBehaviour:
   death: 0
   force: 50
   currentState: 0
+  zombie_scream: {fileID: 0}
+  hit_sound: {fileID: 0}
   HIT: {fileID: 0}
   EP: {fileID: 0}
   POW: {fileID: 0}
