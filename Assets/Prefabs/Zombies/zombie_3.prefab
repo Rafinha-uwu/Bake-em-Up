@@ -749,6 +749,8 @@ MonoBehaviour:
   death: 0
   force: 300
   currentState: 0
+  zombie_scream: {fileID: 8300000, guid: ba2d5d6785b86f046b82ae7301d408aa, type: 3}
+  hit_sound: {fileID: 8300000, guid: f814c8ffe28cdd64680c5cb51bd49015, type: 3}
   HIT: {fileID: 5924883322492440177, guid: ec17bf6466e71064ba3d32073a2eb3a5, type: 3}
   EP: {fileID: 3709776488923154128, guid: 358573e14d2817048983c8d17c62e35e, type: 3}
   POW: {fileID: 8690037928980994899, guid: ffd9d07645daaf54bae1f7eab1dd3ad1, type: 3}
@@ -765,6 +767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 5
+  isAttacking: 0
   attackRange: 1
   roulotteInAttackRange: 0
   whatIsRoulotte:
@@ -819,8 +822,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5194762260383066380, guid: d3f364868a69e4c4ab6ed4b38e697ddc, type: 2}
-  m_audioClip: {fileID: 8300000, guid: f814c8ffe28cdd64680c5cb51bd49015, type: 3}
-  m_Resource: {fileID: 8300000, guid: f814c8ffe28cdd64680c5cb51bd49015, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ba2d5d6785b86f046b82ae7301d408aa, type: 3}
+  m_Resource: {fileID: 8300000, guid: ba2d5d6785b86f046b82ae7301d408aa, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

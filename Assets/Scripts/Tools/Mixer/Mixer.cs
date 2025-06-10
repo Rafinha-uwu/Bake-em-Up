@@ -39,6 +39,10 @@ public class Mixer : ToolCooker
 	private Matrix4x4 _bowlMatrix;
 	private bool _showPutInPlaceHover = false;
 
+	private AudioSource _audioSource;
+	[SerializeField] private AudioClip mixing_sound;
+	[SerializeField] private AudioClip end_sound;
+
 	private Bowl _bowl;
 
 	protected override void Awake()
@@ -61,6 +65,8 @@ public class Mixer : ToolCooker
 
 		_objectMeshFilter = _bowl.GetComponentInChildren<MeshFilter>();
 		_bowlMatrix = UtilsClass.GetHoverMeshMatrix(_bowl.GetComponent<XRBaseInteractable>(), _objectMeshFilter, 1f, _socket);
+
+		_audioSource = GetComponent<AudioSource>();
 	}
 
 	private void OnDestroy()
@@ -87,6 +93,8 @@ public class Mixer : ToolCooker
 
 		if (!_isMixing)
 			return;
+
+		PlayMixSound();
 
 		_currentTime += Time.deltaTime;
 		_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);
@@ -204,6 +212,7 @@ public class Mixer : ToolCooker
 			return;
 
 		_mixingComplete = true;
+		PlayEndMixSound();
 
 		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
 		bowl.MakeDough();
@@ -251,5 +260,19 @@ public class Mixer : ToolCooker
 				_bowlHelperMaterial,
 				gameObject.layer
 		);
-	}	
+	}
+
+	private void PlayMixSound()
+	{
+		_audioSource.clip = mixing_sound;
+		_audioSource.loop = true;
+		_audioSource.Play();
+	}
+
+	private void PlayEndMixSound()
+	{
+		_audioSource.clip = end_sound;
+		_audioSource.loop = false;
+		_audioSource.Play();
+	}
 }

@@ -8,7 +8,8 @@ public class Zombie : MonoBehaviour
     public enum ZombieState
     {
         WALKING,
-        GETHIT
+        GETHIT,
+        ATTACK
 
 
     }
@@ -24,6 +25,8 @@ public class Zombie : MonoBehaviour
     protected NavMeshAgent agent;
     private Animator animator;
     private AudioSource _audioSource;
+    [SerializeField] private AudioClip zombie_scream;
+    [SerializeField] private AudioClip hit_sound;
 
     [SerializeField]
     private GameObject HIT;
@@ -60,22 +63,24 @@ public class Zombie : MonoBehaviour
 
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(currentState == ZombieState.WALKING)
         {
-            StartCoroutine(OnDeath());
+            if (!_audioSource.isPlaying)
+            {
+                PlayWalkSound();
+            }
         }
-        */
     }
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
     {
         if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
         {
+            currentState = ZombieState.GETHIT;
             //Debug.Log("LEVASTE COM UM PAO");
             hp -= damage;
 
-            _audioSource.Play();
+            PlayHitSound();
 
             // Get the limb hit
             Collider hitCollider = receiver.GetComponent<Collider>();
@@ -153,5 +158,16 @@ public class Zombie : MonoBehaviour
         {
             rigidbody.isKinematic = false;
         }
+    }
+
+    private void PlayWalkSound()
+    {
+        _audioSource.PlayOneShot(zombie_scream);
+    }
+
+    private void PlayHitSound()
+    {
+        _audioSource.clip = hit_sound;
+        _audioSource.Play();
     }
 }

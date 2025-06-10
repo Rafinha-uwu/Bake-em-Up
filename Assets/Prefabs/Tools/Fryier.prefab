@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7734096331465494752}
   - component: {fileID: 2707299314493544785}
+  - component: {fileID: 2199901812652941712}
   m_Layer: 0
   m_Name: Fryier
   m_TagString: Untagged
@@ -190,6 +191,105 @@ MonoBehaviour:
   _socketFryerOil: {fileID: 7519405452284945757}
   _fryerCanvas: {fileID: 5982646395339152233}
   _baketHelperMaterial: {fileID: 2100000, guid: 5894a7e091da98d47a28e1986a10ce10, type: 2}
+  frying_sound: {fileID: 8300000, guid: 37b4e373de2fe4443ba062f48f48f1de, type: 3}
+  end_sound: {fileID: 8300000, guid: f012d76ac7c76de41bc8e3339aa8df7d, type: 3}
+--- !u!82 &2199901812652941712
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2503183655405315780}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -5194762260383066380, guid: d3f364868a69e4c4ab6ed4b38e697ddc, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 37b4e373de2fe4443ba062f48f48f1de, type: 3}
+  m_Resource: {fileID: 8300000, guid: 37b4e373de2fe4443ba062f48f48f1de, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 250
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3935113257468003131
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +495,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7734096331465494752}
     m_Modifications:
+    - target: {fileID: 3223103740110457766, guid: 54b7eb24974855041972c307d5e7e373, type: 3}
+      propertyPath: _screenBorder
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 4539759688033133836, guid: 54b7eb24974855041972c307d5e7e373, type: 3}
       propertyPath: m_Name
       value: Warning Canvas
