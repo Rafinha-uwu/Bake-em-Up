@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TutorialConditionStep : MonoBehaviour
@@ -46,7 +47,6 @@ public class TutorialConditionStep : MonoBehaviour
     public enum OvenConditions { OvenOpenDoor, OvenTurnedOn, HeatingComplete }
 
     public enum BalconyConditions { BreadOnBalcony }
-
 
 	private void Start()
 	{
@@ -150,6 +150,124 @@ public class TutorialConditionStep : MonoBehaviour
 			if (_condition.balcony == BalconyConditions.BreadOnBalcony)
 			{
 				balcony.OnBreadOnBalcony += ConditionAchieved;
+				return;
+			}
+		}
+	}
+
+	private void OnDestroy()
+	{
+		if (_condition.tool == ConditionToolName.Bowl)
+		{
+			Bowl bowl = TutorialManager.Instance.Bowl;
+			if (!bowl.IsUnityNull() && _condition.bowl == BowlConditions.RecipeReady)
+			{
+				bowl.OnRecipeReady -= ConditionAchieved;
+				bowl.OnRecipeNotReady -= ConditionUnattained;
+				return;
+			}
+		}
+
+		if (_condition.tool == ConditionToolName.Mixer)
+		{
+			Mixer mixer = TutorialManager.Instance.Mixer;
+			if (mixer.IsUnityNull())
+				return;
+
+			if (_condition.mixer == MixerConditions.MixerTunedOn)
+			{
+				mixer.OnMixerTurnedOn -= ConditionAchieved;
+				mixer.OnMixerTurnedOff -= ConditionUnattained;
+				return;
+			}
+
+			if (_condition.mixer == MixerConditions.MixingComplete)
+			{
+				mixer.OnMixingComplete -= ConditionAchieved;
+				mixer.OnMixingFailed -= ConditionUnattained;
+				return;
+			}
+
+			if (_condition.mixer == MixerConditions.MixerTurnedOff)
+			{
+				mixer.OnMixerTurnedOff -= ConditionAchieved;
+				mixer.OnMixerTurnedOn -= ConditionUnattained;
+				return;
+			}
+		}
+
+		if (_condition.tool == ConditionToolName.WoodBoard)
+		{
+			WoodenBoard woodenBoard = TutorialManager.Instance.WoodBoard;
+			if (woodenBoard.IsUnityNull())
+				return;
+
+			if (_condition.woodBoard == WoodBoardConditions.DoughOnBoard)
+			{
+				woodenBoard.OnDoughOnBoard -= ConditionAchieved;
+				woodenBoard.OnDoughRemovedFromBoard -= ConditionUnattained;
+				return;
+			}
+
+			if (_condition.woodBoard == WoodBoardConditions.DoughKneaded)
+			{
+				woodenBoard.OnDoughKneaded -= ConditionAchieved;
+				return;
+			}
+		}
+
+		if (_condition.tool == ConditionToolName.OvenDish)
+		{
+			OvenDish dish1 = TutorialManager.Instance.OvenDish1;
+			OvenDish dish2 = TutorialManager.Instance.OvenDish2;
+			if (dish1.IsUnityNull() || dish2.IsUnityNull())
+				return;
+
+			if (_condition.ovenDish == OvenDishConditions.DoughsOnDish)
+			{
+				dish1.OnOvenDishHasDough -= ConditionAchieved;
+				dish1.OnOvenDishEmpty -= ConditionUnattained;
+
+				dish2.OnOvenDishHasDough -= ConditionAchieved;
+				dish2.OnOvenDishEmpty -= ConditionUnattained;
+				return;
+			}
+		}
+
+		if (_condition.tool == ConditionToolName.Oven)
+		{
+			Oven oven = TutorialManager.Instance.Oven;
+			if (oven.IsUnityNull())
+				return;
+
+			if (_condition.oven == OvenConditions.OvenOpenDoor)
+			{
+				oven.OnOvenTurnOff -= ConditionAchieved;
+				oven.OnOvenTurnOn -= ConditionUnattained;
+				return;
+			}
+
+			if (_condition.oven == OvenConditions.OvenTurnedOn)
+			{
+				oven.OnOvenTurnOn -= ConditionAchieved;
+				oven.OnOvenTurnOff -= ConditionUnattained;
+				return;
+			}
+
+			if (_condition.oven == OvenConditions.HeatingComplete)
+			{
+				oven.OnHeatingComplete -= ConditionAchieved;
+				oven.OnHeatingFailed -= ConditionUnattained;
+				return;
+			}
+		}
+
+		if (_condition.tool == ConditionToolName.Balcony)
+		{
+			Balcony balcony = TutorialManager.Instance.Balcony;
+			if (!balcony.IsUnityNull() && _condition.balcony == BalconyConditions.BreadOnBalcony)
+			{
+				balcony.OnBreadOnBalcony -= ConditionAchieved;
 				return;
 			}
 		}

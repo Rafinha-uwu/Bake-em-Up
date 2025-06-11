@@ -105,30 +105,34 @@ public class WoodenBoard : MonoBehaviour
 			return;
 		}
 
+		if (_doughSocket.hasSelection)
+			return;
+
 		XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
+
+		if(interactable.TryGetComponent<Bowl>(out var auxBowl))
+		{
+			if (auxBowl.HasCompletedDough && auxBowl.GetDough().CompareTag("Dough"))
+			{
+				GameObject dough = Instantiate(auxBowl.GetDough(), _doughSocket.transform.position, Quaternion.identity);
+				auxBowl.DoughRemoved();
+				return;
+			}
+		}
+
 		if (interactable.isSelected)
 			return;
 
 		if (other.gameObject.CompareTag("Dough"))
 		{
-			if (_doughSocket.hasSelection)
-				return;
-
 			HideDoughMeshOnBoard();
 			OnDoughOnBoard?.Invoke();
 			
-			Bowl bowl = interactable.GetComponentInParent<Bowl>();
-
 			_doughSocket.socketActive = true;
 			_doughSocket.interactionManager.SelectEnter(_doughSocket as IXRSelectInteractor, interactable as IXRSelectInteractable);
 
 			_doughOnBoard = other.gameObject.GetComponentInParent<Dough>();
 			_doughOnBoard.transform.SetParent(null, true);
-
-			SetLayerAllChildren(_doughOnBoard.transform, "Grabbable");
-
-			if (!bowl.IsUnityNull())
-				bowl.DoughRemoved();
 
 			return;
 		}
@@ -139,15 +143,6 @@ public class WoodenBoard : MonoBehaviour
 			_shapedDoughsSocketsManager.ReceivedItem(recipe, other.gameObject);
 
 			return;
-		}
-	}
-
-	private void SetLayerAllChildren(Transform root, string layerName)
-	{
-		var children = root.GetComponentsInChildren<Transform>(includeInactive: true);
-		foreach (var child in children)
-		{
-			child.gameObject.layer = LayerMask.NameToLayer(layerName);
 		}
 	}
 

@@ -5,18 +5,8 @@ using System.Linq;
 using Unity.VisualScripting;
 
 public class ToolContainer : Tool
-{
-    [SerializeField]
-    private ToolContainerName _toolContainerName;
-	public ToolContainerName ToolContainerName => _toolContainerName;
-	
-	protected Collider _collider;
+{	
 	protected RecipeData _recipeData;
-
-	protected virtual void Awake()
-	{
-		_collider = GetComponent<Collider>();
-	}
 
 	protected void ReleaseItem(XRGrabInteractable interactable)
 	{
@@ -33,28 +23,32 @@ public class ToolContainer : Tool
 
 	public virtual bool HasPriorityOver(GameObject currentInteractor)
 	{
-		ToolContainer currentContainer = currentInteractor.GetComponent<ToolContainer>();
+		ToolContainer currentContainer = currentInteractor.GetComponentInParent<ToolContainer>();
 		if (currentContainer == null)
 			return true;
 		
-		if (_toolContainerName == ToolContainerName.Bowl 
-			|| new[] { ToolContainerName.PastryBag, ToolContainerName.Balcony}.Contains(currentContainer.ToolContainerName))
+		if (_toolName == ToolName.Bowl 
+			|| new[] { ToolName.PastryBag, ToolName.Balcony}.Contains(currentContainer.ToolName))
+			return false;
+
+		if (_toolName == ToolName.Balcony && currentContainer.ToolName == ToolName.Bowl)
+			return false;
+
+		if (_toolName == currentContainer.ToolName)
 			return false;
 		
-		if (currentContainer.ToolContainerName == ToolContainerName.Bowl || _toolContainerName == ToolContainerName.Balcony)
+		if (currentContainer.ToolName == ToolName.Bowl || _toolName == ToolName.Balcony)
 			return true;
 
-		if (currentContainer.ToolContainerName == ToolContainerName.WoodBoard && _toolContainerName != ToolContainerName.PastryBag)
+		if (currentContainer.ToolName == ToolName.WoodBoard && _toolName != ToolName.PastryBag)
 			return true;
 
-		if (_toolContainerName == ToolContainerName.OvenDish && _recipeData != null && _recipeData.OvenTime > 0f)
+		if (_toolName == ToolName.OvenDish && _recipeData != null && _recipeData.OvenTime > 0f)
 			return true;
 
-		if (_toolContainerName == ToolContainerName.FryingBasket && _recipeData != null && _recipeData.FryingTime > 0f)
+		if (_toolName == ToolName.FryingBasket && _recipeData != null && _recipeData.FryingTime > 0f)
 			return true;
 
 		return false;
 	}
 }
-
-public enum ToolContainerName { Bowl, OvenDish, FryingBasket, PastryBag, WoodBoard, Balcony }

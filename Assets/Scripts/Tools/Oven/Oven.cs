@@ -223,8 +223,6 @@ public class Oven : ToolCooker
     {
         if (_socket.Interactable != null)
         {
-            _socket.IsToolOn = false;
-
             XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
             grabInteractable.interactionLayers = _dishInteractionLayerMask;
             _isHeating = false;
@@ -232,9 +230,6 @@ public class Oven : ToolCooker
 
         if (_socketDish2.Interactable != null)
         {
-
-            _socketDish2.IsToolOn = false;
-
             XRBaseInteractable grabInteractable = _socketDish2.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
             grabInteractable.interactionLayers = _dishInteractionLayerMask;
             _isHeating = false;
@@ -254,8 +249,6 @@ public class Oven : ToolCooker
     {
         if (_socket.Interactable != null)
         {
-            _socket.IsToolOn = true;
-
             XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
             grabInteractable.interactionLayers = _trackInteractionLayerMask;
 
@@ -269,8 +262,6 @@ public class Oven : ToolCooker
 
         if (_socketDish2.Interactable != null)
         {
-			_socketDish2.IsToolOn = true;
-
             XRBaseInteractable grabInteractable = _socketDish2.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
             grabInteractable.interactionLayers = _trackInteractionLayerMask;
 

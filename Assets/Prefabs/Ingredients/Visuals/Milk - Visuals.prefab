@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7484029731977527125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5574291731940513438}
+  m_Layer: 0
+  m_Name: Milk - Visuals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5574291731940513438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7484029731977527125}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8072095695746805402}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &8615211509746747761
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5574291731940513438}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0.02367987
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: -0.016389579
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: -0.000079778954
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.03253011
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.103880145
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.03250113
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+      propertyPath: m_Name
+      value: ' Visuals'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+--- !u!4 &8072095695746805402 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f9bc6929a48954ca0a8b8d61c0e92cd1, type: 3}
+  m_PrefabInstance: {fileID: 8615211509746747761}
+  m_PrefabAsset: {fileID: 0}

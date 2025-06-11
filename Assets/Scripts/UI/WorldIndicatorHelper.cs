@@ -14,7 +14,8 @@ public class WorldIndicatorHelper : MonoBehaviour
 	private float _screenBorder = 100f;
     
 	private RectTransform _canvas;
-    private Transform _targetPosition;
+    private Vector3 _targetPosition;
+	private bool _hasPosition = false;
 
 	private void Awake()
 	{
@@ -23,10 +24,10 @@ public class WorldIndicatorHelper : MonoBehaviour
 
 	void Update()
 	{
-		if (_targetPosition.IsUnityNull())
+		if (!_hasPosition)
 			return;
 
-		Vector3 targetViewportPoint = Camera.main.WorldToViewportPoint(_targetPosition.position);
+		Vector3 targetViewportPoint = Camera.main.WorldToViewportPoint(_targetPosition);
 
 		bool isBehind = targetViewportPoint.z < 0;
 		bool isOffScreen = targetViewportPoint.x < 0 || targetViewportPoint.x > 1f || targetViewportPoint.y < 0f || targetViewportPoint.y > 1f;
@@ -95,8 +96,9 @@ public class WorldIndicatorHelper : MonoBehaviour
 		_indicatorImage.sprite = sprite;
 	}
 
-	public void SetTargetPosition(Transform target)
+	public void SetTargetPosition(Vector3 target)
 	{
 		_targetPosition = target;
+		_hasPosition = true;
 	}
 }

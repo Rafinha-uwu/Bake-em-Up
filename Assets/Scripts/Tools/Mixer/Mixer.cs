@@ -12,10 +12,6 @@ public class Mixer : ToolCooker
 	[SerializeField]
 	private GameObject _particles;
 
-	private InteractionLayerMask _bowlInteractionLayerMask;
-	[SerializeField]
-	private InteractionLayerMask _trackInteractionLayerMask;
-
 	private RecipeData _recipeData;
 	public bool _isMixing = false;
 	private float _currentTime = 0f;
@@ -54,7 +50,7 @@ public class Mixer : ToolCooker
 		_toolButton.OnTurnOff += TurnOff;
 
 		_bowl = LevelManager.Instance.GetBowl();
-		_bowl.OnRecipeReady += ShowBowlMeshOnSocket;
+		_bowl.OnRecipeReady += BowlHasRecipe;
 		_bowl.OnRecipeNotReady += HideBowlMeshOnSocket;
 		_socket.hoverEntered.AddListener(HoverEntered);
 		_socket.hoverExited.AddListener(HoverExited);
@@ -108,40 +104,18 @@ public class Mixer : ToolCooker
 	}
 
 	public override void SocketSelectedEnter(XRSocketToolInteractor socket)
-	{
+	{		
+		_bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
+		
 		HideBowlMeshOnSocket();
-
-		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
-		bowl.DisableCanvas();
-
-		if (bowl.GetRecipe(out _recipeData))
-		{
-			_badTimer = _recipeData.MixerTime * BadTimerMultiplier;
-
-			if (bowl.HasBadDough)
-			{
-				_currentTime = _badTimer;
-				_mixingRuined = true;
-			}
-			else if (bowl.HasCompletedDough)
-			{
-				_currentTime = _recipeData.MixerTime;
-				_mixingComplete = true;
-			}
-
-			if (!bowl.HasBadDough)
-				OnSocketSelected();
-
-			_mixerCanvas.SetRecipe(_recipeData.recipeSprite);
-			_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);
-			_mixerCanvas.EnableCanvas();
-		}
+		BowlHasRecipe();
 	}
 
 	public override void SocketSelectedExit(XRSocketToolInteractor socket)
 	{
-		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
-		bowl.EnableCanvas();
+		_bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
+		_bowl.ResetCanvasPosition();
+		_bowl.EnableCanvas();
 
 		if (!_recipeData.IsUnityNull())
 			OnSocketExited?.Invoke();
@@ -151,6 +125,9 @@ public class Mixer : ToolCooker
 			_mixerCanvas.ClearCanvas();
 			_mixerCanvas.DisableCanvas();
 		}
+
+		TurnOff();
+		_toolButton.TurnOffButton();
 		
 		_recipeData = null;
 		_currentTime = 0f;
@@ -161,40 +138,32 @@ public class Mixer : ToolCooker
 
 	protected override void TurnOn()
 	{
-		if (_socket.Interactable != null)
+		if (_recipeData != null)
 		{
-			_socket.IsToolOn = true;
-			XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
-			_bowlInteractionLayerMask = grabInteractable.interactionLayers;
-			grabInteractable.interactionLayers = _trackInteractionLayerMask;
-
-			if (_recipeData != null)
-			{
-				_isMixing = true;
-				OnMixerTurnedOn?.Invoke();
+			_isMixing = true;
+			OnMixerTurnedOn?.Invoke();
 				
-                GetComponent<Animator>().Play("Shake_Mix");
-                _socket.Interactable.transform.gameObject.GetComponent<Animator>().SetBool("Shake", true);
-                _particles.gameObject.SetActive(true);
-            }
-        }
+            GetComponent<Animator>().Play("Shake_Mix");
+            _bowl.gameObject.GetComponent<Animator>().SetBool("Shake", true);
+            _particles.SetActive(true);
+		}
+		else
+		{
+			_toolButton.TurnOffButton();
+		}
 	}
 
 	protected override void TurnOff()
 	{
-		if (_socket.Interactable != null)
+		if (_recipeData != null)
 		{
-			_socket.IsToolOn = false;
-			XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
-			grabInteractable.interactionLayers = _bowlInteractionLayerMask;
 			_isMixing = false;
 			_warningHelper.Hide();
 			OnMixerTurnedOff?.Invoke();
 
             GetComponent<Animator>().Play("Stop_Mix");
-            _socket.Interactable.transform.gameObject.GetComponent<Animator>().SetBool("Shake", false);
-            _particles.gameObject.SetActive(false);
-
+            _bowl.gameObject.GetComponent<Animator>().SetBool("Shake", false);
+            _particles.SetActive(false);
         }
 	}
 
@@ -222,9 +191,43 @@ public class Mixer : ToolCooker
 		OnMixingFailed?.Invoke();
 	}
 
-	private void ShowBowlMeshOnSocket()
+	private void BowlHasRecipe()
 	{
-		_showPutInPlaceHover = true;
+		if (_socket.Interactable.IsUnityNull())
+			_showPutInPlaceHover = true;
+		else
+		{
+			if (_bowl.GetRecipe(out _recipeData))
+			{
+				_bowl.ResetCanvasPosition();
+				_bowl.DisableCanvas();
+
+				_badTimer = _recipeData.MixerTime * BadTimerMultiplier;
+
+				if (_bowl.HasBadDough)
+				{
+					_currentTime = _badTimer;
+					_mixingRuined = true;
+				}
+				else if (_bowl.HasCompletedDough)
+				{
+					_currentTime = _recipeData.MixerTime;
+					_mixingComplete = true;
+				}
+
+				if (!_bowl.HasBadDough)
+					OnSocketSelected();
+
+				_mixerCanvas.SetRecipe(_recipeData.recipeSprite);
+				_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);
+				_mixerCanvas.EnableCanvas();
+			}
+			else
+			{
+				_bowl.EnableCanvas();
+				_bowl.ChangeCanvasPosition(_transformForIndicatorHelper);
+			}
+		}
 	}
 
 	private void HideBowlMeshOnSocket()
@@ -240,7 +243,7 @@ public class Mixer : ToolCooker
 	private void HoverExited(HoverExitEventArgs args)
 	{
 		if (!_bowl.IsUnityNull() && _bowl.HasRecipeReady)
-			ShowBowlMeshOnSocket();
+			BowlHasRecipe();
 	}
 
 	private void DrawHelperMesh()

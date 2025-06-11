@@ -24,9 +24,8 @@ public class OvenDish : ToolContainer
 	public delegate void DishHelperHandler(OvenDish dish);
 	public event DishHelperHandler OnShowHelper;
 
-	protected override void Awake()
+	protected void Awake()
     {
-        base.Awake();
         _resettable = GetComponent<Resettable>();
         _resettable.OnObjectReset += ClearDish;
     }
@@ -82,7 +81,7 @@ public class OvenDish : ToolContainer
     {
 		GameObject item = other.gameObject;
 
-		if (!_recipeData.IsUnityNull())
+		if (!_recipeData.IsUnityNull() && (item.CompareTag("Shaped Dough") || item.CompareTag("Bread")))
 		{
 			_shapedDoughsSocketsManager.OnContainerTriggerEnter(item);
 			return;

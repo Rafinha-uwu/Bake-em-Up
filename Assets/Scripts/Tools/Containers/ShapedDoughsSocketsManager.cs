@@ -151,13 +151,13 @@ public class ShapedDoughsSocketsManager : MonoBehaviour
 		if (!interactable.isSelected)
 			return true;
 
-		XRBaseInteractor interactor = interactable.firstInteractorSelecting as XRBaseInteractor;
-		//Provavelmente aqui da para fazer para mostrar o mesh do objeto que ta sendo segurado pelo player e colocar no meio mesmo
 		if (interactable.IsSelectedByLeft() || interactable.IsSelectedByRight())
 			return false;
 
 		if (_toolContainer == null)
 			return false;
+		
+		XRBaseInteractor interactor = interactable.firstInteractorSelecting as XRBaseInteractor;
 
 		return _toolContainer.HasPriorityOver(interactor.gameObject);
 	}

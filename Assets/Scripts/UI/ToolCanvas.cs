@@ -6,7 +6,6 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class ToolCanvas : MonoBehaviour
 {
-	private Transform _lookAt;
     private Transform _transformToFollow;
 	private Canvas _canvas;
 	
@@ -14,11 +13,6 @@ public class ToolCanvas : MonoBehaviour
 	{
 		_canvas = GetComponent<Canvas>();
 		DisableCanvas();
-	}
-
-	private void Start()
-	{
-		_lookAt = Camera.main.transform;
 	}
 
 	protected virtual void LateUpdate()

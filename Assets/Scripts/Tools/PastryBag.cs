@@ -33,9 +33,8 @@ public class PastryBag : ToolContainer
 	[SerializeField]
 	private LayerMask _projectileCollisionMask;
 
-	protected override void Awake()
+	protected void Awake()
 	{
-		base.Awake();
 		_pastryBagCanvas.UpdateCounter(_remainingCream);
 
 		_interactable = GetComponent<XRGrabInteractable>();
@@ -89,18 +88,19 @@ public class PastryBag : ToolContainer
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.CompareTag("Cream"))
-		{
-			XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
-			if (interactable == null || interactable.isSelected)
-				return;
-
-			PastryCream cream = other.gameObject.GetComponentInParent<PastryCream>();
-			_recipeData = cream.GetRecipe();
-			AddCream();
-
-			Destroy(cream.gameObject);
+		XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
+		if (interactable.IsUnityNull())
 			return;
+
+		if (interactable.TryGetComponent<Bowl>(out var auxBowl))
+		{
+			if (auxBowl.HasCompletedDough && auxBowl.GetDough().CompareTag("Cream"))
+			{
+				auxBowl.GetRecipe(out _recipeData);
+				AddCream();
+				auxBowl.DoughRemoved();
+				return;
+			}
 		}
 	}
 

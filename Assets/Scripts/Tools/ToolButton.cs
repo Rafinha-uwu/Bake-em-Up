@@ -27,17 +27,22 @@ public class ToolButton : XRPokeFollowAffordance
 	{
 		if (!_isPressed)
 		{
-			OnTurnOn?.Invoke();
 			_isPressed = true;
 			initialPosition = _onTransform.localPosition;
 			_renderer.material = _onMaterial;
+			OnTurnOn?.Invoke();
 		}
 		else
 		{
+			TurnOffButton();
 			OnTurnOff?.Invoke();
-			_isPressed = false;
-			initialPosition = _offTransform.localPosition;
-			_renderer.material = _offMaterial;
 		}
+	}
+
+	public void TurnOffButton()
+	{
+		_isPressed = false;
+		initialPosition = _offTransform.localPosition;
+		_renderer.material = _offMaterial;
 	}
 }

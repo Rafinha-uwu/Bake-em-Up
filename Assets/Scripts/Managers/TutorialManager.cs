@@ -78,28 +78,22 @@ public class TutorialManager : MonoBehaviour
 		{
 			if (_currentTutorialCondition == _tutorialConditionSteps.Count - 1)
 			{
+				Destroy(gameObject);
 				_indicatorHelper.Hide();
 				return;
 			}
 
-			_currentTutorialCondition = (_currentTutorialCondition == _tutorialConditionSteps.Count - 1) ? 0 : _currentTutorialCondition + 1;
+			_currentTutorialCondition++;
 			_tutorialConditionSteps[_currentTutorialCondition].StartCondition(_indicatorHelper);
 		}
 	}
 
 	public void TutorialConditionFailed(TutorialConditionStep condition)
 	{
-		if (_currentTutorialCondition == 0)
+		if (_currentTutorialCondition == 0 || _currentTutorialCondition == _tutorialConditionSteps.Count - 1)
 			return;
 
-		bool last = false;
-		if (_currentTutorialCondition == _tutorialConditionSteps.Count - 1)
-		{
-			_indicatorHelper.Show();
-			last = true;
-		}
-
-		if (_tutorialConditionSteps[_currentTutorialCondition-1].GetInstanceID() == condition.GetInstanceID() || last)
+		if (_tutorialConditionSteps[_currentTutorialCondition-1].GetInstanceID() == condition.GetInstanceID())
 		{
 			_currentTutorialCondition--;
 			_tutorialConditionSteps[_currentTutorialCondition].StartCondition(_indicatorHelper);

@@ -97,5 +97,4 @@ public class LevelManager : MonoBehaviour
             Instance = null;
         }
     }
-    
 }

@@ -101,8 +101,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
-  IsToolOn: 0
-  _toolContainerName: 0
+  _toolName: 0
 --- !u!1 &2122401835188058125
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,13 +283,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21372017f2c702d4e91cd042dfa5b51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _toolName: 6
   _transformForIndicatorHelper: {fileID: 4101588521288634495}
   _badTimerPercent: 200
   _socket: {fileID: 3671289700795073015}
   _mixerCanvas: {fileID: 44628424264461806}
   _particles: {fileID: 3614526666529057825}
-  _trackInteractionLayerMask:
-    m_Bits: 16
   _isMixing: 0
   _socketTransform: {fileID: 4511790447317229390}
   _bowlHelperMaterial: {fileID: 2100000, guid: 5894a7e091da98d47a28e1986a10ce10, type: 2}
@@ -478,7 +476,7 @@ MonoBehaviour:
       m_PokeDirection: 1
       m_InteractionDepthOffset: 0
       m_EnablePokeAngleThreshold: 1
-      m_PokeAngleThreshold: 89.9
+      m_PokeAngleThreshold: 45
     m_Variable: {fileID: 0}
 --- !u!114 &1888743050949706242
 MonoBehaviour:
@@ -961,15 +959,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7899099928202489408, guid: f2c3d481e5b272343b6634c143d66f00, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.016665325
+      value: -0.016666666
       objectReference: {fileID: 0}
     - target: {fileID: 7899099928202489408, guid: f2c3d481e5b272343b6634c143d66f00, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000025331974
+      value: 0.000000014901161
       objectReference: {fileID: 0}
     - target: {fileID: 7899099928202489408, guid: f2c3d481e5b272343b6634c143d66f00, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00000017881393
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

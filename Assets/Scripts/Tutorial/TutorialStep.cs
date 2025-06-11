@@ -16,7 +16,11 @@ public class TutorialStep: MonoBehaviour
 
 	public virtual void ShowStep(WorldIndicatorHelper indicatorHelper)
 	{
-		indicatorHelper.SetTargetPosition(_targetTransform);
+		Vector3 auxPosition = _targetTransform.position;
+		if(this is TutorialGrabStep || this is TutorialSocketStep)
+			auxPosition.y += 0.15f;
+
+		indicatorHelper.SetTargetPosition(auxPosition);
 		indicatorHelper.SetIndicatorImage(_indicatorSprite);
 		_isCurrentStep = true;
 	}
