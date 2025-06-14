@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -18,6 +19,8 @@ public class RecipeContainer : MonoBehaviour
 
 	[SerializeField]
     private int _recipeCount = 0;
+
+	public UnityEvent<int> ChangedRecipeCount;
 
     void Awake()
     {
@@ -45,6 +48,8 @@ public class RecipeContainer : MonoBehaviour
     {
         _recipeCount += 1;
         _containerCanvas.UpdateCounter(_recipeCount);
+
+		ChangedRecipeCount?.Invoke(_recipeCount);
         
         ShowContainer();
 	}
@@ -70,6 +75,7 @@ public class RecipeContainer : MonoBehaviour
 
 			_recipeCount -= 1;
 			_containerCanvas.UpdateCounter(_recipeCount);
+			ChangedRecipeCount?.Invoke(_recipeCount);
 			if (_recipeCount == 0)
 				HideContainer();
 		}

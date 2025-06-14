@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1093480231743302539}
   - component: {fileID: 5359834479833065852}
   - component: {fileID: 5731388177772324973}
+  - component: {fileID: 2044588953499771883}
   m_Layer: 12
   m_Name: Cheese Bread Container
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 317225419974177073}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.285, y: 0.083999634, z: 0}
+  m_LocalPosition: {x: 0.285, y: 0.06999969, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 0}
+  - {fileID: 6456104515938368536}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -124,6 +125,41 @@ MonoBehaviour:
   _containerCanvas: {fileID: 4323007920038506944}
   _visuals: {fileID: 3526989557554127355}
   _recipeCount: 0
+  ChangedRecipeCount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2044588953499771883}
+        m_TargetAssemblyTypeName: ChangeBalconyMesh, Assembly-CSharp
+        m_MethodName: CheckMeshCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2044588953499771883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317225419974177073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f803785291fc72c4d9b3237ff340c70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recipeMeshFilter: {fileID: 2870128115660415455}
+  _meshCount:
+  - minCount: 8
+    recipeMesh: {fileID: -2596744769809120296, guid: 63d73cb47218a364eae7773599d073f4, type: 3}
+  - minCount: 4
+    recipeMesh: {fileID: 4869684999781159963, guid: 7b3cd7467786a4e43acaff591fe9781b, type: 3}
+  - minCount: 1
+    recipeMesh: {fileID: 8846623159854370519, guid: c2c15aa2a14a3fa49b8661a58c121ecf, type: 3}
 --- !u!1 &1427759539541667250
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +203,7 @@ GameObject:
   - component: {fileID: 3925567620515233343}
   - component: {fileID: 931159710095244063}
   - component: {fileID: 2938479421789832114}
+  - component: {fileID: 2217264168263051048}
   m_Layer: 12
   m_Name: Bread Container
   m_TagString: Untagged
@@ -205,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 0}
+  - {fileID: 3129032825127489351}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -280,6 +317,41 @@ MonoBehaviour:
   _containerCanvas: {fileID: 4833204928276679193}
   _visuals: {fileID: 3692977097512316992}
   _recipeCount: 0
+  ChangedRecipeCount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2217264168263051048}
+        m_TargetAssemblyTypeName: ChangeBalconyMesh, Assembly-CSharp
+        m_MethodName: CheckMeshCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2217264168263051048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660306834947376739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f803785291fc72c4d9b3237ff340c70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recipeMeshFilter: {fileID: 2769851279235685813}
+  _meshCount:
+  - minCount: 12
+    recipeMesh: {fileID: -1412490011413983264, guid: 9e316da4cb0b352429eeb7d3690afbfd, type: 3}
+  - minCount: 6
+    recipeMesh: {fileID: -3580942868444644092, guid: 66b50f518b78b9d408de24c3f7f0e169, type: 3}
+  - minCount: 1
+    recipeMesh: {fileID: 6738769108097114687, guid: 31b4d813c3e22af4f86b119c6bab68b7, type: 3}
 --- !u!1 &2443983016001907048
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +363,7 @@ GameObject:
   - component: {fileID: 3071759743242597330}
   - component: {fileID: 8754766947164043966}
   - component: {fileID: 4777987115954627062}
+  - component: {fileID: 2841584716210411653}
   m_Layer: 12
   m_Name: Donut Container
   m_TagString: Untagged
@@ -307,7 +380,7 @@ Transform:
   m_GameObject: {fileID: 2443983016001907048}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.57, y: 0.09599972, z: 0}
+  m_LocalPosition: {x: 0.57, y: 0.06999969, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -329,7 +402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 0}
+  - {fileID: 8619060167363619023}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -404,6 +477,41 @@ MonoBehaviour:
   _containerCanvas: {fileID: 4368171642432254574}
   _visuals: {fileID: 1427759539541667250}
   _recipeCount: 0
+  ChangedRecipeCount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2841584716210411653}
+        m_TargetAssemblyTypeName: ChangeBalconyMesh, Assembly-CSharp
+        m_MethodName: CheckMeshCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2841584716210411653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2443983016001907048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f803785291fc72c4d9b3237ff340c70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recipeMeshFilter: {fileID: 5736876809571796348}
+  _meshCount:
+  - minCount: 4
+    recipeMesh: {fileID: 712165046167383135, guid: 6cd2d4416171f1948aa6fb3b1fceb7ec, type: 3}
+  - minCount: 2
+    recipeMesh: {fileID: 285076830592061463, guid: 6260da905703d47429071587e23a7193, type: 3}
+  - minCount: 1
+    recipeMesh: {fileID: -4732840110133418022, guid: f4f27f4f87825824599078ede0c26873, type: 3}
 --- !u!1 &3526989557554127355
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,6 +587,7 @@ GameObject:
   - component: {fileID: 6671357303275490159}
   - component: {fileID: 7788631907526913984}
   - component: {fileID: 466247221259400633}
+  - component: {fileID: 6716986497235432064}
   m_Layer: 12
   m_Name: Baguette Container
   m_TagString: Untagged
@@ -495,7 +604,7 @@ Transform:
   m_GameObject: {fileID: 5313358525950735526}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.285, y: 0.06000042, z: 0}
+  m_LocalPosition: {x: -0.285, y: 0.06999969, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -517,7 +626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 0}
+  - {fileID: 28328718542682632}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -592,6 +701,41 @@ MonoBehaviour:
   _containerCanvas: {fileID: 3998235706477172600}
   _visuals: {fileID: 8852576857022369547}
   _recipeCount: 0
+  ChangedRecipeCount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6716986497235432064}
+        m_TargetAssemblyTypeName: ChangeBalconyMesh, Assembly-CSharp
+        m_MethodName: CheckMeshCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6716986497235432064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313358525950735526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f803785291fc72c4d9b3237ff340c70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recipeMeshFilter: {fileID: 1700501694958688458}
+  _meshCount:
+  - minCount: 3
+    recipeMesh: {fileID: 1680119480770584950, guid: 410eab663e8cffe458263cc3fd206f5e, type: 3}
+  - minCount: 2
+    recipeMesh: {fileID: 8710624572339347789, guid: 70efda872e5388142beec1a6675c4d28, type: 3}
+  - minCount: 1
+    recipeMesh: {fileID: -6005180678748250818, guid: b2b4e2089033b184093de76a70653680, type: 3}
 --- !u!1 &6121222201560779196
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,8 +944,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.35, y: 0.07525286, z: 0.5}
-  m_Center: {x: 0, y: 0.05052872, z: 0}
+  m_Size: {x: 1.35, y: 0.1, z: 0.5}
+  m_Center: {x: 0, y: 0.09, z: 0}
 --- !u!114 &8055978486622873817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,6 +1009,7 @@ GameObject:
   - component: {fileID: 8361789521696673214}
   - component: {fileID: 5310445497930288749}
   - component: {fileID: 2360751157718714073}
+  - component: {fileID: 2617088156561067082}
   m_Layer: 12
   m_Name: Cupcake Container
   m_TagString: Untagged
@@ -881,7 +1026,7 @@ Transform:
   m_GameObject: {fileID: 9169570634930329348}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.11340046, z: 0}
+  m_LocalPosition: {x: 0, y: 0.06999969, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -903,7 +1048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 0}
+  - {fileID: 6961660428589978043}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -978,6 +1123,41 @@ MonoBehaviour:
   _containerCanvas: {fileID: 3039293128420839083}
   _visuals: {fileID: 6121222201560779196}
   _recipeCount: 0
+  ChangedRecipeCount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2617088156561067082}
+        m_TargetAssemblyTypeName: ChangeBalconyMesh, Assembly-CSharp
+        m_MethodName: CheckMeshCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2617088156561067082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9169570634930329348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f803785291fc72c4d9b3237ff340c70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recipeMeshFilter: {fileID: 7264468730689962878}
+  _meshCount:
+  - minCount: 8
+    recipeMesh: {fileID: 3614451003899496131, guid: 617e24f7e51d1bd4c9434c02aa0b6a3b, type: 3}
+  - minCount: 4
+    recipeMesh: {fileID: -3275864255690567981, guid: 46d112b7f5f7bf347a19c50e321e606f, type: 3}
+  - minCount: 1
+    recipeMesh: {fileID: -8581089149357550484, guid: 1f413b1e75d129141bf10f2243625189, type: 3}
 --- !u!1001 &1609227592189310459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1029,10 +1209,10 @@ PrefabInstance:
     - target: {fileID: -5754084199372789682, guid: 158894d44a96744c29080433b1965cb1, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 6738769108097114687, guid: 31b4d813c3e22af4f86b119c6bab68b7, type: 3}
+      objectReference: {fileID: -1412490011413983264, guid: 9e316da4cb0b352429eeb7d3690afbfd, type: 3}
     - target: {fileID: 919132149155446097, guid: 158894d44a96744c29080433b1965cb1, type: 3}
       propertyPath: m_Name
-      value: bread
+      value: Bread
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1073,6 +1253,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.25, y: 0.1, z: 0.5}
   m_Center: {x: 0, y: 0.01, z: 0}
+--- !u!33 &2769851279235685813 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: 158894d44a96744c29080433b1965cb1, type: 3}
+  m_PrefabInstance: {fileID: 1609227592189310459}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1725402818069563793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1091,7 +1276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 798bfdc98ce8f4066997c7ceaff3cb0a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 798bfdc98ce8f4066997c7ceaff3cb0a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1121,9 +1306,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: 798bfdc98ce8f4066997c7ceaff3cb0a, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2596744769809120296, guid: 63d73cb47218a364eae7773599d073f4, type: 3}
     - target: {fileID: 919132149155446097, guid: 798bfdc98ce8f4066997c7ceaff3cb0a, type: 3}
       propertyPath: m_Name
-      value: cheese_bread
+      value: Cheese Bread
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1164,6 +1353,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.25, y: 0.1, z: 0.5}
   m_Center: {x: 0, y: 0.01, z: 0}
+--- !u!33 &2870128115660415455 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: 798bfdc98ce8f4066997c7ceaff3cb0a, type: 3}
+  m_PrefabInstance: {fileID: 1725402818069563793}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2373106455388830343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1266,7 +1460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0088
+      value: -0.0167
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1319,7 +1513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b2b4e2089033b184093de76a70653680, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b2b4e2089033b184093de76a70653680, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1355,7 +1549,7 @@ PrefabInstance:
       objectReference: {fileID: 1680119480770584950, guid: 410eab663e8cffe458263cc3fd206f5e, type: 3}
     - target: {fileID: 919132149155446097, guid: b2b4e2089033b184093de76a70653680, type: 3}
       propertyPath: m_Name
-      value: Single_Baguette
+      value: Baguette
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1365,6 +1559,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 28328718542682632}
   m_SourcePrefab: {fileID: 100100000, guid: b2b4e2089033b184093de76a70653680, type: 3}
+--- !u!33 &1700501694958688458 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: b2b4e2089033b184093de76a70653680, type: 3}
+  m_PrefabInstance: {fileID: 2863171847200190596}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2321252516198176623 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b2b4e2089033b184093de76a70653680, type: 3}
@@ -1498,7 +1697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0448
+      value: -0.0167
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1635,7 +1834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0327
+      value: -0.0167
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1772,7 +1971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0607
+      value: -0.0167
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1958,11 +2157,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 36ee966ac2edf42bb8479aaf4f9ba4ea, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0019
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 36ee966ac2edf42bb8479aaf4f9ba4ea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 36ee966ac2edf42bb8479aaf4f9ba4ea, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1992,9 +2191,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: 36ee966ac2edf42bb8479aaf4f9ba4ea, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3614451003899496131, guid: 617e24f7e51d1bd4c9434c02aa0b6a3b, type: 3}
     - target: {fileID: 919132149155446097, guid: 36ee966ac2edf42bb8479aaf4f9ba4ea, type: 3}
       propertyPath: m_Name
-      value: cupcake
+      value: Cupcake
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 36ee966ac2edf42bb8479aaf4f9ba4ea, type: 3}
       propertyPath: m_IsActive
@@ -2039,6 +2242,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.25, y: 0.1, z: 0.5}
   m_Center: {x: 0, y: 0.01, z: 0}
+--- !u!33 &7264468730689962878 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: 36ee966ac2edf42bb8479aaf4f9ba4ea, type: 3}
+  m_PrefabInstance: {fileID: 6122064501602200368}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9203134391910821170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2057,7 +2265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ffa2fe3cb6928417296f143c6e78c337, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ffa2fe3cb6928417296f143c6e78c337, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2087,9 +2295,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: ffa2fe3cb6928417296f143c6e78c337, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 712165046167383135, guid: 6cd2d4416171f1948aa6fb3b1fceb7ec, type: 3}
     - target: {fileID: 919132149155446097, guid: ffa2fe3cb6928417296f143c6e78c337, type: 3}
       propertyPath: m_Name
-      value: donut
+      value: Donut
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2099,6 +2311,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8619060167363619023}
   m_SourcePrefab: {fileID: 100100000, guid: ffa2fe3cb6928417296f143c6e78c337, type: 3}
+--- !u!33 &5736876809571796348 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: ffa2fe3cb6928417296f143c6e78c337, type: 3}
+  m_PrefabInstance: {fileID: 9203134391910821170}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8320805112201826403 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ffa2fe3cb6928417296f143c6e78c337, type: 3}
