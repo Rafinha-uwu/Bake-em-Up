@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4180643295401024952}
   - component: {fileID: 1917833427108029344}
   - component: {fileID: 6789212318359675907}
-  - component: {fileID: 5766153554141258905}
   - component: {fileID: 7368671026907287720}
+  - component: {fileID: 8929452174797513038}
   m_Layer: 0
   m_Name: Creme
   m_TagString: Bread
@@ -666,7 +666,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 4
+    type: 5
     angle: 1
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -674,7 +674,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 1}
+    m_Scale: {x: 0, y: 0, z: 0}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -753,7 +753,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.0001
+      value: 2
       mode: 0
       spread: 0
       speed:
@@ -4903,20 +4903,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &5766153554141258905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3521269033941842357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4143e071c9495f74ea339dae2916942e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Zombies: 0
-  GroundCream: {fileID: 4647388620416500380, guid: b8b6d364bbf2a2b4792c3ecdc6aa38cc, type: 3}
 --- !u!114 &7368671026907287720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4930,6 +4916,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+--- !u!114 &8929452174797513038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3521269033941842357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4143e071c9495f74ea339dae2916942e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Zombies: 0
+  GroundCream: {fileID: 4647388620416500380, guid: b8b6d364bbf2a2b4792c3ecdc6aa38cc, type: 3}
 --- !u!1 &3745125057616872124
 GameObject:
   m_ObjectHideFlags: 0
@@ -4955,8 +4955,8 @@ Transform:
   m_GameObject: {fileID: 3745125057616872124}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.546, y: 1.89, z: 2.4804}
-  m_LocalScale: {x: 1.1412138, y: 1.1412138, z: 1.1412138}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4180643295401024952}

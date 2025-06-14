@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a874adb662b01409b1d26c7aaa1465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toolContainerName: 3
+  _toolName: 0
   _canvasTransformRightHand: {fileID: 8510731004620136458}
   _canvasTransformLeftHand: {fileID: 2993424723270352652}
   _remainingCream: 5
@@ -511,6 +511,8 @@ MonoBehaviour:
   _projectileCollisionMask:
     serializedVersion: 2
     m_Bits: 1985
+  bulletSpeed: 5
+  bulletMass: 0.2
 --- !u!114 &-2175485797227203497
 MonoBehaviour:
   m_ObjectHideFlags: 0

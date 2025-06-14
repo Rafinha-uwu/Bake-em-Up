@@ -32,6 +32,13 @@ public class PastryBag : ToolContainer
 	private float _timeBetweenPoints = 0.1f;
 	[SerializeField]
 	private LayerMask _projectileCollisionMask;
+	private int aimCount = 5;
+
+	[SerializeField]
+	private float bulletSpeed = 4.5f;
+	[SerializeField]
+	private float bulletMass = 0.15f;
+
 
 	protected void Awake()
 	{
@@ -52,7 +59,7 @@ public class PastryBag : ToolContainer
 
 	private void Update()
 	{
-		if(_grabbed)
+		if(_grabbed && aimCount > 0)
 			DrawProjection();
 	}
 
@@ -66,7 +73,11 @@ public class PastryBag : ToolContainer
 
 		_remainingCream -= 1;
 
-        if (_remainingCream == 0)
+		aimCount -= 1;
+		if (aimCount <= 0)
+			_lineRenderer.enabled = false;
+
+		if (_remainingCream == 0)
 		{
 			_recipeData = null;
 			_maxCream = 0;
@@ -144,14 +155,14 @@ public class PastryBag : ToolContainer
 		_lineRenderer.enabled = true;
 		_lineRenderer.positionCount = Mathf.CeilToInt(_linePoints / _timeBetweenPoints) + 1;
 		Vector3 startPosition = _dispara.shootPoint.position;
-		Vector3 startVelocity = 5f * _dispara.shootPoint.forward;
+		Vector3 startVelocity = bulletSpeed * _dispara.shootPoint.forward;
 		int i = 0;
 		_lineRenderer.SetPosition(i, startPosition);
 		for (float time = 0; time < _linePoints; time += _timeBetweenPoints)
 		{
 			i++;
 			Vector3 point = startPosition + time * startVelocity;
-			point.y = startPosition.y + startVelocity.y * time + (Physics.gravity.y * 0.15f / 2f * time * time);
+			point.y = startPosition.y + startVelocity.y * time + (Physics.gravity.y * bulletMass / 2f * time * time);
 
 			_lineRenderer.SetPosition(i, point);
 

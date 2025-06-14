@@ -6,37 +6,16 @@ public class Cream : MonoBehaviour
     [SerializeField] private bool Zombies = true;
 
     [SerializeField] private GameObject GroundCream;
-    private Vector3 CreamLocation;
 
     private ParticleSystem part;
     private List<ParticleCollisionEvent> collisionEvents;
 
     void Start()
     {
-        part = GetComponent<ParticleSystem>();
+        part = GetComponentInChildren<ParticleSystem>();
         collisionEvents = new List<ParticleCollisionEvent>();
-
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Zombie") && Zombies)
-        {
-            CreamLocation = other.transform.position;
-            CreamLocation.y -= 1.1f;
 
-            Instantiate(GroundCream, CreamLocation, GroundCream.transform.rotation);
-
-            Destroy(gameObject);
-        }
-        else if (other.CompareTag("Ground"))
-        {
-            CreamLocation = transform.position;
-            CreamLocation.y -= 0f;
-            Instantiate(GroundCream, CreamLocation, GroundCream.transform.rotation);
-
-            Destroy(gameObject);
-        }
-    }
     public void OnParticleCollision(GameObject other)
     {
         int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);
@@ -55,7 +34,7 @@ public class Cream : MonoBehaviour
                 Instantiate(GroundCream, collisionPos, GroundCream.transform.rotation);
             }
 
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 }
