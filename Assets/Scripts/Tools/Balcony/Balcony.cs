@@ -14,9 +14,6 @@ public class Balcony : Tool
     public delegate void BalconyHandler();
     public event BalconyHandler OnBreadOnBalcony;
 
-    private bool gamestart = true;
-    public GameObject waveSpawner;
-
     private void OnDestroy()
     {
         OnBreadOnBalcony = null;
@@ -26,12 +23,6 @@ public class Balcony : Tool
     {
         if (other.gameObject.CompareTag("Bread"))
         {
-            if (!waveSpawner.IsUnityNull() && gamestart == true)
-            {
-                waveSpawner.GetComponent<WaveSpawner>().StartWaves();
-                gamestart = false;
-            }
-
             XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
             if (interactable.IsSelectedByLeft() || interactable.IsSelectedByRight())
                 return;

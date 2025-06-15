@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 using Unity.VisualScripting;
+using System.Linq;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private TextMeshProUGUI waveDisplay;
     [SerializeField] private TextMeshProUGUI timeDisplay;
+
+    [SerializeField]
+    private List<RecipeData> _bakedRecipeToStart = new();
 
     private int currentWaveIndex = 0;
     private bool isSpawning = false;
@@ -25,7 +29,27 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private bool AutoStart = false;
     [SerializeField] private float CountTime = 0;
     [SerializeField] private bool CountOn = true;
-    public void Update()
+
+    private void Start()
+    {
+        LevelEvents.OnBakedNewRecipe += CheckBakedRecipe;
+        if (GameManager.Instance != null)
+        {
+            currentWaveIndex = GameManager.Instance.lastWaveIndex;
+        }
+
+        if (AutoStart)
+        {
+            StartWaves();
+        }
+    }
+
+	private void OnDestroy()
+	{
+		LevelEvents.OnBakedNewRecipe -= CheckBakedRecipe;
+	}
+
+	public void Update()
     {
         if (CountOn)
         {
@@ -42,18 +66,6 @@ public class WaveSpawner : MonoBehaviour
         }
 
     }
-    private void Start()
-    {
-        if (GameManager.Instance != null)
-        {
-            currentWaveIndex = GameManager.Instance.lastWaveIndex;
-        }
-
-        if (AutoStart)
-        {
-            StartWaves();
-        }
-    }
 
     public void StartWaves()
     {
@@ -61,9 +73,10 @@ public class WaveSpawner : MonoBehaviour
         {
             StopWaves();
         }
-        if (isSpawning) return;
+		if (isSpawning) return;
 
-        isSpawning = true;
+		isSpawning = true;
+        LevelManager.Instance.WaveStarted = true;
         currentWaveIndex = 0;
         waveCoroutine = StartCoroutine(SpawnWaveLoop());
     }
@@ -111,6 +124,16 @@ public class WaveSpawner : MonoBehaviour
             waveCoroutine = StartCoroutine(SpawnWaveLoop());
         }
     }
+
+    private void CheckBakedRecipe(RecipeData recipe)
+    {
+        if(isSpawning) return;
+
+        Debug.Log(recipe.ToString());
+        if (_bakedRecipeToStart.Contains(recipe)) 
+            StartWaves();
+	}
+
     private IEnumerator SpawnWaveLoop()
     {
         while (true)

@@ -225,18 +225,25 @@ public class Oven : ToolCooker
         {
             XRBaseInteractable grabInteractable = _socket.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
             grabInteractable.interactionLayers = _dishInteractionLayerMask;
-            _isHeating = false;
         }
 
         if (_socketDish2.Interactable != null)
         {
             XRBaseInteractable grabInteractable = _socketDish2.Interactable.transform.gameObject.GetComponent<XRBaseInteractable>();
             grabInteractable.interactionLayers = _dishInteractionLayerMask;
-            _isHeating = false;
-
-            GetComponent<Animator>().Play("Stop_Oven");
         }
 
+        _isHeating = false;
+
+		if (!LevelManager.Instance.IsUnityNull() && !LevelManager.Instance.WaveStarted)
+		{
+            if(_heatingCompleteDish1 && !_burnedDish1)
+			    LevelEvents.BakedNewRecipe(_recipeDataDish1);
+            if(_heatingCompleteDish2 && !_burnedDish2)
+				LevelEvents.BakedNewRecipe(_recipeDataDish2);
+		}
+
+        GetComponent<Animator>().Play("Stop_Oven");
         OnOvenTurnOff?.Invoke();
 
 		_warningHelper.Hide();
@@ -351,14 +358,13 @@ public class Oven : ToolCooker
 
     private void BurnedBread(XRSocketToolInteractor socket)
     {
-
         if (_socket == socket)
         {
-            _burnedDish1 = true;
+			_burnedDish1 = true;
         }
         else if (_socketDish2 == socket)
         {
-            _burnedDish2 = true;
+			_burnedDish2 = true;
         }
 
         OnHeatingFailed?.Invoke();

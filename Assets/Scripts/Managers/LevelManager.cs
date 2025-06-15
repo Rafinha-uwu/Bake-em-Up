@@ -25,6 +25,8 @@ public class LevelManager : MonoBehaviour
 	[SerializeField]
 	private FryerBasket _basket;
 
+    public bool WaveStarted = false;
+
 	private void Awake()
     {
 		if (Instance != null && Instance != this)
@@ -87,7 +89,6 @@ public class LevelManager : MonoBehaviour
 
 		return _basket;
 	}
-
 
 	private void OnDestroy()
     {

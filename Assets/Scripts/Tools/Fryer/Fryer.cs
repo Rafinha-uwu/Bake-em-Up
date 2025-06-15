@@ -131,6 +131,12 @@ public class Fryer : ToolCooker
 
 	protected override void TurnOff()
 	{
+		if (!LevelManager.Instance.IsUnityNull() && !LevelManager.Instance.WaveStarted)
+		{
+			if (_heatingCompleteBasket && !_burnedBasket)
+				LevelEvents.BakedNewRecipe(_recipeData);
+		}
+
 		_isHeating = false;
 		_basket = null;
 		_warningHelper.Hide();
