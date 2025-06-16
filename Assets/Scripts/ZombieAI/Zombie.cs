@@ -111,6 +111,7 @@ public class Zombie : MonoBehaviour
         Died?.Invoke();
         death = true;
         receiver.tag = "Dead";
+        SetTagInChildren(receiver, "Dead");
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = true;
         if (obstacle != null) obstacle.enabled = false;
@@ -162,5 +163,14 @@ public class Zombie : MonoBehaviour
     {
         _audioSource.clip = hit_sound;
         _audioSource.Play();
+    }
+
+    void SetTagInChildren(GameObject parent, string tag)
+    {
+        foreach (Transform child in parent.transform)
+        {
+            child.gameObject.tag = tag;
+            SetTagInChildren(child.gameObject, tag);
+        }
     }
 }
