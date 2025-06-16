@@ -74,7 +74,7 @@ public class Zombie : MonoBehaviour
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
     {
-        if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
+        if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform) && receiver.CompareTag("Zombie"))
         {
             currentState = ZombieState.GETHIT;
             //Debug.Log("LEVASTE COM UM PAO");
@@ -101,15 +101,16 @@ public class Zombie : MonoBehaviour
             {
                 //Debug.Log("Parte que acertou:" + hitPart.transform.name);
 
-                StartCoroutine(OnDeath(hitPart, sender.transform.position));
+                StartCoroutine(OnDeath(hitPart, sender.transform.position, receiver));
             }
         }
     }
 
-    IEnumerator OnDeath(RagdollPart hitPart, Vector3 senderPosition)
+    IEnumerator OnDeath(RagdollPart hitPart, Vector3 senderPosition, GameObject receiver)
     {
         Died?.Invoke();
         death = true;
+        receiver.tag = "Dead";
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = true;
         if (obstacle != null) obstacle.enabled = false;
@@ -149,14 +150,6 @@ public class Zombie : MonoBehaviour
         foreach (var rigidbody in _ragdollRigidboddies)
         {
             rigidbody.isKinematic = true;
-        }
-    }
-
-    private void EnableRagdoll()
-    {
-        foreach (var rigidbody in _ragdollRigidboddies)
-        {
-            rigidbody.isKinematic = false;
         }
     }
 
