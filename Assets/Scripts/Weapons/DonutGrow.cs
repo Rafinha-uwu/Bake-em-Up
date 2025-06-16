@@ -68,7 +68,7 @@ public class DonutRoller : MonoBehaviour
 
 			if (Mathf.Abs(targetY) >= 5f)
 			{
-				targetY *= 0.5f;
+				targetY *= 0.8f;
 			}
 
 			transform.rotation = Quaternion.Euler(0f, targetY, 90f);
