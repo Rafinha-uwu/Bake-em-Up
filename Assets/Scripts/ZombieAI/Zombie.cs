@@ -23,7 +23,7 @@ public class Zombie : MonoBehaviour
     private NavMeshObstacle obstacle;
     private Rigidbody[] _ragdollRigidboddies;
     protected NavMeshAgent agent;
-    private Animator animator;
+    protected Animator animator;
     private AudioSource _audioSource;
     [SerializeField] private AudioClip zombie_scream;
     [SerializeField] private AudioClip hit_sound;

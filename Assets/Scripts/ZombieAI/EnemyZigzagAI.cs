@@ -6,6 +6,7 @@ public class EnemyZigzagAI : Zombie
     public float zigzagDistance = 3f;
     public float zigzagSpeed = 2f;
     public float movementUpdateRate = 0.2f;
+    public float rotationSpeed = 0.2f;
 
 
     private float timer;
@@ -27,6 +28,14 @@ public class EnemyZigzagAI : Zombie
         timer = 0f;
 
         zombieAttack = GetComponent<ZombieAttack>();
+        animator = GetComponent<Animator>();
+
+        // Start walk animation at random point
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        animator.Play(state.fullPathHash, 0, Random.Range(0f, 1f));
+
+        // Slight variation in animation speed
+        animator.speed = Random.Range(0.95f, 1.05f);
     }
 
     void Update()
@@ -34,6 +43,7 @@ public class EnemyZigzagAI : Zombie
         timer += Time.deltaTime;
         if (timer >= movementUpdateRate && !death && !zombieAttack.isAttacking)
         {
+            animator.SetBool("isRunning", true);
             timer = 0f;
             Vector3 directionToPlayer = (randomPoint - transform.position).normalized;
             Vector3 right = Vector3.Cross(Vector3.up, directionToPlayer);
@@ -45,6 +55,10 @@ public class EnemyZigzagAI : Zombie
 
             // Set destination slightly off the player to create a zigzag path
             agent.SetDestination(zigzagTarget);
+            //transform.forward = zigzagTarget;
+            Quaternion toRotation = Quaternion.LookRotation(zigzagTarget, Vector3.up);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
         }
     }
 }
