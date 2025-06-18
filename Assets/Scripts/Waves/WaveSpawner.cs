@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using TMPro;
 using Unity.VisualScripting;
 using System.Linq;
+using Yarn.Unity;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -64,7 +65,6 @@ public class WaveSpawner : MonoBehaviour
                 CountOn = false;
             }
         }
-
     }
 
     public void StartWaves()

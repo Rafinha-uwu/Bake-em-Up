@@ -172,6 +172,8 @@ public class Mixer : ToolCooker
 		if (_socket.Interactable == null)
 			return;
 
+		LevelEvents.PhoneStartRinging("Start");
+
 		_mixingComplete = true;
 
 		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Yarn.Unity;
 
 public class LevelManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class LevelManager : MonoBehaviour
 	private FryerBasket _basket;
 
     public bool WaveStarted = false;
+
+    public DialogueRunner DialogueRunner;
 
 	private void Awake()
     {
