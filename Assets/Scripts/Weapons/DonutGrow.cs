@@ -7,6 +7,11 @@ public class DonutRoller : MonoBehaviour
     [SerializeField] private float growInterval = 1f;
     [SerializeField] private float maxScale = 5f;
 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip donutgrowth1_sound;
+    [SerializeField] private AudioClip donutgrowth2_sound;
+    [SerializeField] private AudioClip donutgrowth3_sound;
+
     private bool isRolling = false;
     private Rigidbody rb;
     [SerializeField]
@@ -19,6 +24,7 @@ public class DonutRoller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         lastPosition = transform.position;
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -30,6 +36,7 @@ public class DonutRoller : MonoBehaviour
             if (Time.time >= nextGrowTime)
             {
                 nextGrowTime = Time.time + growInterval;
+
                 transform.localScale *= growthRate;
 
                 if (transform.localScale.x >= maxScale)
