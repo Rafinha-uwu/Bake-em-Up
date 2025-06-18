@@ -17,6 +17,7 @@ public class WaveSpawner : MonoBehaviour
     private Coroutine waveCoroutine;
     private int holdWaveIndex = -1;
     private List<GameObject> activeZombies = new List<GameObject>();
+    private AudioSource _audioSource;
 
     public int CurrentWave => currentWaveIndex + 1;
 
@@ -44,6 +45,7 @@ public class WaveSpawner : MonoBehaviour
     }
     private void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         if (GameManager.Instance != null)
         {
             currentWaveIndex = GameManager.Instance.lastWaveIndex;
@@ -219,10 +221,12 @@ public class WaveSpawner : MonoBehaviour
     public void OpenDoor()
     {
         garageDoor.GetComponent<Animator>().SetBool("Open", true);
+        _audioSource.Play();
     }
 
     public void CloseDoor()
     {
         garageDoor.GetComponent<Animator>().SetBool("Open", false);
+        _audioSource.Play();
     }
 }

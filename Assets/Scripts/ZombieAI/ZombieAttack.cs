@@ -40,6 +40,8 @@ public class ZombieAttack : MonoBehaviour
     private IEnumerator PerformAttack()
     {
         isAttacking = true;
+        animator.logWarnings = false;
+        animator.SetBool("isRunning", false);
         animator.SetBool("isWalking", false);
         animator.SetBool("isAttacking", true);
         animator.applyRootMotion = false;

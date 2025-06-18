@@ -31,6 +31,8 @@ public class WoodenBoard : MonoBehaviour
 	private Matrix4x4 _doughMatrix;
 	private bool _showDoughOnBoard = false;
 
+	private AudioSource _audioSource;
+
 	private void Start()
 	{
 		_shapedDoughsSocketsManager = GetComponentInChildren<ShapedDoughsSocketsManager>();
@@ -38,6 +40,8 @@ public class WoodenBoard : MonoBehaviour
 		Mixer mixer = LevelManager.Instance.GetMixer();
 		mixer.OnMixingComplete += ShowDoughMeshOnBoard;
 		mixer.OnMixingFailed += HideDoughMeshOnBoard;
+
+		_audioSource = GetComponent<AudioSource>();
 	}
 
 	private void OnEnable()
@@ -93,6 +97,7 @@ public class WoodenBoard : MonoBehaviour
             particles.Play();
 
             if (_doughOnBoard.KneadDough()){
+				_audioSource.Play();
 				OnDoughKneaded?.Invoke();	
 			}
 

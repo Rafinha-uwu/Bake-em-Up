@@ -25,6 +25,10 @@ public class Fryer : ToolCooker
 	private Matrix4x4 _basketMatrix;
 	private bool _showBasketOnFryer = false;
 
+	private AudioSource _audioSource;
+	[SerializeField] private AudioClip frying_sound;
+	[SerializeField] private AudioClip end_sound;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -44,6 +48,8 @@ public class Fryer : ToolCooker
 
 		_basketMeshFilter = _basket.GetComponentInChildren<MeshFilter>();
 		_basketMatrix = UtilsClass.GetHoverMeshMatrix(_basket.GetComponent<XRGrabInteractable>(), _basketMeshFilter, 1f, _socketFryerOil);
+
+		_audioSource = GetComponent<AudioSource>();
 	}
 
 	private void OnDestroy()
@@ -63,6 +69,7 @@ public class Fryer : ToolCooker
 
 		if (_socketFryerOil.Interactable != null)
 		{
+			PlayFrySound();
 			HeatBasket();
 		}
 	}
@@ -171,7 +178,7 @@ public class Fryer : ToolCooker
 	private void MakeBread()
 	{
 		_heatingCompleteBasket = true;
-
+		PlayEndFrySound();
 		_basket.MakeBread();
 	}
 
@@ -216,5 +223,17 @@ public class Fryer : ToolCooker
 				_baketHelperMaterial,
 				gameObject.layer
 		);
+	}
+
+	private void PlayFrySound()
+	{
+		_audioSource.clip = frying_sound;
+		_audioSource.Play();   
+	}
+
+	private void PlayEndFrySound()
+	{
+		_audioSource.clip = end_sound;
+		_audioSource.Play();
 	}
 }
