@@ -8,6 +8,8 @@ public class RoulotteHealth : MonoBehaviour
     [SerializeField]
     private TakeDamageFX _damageFX;
 
+    private AudioSource _audioSource;
+
     [SerializeField] private TextMeshProUGUI healthDisplay;
 
     private void OnEnable()
@@ -20,10 +22,16 @@ public class RoulotteHealth : MonoBehaviour
         HitEvent.OnHit -= GetHit;
     }
 
+
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
     public void GetHit(int damage, GameObject sender, GameObject receiver)
     {
         if (sender.CompareTag("Zombie") && receiver.GetInstanceID() == gameObject.GetInstanceID())
-        {   
+        {
+            _audioSource.Play();
             hp -= damage;
             healthDisplay.text = $"{hp} - HP";
             _damageFX.PlayFX();

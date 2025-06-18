@@ -10,6 +10,7 @@ public class SoundSettings : MonoBehaviour
     public Slider sfxSlider;
     float mastervolume, musicvolume, sfxvolume;
 
+
     void Start()
     {
         masterSlider.minValue = 0.0001f;
@@ -44,4 +45,5 @@ public class SoundSettings : MonoBehaviour
     {
         audioMixer.SetFloat("SFX Volume", Mathf.Log10(volume) * 20);
     }
+
 }

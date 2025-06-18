@@ -8,7 +8,8 @@ public class Zombie : MonoBehaviour
     public enum ZombieState
     {
         WALKING,
-        GETHIT
+        GETHIT,
+        ATTACK
 
 
     }
@@ -22,8 +23,10 @@ public class Zombie : MonoBehaviour
     private NavMeshObstacle obstacle;
     private Rigidbody[] _ragdollRigidboddies;
     protected NavMeshAgent agent;
-    private Animator animator;
+    protected Animator animator;
     private AudioSource _audioSource;
+    [SerializeField] private AudioClip zombie_scream;
+    [SerializeField] private AudioClip hit_sound;
 
     [SerializeField]
     private GameObject HIT;
@@ -60,22 +63,24 @@ public class Zombie : MonoBehaviour
 
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(currentState == ZombieState.WALKING)
         {
-            StartCoroutine(OnDeath());
+            if (!_audioSource.isPlaying)
+            {
+                PlayWalkSound();
+            }
         }
-        */
     }
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
     {
         if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
         {
+            currentState = ZombieState.GETHIT;
             //Debug.Log("LEVASTE COM UM PAO");
             hp -= damage;
 
-            _audioSource.Play();
+            PlayHitSound();
 
             // Get the limb hit
             Collider hitCollider = receiver.GetComponent<Collider>();
@@ -95,16 +100,17 @@ public class Zombie : MonoBehaviour
             if (hp < 1)
             {
                 //Debug.Log("Parte que acertou:" + hitPart.transform.name);
-
-                StartCoroutine(OnDeath(hitPart, sender.transform.position));
+                StartCoroutine(OnDeath(hitPart, sender.transform.position, receiver));
             }
         }
     }
 
-    IEnumerator OnDeath(RagdollPart hitPart, Vector3 senderPosition)
+    IEnumerator OnDeath(RagdollPart hitPart, Vector3 senderPosition, GameObject receiver)
     {
         Died?.Invoke();
         death = true;
+        receiver.tag = "Dead";
+        SetTagInChildren(receiver, "Dead");
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = true;
         if (obstacle != null) obstacle.enabled = false;
@@ -147,11 +153,23 @@ public class Zombie : MonoBehaviour
         }
     }
 
-    private void EnableRagdoll()
+    private void PlayWalkSound()
     {
-        foreach (var rigidbody in _ragdollRigidboddies)
+        _audioSource.PlayOneShot(zombie_scream);
+    }
+
+    private void PlayHitSound()
+    {
+        _audioSource.clip = hit_sound;
+        _audioSource.Play();
+    }
+
+    void SetTagInChildren(GameObject parent, string tag)
+    {
+        foreach (Transform child in parent.transform)
         {
-            rigidbody.isKinematic = false;
+            child.gameObject.tag = tag;
+            SetTagInChildren(child.gameObject, tag);
         }
     }
 }

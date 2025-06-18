@@ -75,6 +75,7 @@ public class PauseManager : MonoBehaviour
         if (optionsMenu != null)
         {
             optionsMenu.SetActive(!optionsMenu.activeSelf);
+            pauseMenu.GetComponent<Renderer>().enabled = !optionsMenu.activeSelf;
         }
     }
 
@@ -99,5 +100,11 @@ public class PauseManager : MonoBehaviour
         {
             button.interactable = true;
         }
+    }
+
+    public void WaveRestart()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 }

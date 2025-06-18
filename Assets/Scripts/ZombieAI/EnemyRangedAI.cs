@@ -6,6 +6,7 @@ public class EnemyRangedAI : MonoBehaviour
     private Transform roulotte;
     public GameObject projectilePrefab;
     public Transform firePoint;
+    public int attackDamage = 5;
     public float attackRange = 15f;
     public float fireRate = 2f;
     public float projectileSpeed = 20f;
@@ -14,12 +15,18 @@ public class EnemyRangedAI : MonoBehaviour
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
     private float fireCooldown;
+    private Animator animator;
+
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip throw_sound;
 
     void Start()
     {
         roulotte = LevelManager.Instance.roulote;
         agent = GetComponent<NavMeshAgent>();
         fireCooldown = 0f;
+        animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -34,6 +41,7 @@ public class EnemyRangedAI : MonoBehaviour
             if (fireCooldown <= 0f)
             {
                 Shoot();
+                HitEvent.GetHit(attackDamage, gameObject, roulotte.gameObject);
                 fireCooldown = 1f / fireRate;
             }
         }
@@ -45,6 +53,8 @@ public class EnemyRangedAI : MonoBehaviour
     void Shoot()
     {
         isAttacking = true;
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isAttacking", true);
         if (obstacle != null) obstacle.enabled = true;
         if (agent != null) agent.enabled = false;
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
@@ -53,8 +63,16 @@ public class EnemyRangedAI : MonoBehaviour
         {
             rb.linearVelocity = firePoint.forward * projectileSpeed;
         }
+        PlayThrowSound();
+        animator.SetBool("isAttacking", false);
         isAttacking = false;
 
 
+    }
+
+    private void PlayThrowSound()
+    {
+        _audioSource.clip = throw_sound;
+        _audioSource.Play();
     }
 }

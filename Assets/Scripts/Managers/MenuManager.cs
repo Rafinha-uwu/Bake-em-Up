@@ -3,12 +3,22 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private GameObject optionsMenu; 
+    [SerializeField] private GameObject optionsMenu;
 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip start_sound;
 
+    [SerializeField] private GameObject blackout;
+
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
     public void StartGame()
     {
-        SceneManager.LoadScene("Main");
+        PlayStartButtonSound();
+        blackout.GetComponent<Animator>().Play("Dark");
+        Invoke("GoToMain", 5);
     }
 
 
@@ -28,9 +38,22 @@ public class MenuManager : MonoBehaviour
 
     public void Continue()
     {
+        PlayStartButtonSound();
         int savedWave = GameManager.Instance.LoadSavedWave();
         GameManager.Instance.lastWaveIndex = savedWave;
+        blackout.GetComponent<Animator>().Play("Dark");
+        Invoke("GoToMain", 5);
+    }
 
-        SceneManager.LoadScene("Main");
+    private void GoToMain()
+    {
+        SceneManager.LoadScene("1");
+    }
+
+
+    private void PlayStartButtonSound()
+    {
+        _audioSource.clip = start_sound;
+        _audioSource.Play();
     }
 }

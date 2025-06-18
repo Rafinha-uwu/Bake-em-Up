@@ -28,6 +28,8 @@ public class Oven : ToolCooker
 	private InteractionLayerMask _trackInteractionLayerMask;
 
     private AudioSource _audioSource;
+    [SerializeField] private AudioClip cooking_sound;
+    [SerializeField] private AudioClip end_sound;
 
     private RecipeData _recipeDataDish1;
     private RecipeData _recipeDataDish2;
@@ -245,9 +247,9 @@ public class Oven : ToolCooker
 
         GetComponent<Animator>().Play("Stop_Oven");
         OnOvenTurnOff?.Invoke();
+        turnOffSound();
 
-		_warningHelper.Hide();
-
+        _warningHelper.Hide();
         Smoke.SetActive(false);
         Burned.SetActive(false);
     }
@@ -264,6 +266,11 @@ public class Oven : ToolCooker
                 _isHeating = true;
                 GetComponent<Animator>().Play("Shake_Oven");
                 Smoke.SetActive(true);
+                if (!_audioSource.isPlaying)
+                {
+                    PlayCookSound();
+                }
+                
             }
         }
 
@@ -277,6 +284,10 @@ public class Oven : ToolCooker
                 _isHeating = true;
                 GetComponent<Animator>().Play("Shake_Oven");
                 Smoke.SetActive(true);
+                if (!_audioSource.isPlaying)
+                {
+                    PlayCookSound();
+                }
             }
         }
 
@@ -312,9 +323,9 @@ public class Oven : ToolCooker
         else if (!_heatingCompleteDish1 && _currentTimeDish1 >= _recipeDataDish1.OvenTime)
         {
 			MakeBread(_socket);
-            _audioSource.Play();
+            PlayEndMixSound();
 
-		}
+        }
     }
     private void HeatDish2()
     {
@@ -334,7 +345,7 @@ public class Oven : ToolCooker
         else if (!_heatingCompleteDish2 && _currentTimeDish2 >= _recipeDataDish2.OvenTime)
         {
             MakeBread(_socketDish2);
-            _audioSource.Play();
+            PlayEndMixSound();
         }
 
     }
@@ -415,4 +426,24 @@ public class Oven : ToolCooker
 				gameObject.layer
 		);
 	}
+
+    private void PlayCookSound()
+    {
+        _audioSource.clip = cooking_sound;
+        _audioSource.loop = true;
+        _audioSource.Play();
+    }
+
+    private void PlayEndMixSound()
+    {
+        _audioSource.clip = end_sound;
+        _audioSource.Play();
+        _audioSource.clip = cooking_sound;
+    }
+
+    private void turnOffSound()
+    {
+        _audioSource.Stop();
+        _audioSource.loop = false;
+    }
 }

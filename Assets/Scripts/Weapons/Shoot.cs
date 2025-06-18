@@ -6,12 +6,15 @@ public class Shoot : MonoBehaviour
 
     public Transform shootPoint;
 
+    private AudioSource _audioSource;
+
     private bool cooldown;
     [SerializeField] private float CooldownTime = 0.5f;
     private float CoolTime = 0.5f;
 
 	public void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         CoolTime = CooldownTime;
     }
 
@@ -33,7 +36,7 @@ public class Shoot : MonoBehaviour
         if (!cooldown)
         {
             GameObject ProjTemp = Instantiate(projetil);
-
+            _audioSource.Play();
             ProjTemp.transform.SetParent(shootPoint);
             ProjTemp.transform.localPosition = new Vector3(0f,0f, 0f);
             ProjTemp.transform.rotation = shootPoint.rotation;

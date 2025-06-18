@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 using System.Linq;
 using Yarn.Unity;
 
@@ -22,6 +23,7 @@ public class WaveSpawner : MonoBehaviour
     private Coroutine waveCoroutine;
     private int holdWaveIndex = -1;
     private List<GameObject> activeZombies = new List<GameObject>();
+    private AudioSource _audioSource;
 
     public int CurrentWave => currentWaveIndex + 1;
 
@@ -30,6 +32,10 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private bool AutoStart = false;
     [SerializeField] private float CountTime = 0;
     [SerializeField] private bool CountOn = true;
+
+    [SerializeField] private GameObject blackout;
+
+    private bool finni = false;
 
     private void Start()
     {
@@ -43,14 +49,15 @@ public class WaveSpawner : MonoBehaviour
         {
             StartWaves();
         }
+        _audioSource = GetComponent<AudioSource>();
     }
 
-	private void OnDestroy()
-	{
-		LevelEvents.OnBakedNewRecipe -= CheckBakedRecipe;
-	}
+    private void OnDestroy()
+    {
+        LevelEvents.OnBakedNewRecipe -= CheckBakedRecipe;
+    }
 
-	public void Update()
+    public void Update()
     {
         if (CountOn)
         {
@@ -73,9 +80,9 @@ public class WaveSpawner : MonoBehaviour
         {
             StopWaves();
         }
-		if (isSpawning) return;
+        if (isSpawning) return;
 
-		isSpawning = true;
+        isSpawning = true;
         LevelManager.Instance.WaveStarted = true;
         currentWaveIndex = 0;
         waveCoroutine = StartCoroutine(SpawnWaveLoop());
@@ -94,14 +101,6 @@ public class WaveSpawner : MonoBehaviour
                 Destroy(zombie);
         }
         activeZombies.Clear();
-
-        /*
-        Transform playerTransform = Camera.main?.transform; // Or use a direct reference to the player object
-        if (playerTransform != null && LevelManager.Instance != null)
-        {
-            playerTransform.position = LevelManager.Instance.playerStartPosition.position;
-            playerTransform.rotation = LevelManager.Instance.playerStartPosition.rotation;
-        }*/
 
         isSpawning = true;
         currentWaveIndex = GameManager.Instance.lastWaveIndex;
@@ -127,12 +126,12 @@ public class WaveSpawner : MonoBehaviour
 
     private void CheckBakedRecipe(RecipeData recipe)
     {
-        if(isSpawning) return;
+        if (isSpawning) return;
 
         Debug.Log(recipe.ToString());
-        if (_bakedRecipeToStart.Contains(recipe)) 
+        if (_bakedRecipeToStart.Contains(recipe))
             StartWaves();
-	}
+    }
 
     private IEnumerator SpawnWaveLoop()
     {
@@ -174,14 +173,42 @@ public class WaveSpawner : MonoBehaviour
             currentWaveIndex++;
             CloseDoor();
 
-            if (!waveSet.isInfinite && currentWaveIndex >= waveSet.predefinedWaves.Length)
+            if (currentWaveIndex == 2)
             {
+                blackout.GetComponent<Animator>().Play("Dark");
+                Invoke("LoadScene", 5);
+            }
+
+            if (!waveSet.isInfinite && finni)
+            {
+                // for end
                 garageDoor.GetComponentInChildren<Canvas>().enabled = true;
                 break;
             }
         }
         GameManager.Instance.SaveProgress(currentWaveIndex);
         isSpawning = false;
+    }
+
+    private void LoadScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        switch (currentSceneName)
+        {
+            case "1":
+                SceneManager.LoadScene("2");
+                break;
+            case "2":
+                SceneManager.LoadScene("3");
+                break;
+            case "3":
+                SceneManager.LoadScene("4");
+                break;
+            case "4":
+                SceneManager.LoadScene("5");
+                break;
+        }
     }
 
     private void SpawnEnemy(WaveData wave)
@@ -242,10 +269,12 @@ public class WaveSpawner : MonoBehaviour
     public void OpenDoor()
     {
         garageDoor.GetComponent<Animator>().SetBool("Open", true);
+        _audioSource.Play();
     }
 
     public void CloseDoor()
     {
         garageDoor.GetComponent<Animator>().SetBool("Open", false);
+        _audioSource.Play();
     }
 }

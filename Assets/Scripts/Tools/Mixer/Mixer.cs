@@ -35,6 +35,10 @@ public class Mixer : ToolCooker
 	private Matrix4x4 _bowlMatrix;
 	private bool _showPutInPlaceHover = false;
 
+	private AudioSource _audioSource;
+	[SerializeField] private AudioClip mixing_sound;
+	[SerializeField] private AudioClip end_sound;
+
 	private Bowl _bowl;
 
 	protected override void Awake()
@@ -57,6 +61,8 @@ public class Mixer : ToolCooker
 
 		_objectMeshFilter = _bowl.GetComponentInChildren<MeshFilter>();
 		_bowlMatrix = UtilsClass.GetHoverMeshMatrix(_bowl.GetComponent<XRBaseInteractable>(), _objectMeshFilter, 1f, _socket);
+
+		_audioSource = GetComponent<AudioSource>();
 	}
 
 	private void OnDestroy()
@@ -83,6 +89,7 @@ public class Mixer : ToolCooker
 
 		if (!_isMixing)
 			return;
+
 
 		_currentTime += Time.deltaTime;
 		_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);
@@ -146,6 +153,7 @@ public class Mixer : ToolCooker
             GetComponent<Animator>().Play("Shake_Mix");
             _bowl.gameObject.GetComponent<Animator>().SetBool("Shake", true);
             _particles.SetActive(true);
+			PlayMixSound();
 		}
 		else
 		{
@@ -164,6 +172,7 @@ public class Mixer : ToolCooker
             GetComponent<Animator>().Play("Stop_Mix");
             _bowl.gameObject.GetComponent<Animator>().SetBool("Shake", false);
             _particles.SetActive(false);
+			turnOffSound();
         }
 	}
 
@@ -175,6 +184,7 @@ public class Mixer : ToolCooker
 		LevelEvents.PhoneStartRinging("Start");
 
 		_mixingComplete = true;
+		PlayEndMixSound();
 
 		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
 		bowl.MakeDough();
@@ -256,5 +266,25 @@ public class Mixer : ToolCooker
 				_bowlHelperMaterial,
 				gameObject.layer
 		);
-	}	
+	}
+
+	private void PlayMixSound()
+	{
+		_audioSource.clip = mixing_sound;
+		_audioSource.loop = true;
+		_audioSource.Play();
+	}
+
+	private void turnOffSound()
+	{
+		_audioSource.Stop();
+        _audioSource.loop = false;
+    }
+
+	private void PlayEndMixSound()
+	{
+		_audioSource.clip = end_sound;
+		_audioSource.Play();
+        _audioSource.clip = mixing_sound;
+    }
 }
