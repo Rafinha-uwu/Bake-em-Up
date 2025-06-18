@@ -100,7 +100,8 @@ public class Zombie : MonoBehaviour
             if (hp < 1)
             {
                 //Debug.Log("Parte que acertou:" + hitPart.transform.name);
-
+                receiver.tag = "Dead";
+                SetTagInChildren(receiver, "Dead");
                 StartCoroutine(OnDeath(hitPart, sender.transform.position, receiver));
             }
         }
@@ -110,8 +111,6 @@ public class Zombie : MonoBehaviour
     {
         Died?.Invoke();
         death = true;
-        receiver.tag = "Dead";
-        SetTagInChildren(receiver, "Dead");
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = true;
         if (obstacle != null) obstacle.enabled = false;

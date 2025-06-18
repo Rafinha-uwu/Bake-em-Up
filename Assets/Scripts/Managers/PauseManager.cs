@@ -75,6 +75,7 @@ public class PauseManager : MonoBehaviour
         if (optionsMenu != null)
         {
             optionsMenu.SetActive(!optionsMenu.activeSelf);
+            pauseMenu.GetComponent<Renderer>().enabled = !optionsMenu.activeSelf;
         }
     }
 

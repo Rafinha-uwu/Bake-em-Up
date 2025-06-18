@@ -8,6 +8,8 @@ public class EnemyZigzagAI : Zombie
     public float movementUpdateRate = 0.2f;
     public float rotationSpeed = 0.2f;
 
+    [SerializeField] private GameObject player;
+
 
     private float timer;
     private float sideWidth;
@@ -45,7 +47,7 @@ public class EnemyZigzagAI : Zombie
         {
             animator.SetBool("isRunning", true);
             timer = 0f;
-            Vector3 directionToPlayer = (randomPoint - transform.position).normalized;
+            Vector3 directionToPlayer = (randomPoint - player.transform.position).normalized;
             Vector3 right = Vector3.Cross(Vector3.up, directionToPlayer);
 
             // Zigzag offset based on time
@@ -54,6 +56,7 @@ public class EnemyZigzagAI : Zombie
             Vector3 zigzagTarget = randomPoint + right * zigzagOffset;
 
             // Set destination slightly off the player to create a zigzag path
+            //if(randomPoint)
             agent.SetDestination(zigzagTarget);
             //transform.forward = zigzagTarget;
             Quaternion toRotation = Quaternion.LookRotation(zigzagTarget, Vector3.up);

@@ -94,7 +94,6 @@ public class Mixer : ToolCooker
 		if (!_isMixing)
 			return;
 
-		PlayMixSound();
 
 		_currentTime += Time.deltaTime;
 		_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);
@@ -184,7 +183,8 @@ public class Mixer : ToolCooker
                 GetComponent<Animator>().Play("Shake_Mix");
                 _socket.Interactable.transform.gameObject.GetComponent<Animator>().SetBool("Shake", true);
                 _particles.gameObject.SetActive(true);
-            }
+				PlayMixSound();
+			}
         }
 	}
 
