@@ -6,13 +6,20 @@ public class Dough : MonoBehaviour
 	[SerializeField]
 	private RecipeData _recipeData;
 
+	private AudioSource _audioSource;
+
 	[SerializeField]
 	private bool _isBadDough = false;
 
 	private int _kneadsToShape = 5;
 	private int _kneadCount = 0;
 
-	public RecipeData GetRecipe()
+
+    private void Start()
+    {
+		_audioSource = GetComponent<AudioSource>();
+	}
+    public RecipeData GetRecipe()
 	{
 		return _recipeData;
 	}
@@ -21,7 +28,7 @@ public class Dough : MonoBehaviour
 	{
 		if (_isBadDough)
 			return false;
-
+		_audioSource.Play();
 		_kneadCount += 1;
 
 		if(_kneadCount == _kneadsToShape)
