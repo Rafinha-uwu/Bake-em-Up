@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private AudioClip start_sound;
 
+    [SerializeField] private GameObject blackout;
 
     private void Start()
     {
@@ -16,7 +17,8 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         PlayStartButtonSound();
-        SceneManager.LoadScene("Main");
+        blackout.GetComponent<Animator>().Play("Dark");
+        Invoke("GoToMain", 5);
     }
 
 
@@ -39,8 +41,13 @@ public class MenuManager : MonoBehaviour
         PlayStartButtonSound();
         int savedWave = GameManager.Instance.LoadSavedWave();
         GameManager.Instance.lastWaveIndex = savedWave;
+        blackout.GetComponent<Animator>().Play("Dark");
+        Invoke("GoToMain", 5);
+    }
 
-        SceneManager.LoadScene("Main");
+    private void GoToMain()
+    {
+        SceneManager.LoadScene("1");
     }
 
 

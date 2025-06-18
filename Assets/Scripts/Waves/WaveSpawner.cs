@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private bool AutoStart = false;
     [SerializeField] private float CountTime = 0;
     [SerializeField] private bool CountOn = true;
+
+    [SerializeField] private GameObject blackout;
+
     public void Update()
     {
         if (CountOn)
@@ -153,14 +157,54 @@ public class WaveSpawner : MonoBehaviour
             currentWaveIndex++;
             CloseDoor();
 
+            switch (currentWaveIndex)
+            {
+                case 3:
+                    blackout.GetComponent<Animator>().Play("Dark");
+                    Invoke("LoadScene", 5);
+                    break;
+                case 5:
+                    blackout.GetComponent<Animator>().Play("Dark");
+                    Invoke("LoadScene", 5);
+                    break;
+                case 7:
+                    blackout.GetComponent<Animator>().Play("Dark");
+                    Invoke("LoadScene", 5);
+                    break;
+                case 9:
+                    blackout.GetComponent<Animator>().Play("Dark");
+                    Invoke("LoadScene", 5);
+                    break;
+            }
+
             if (!waveSet.isInfinite && currentWaveIndex >= waveSet.predefinedWaves.Length)
             {
+                // for end
                 garageDoor.GetComponentInChildren<Canvas>().enabled = true;
                 break;
             }
         }
         GameManager.Instance.SaveProgress(currentWaveIndex);
         isSpawning = false;
+    }
+
+    private void LoadScene()
+    {
+        switch (currentWaveIndex)
+        {
+            case 3:
+                SceneManager.LoadScene("2");
+                break;
+            case 5:
+                SceneManager.LoadScene("3");
+                break;
+            case 7:
+                SceneManager.LoadScene("4");
+                break;
+            case 9:
+                SceneManager.LoadScene("5");
+                break;
+        }
     }
 
     private void SpawnEnemy(WaveData wave)

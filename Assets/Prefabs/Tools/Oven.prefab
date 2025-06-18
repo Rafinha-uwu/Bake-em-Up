@@ -310,7 +310,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!59 &8015632618460483843
@@ -323,26 +323,26 @@ HingeJoint:
   serializedVersion: 3
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: -0.339, y: -0.17, z: 0.07}
-  m_Axis: {x: 0, y: 0, z: -1}
+  m_Anchor: {x: -0.31, y: -0.17, z: 0.07}
+  m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
-    spring: 0
+    spring: 10
     damper: 1
     targetPosition: 0
   m_UseMotor: 1
   m_Motor:
-    targetVelocity: 40
-    force: 500
+    targetVelocity: -40
+    force: 400
     freeSpin: 0
   m_UseLimits: 1
   m_ExtendedLimits: 1
   m_UseAcceleration: 0
   m_Limits:
-    min: -90
-    max: 0
+    min: 0
+    max: 90
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -535,7 +535,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -569,7 +569,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
 --- !u!114 &1407102143992269465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,7 +692,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  m_FarAttachMode: 0
+  m_FarAttachMode: 1
 --- !u!138 &342640241898785278
 FixedJoint:
   m_ObjectHideFlags: 0
@@ -768,7 +768,7 @@ Transform:
   m_GameObject: {fileID: 5884416410762880484}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.325, y: 0.15, z: 0.066}
+  m_LocalPosition: {x: -0.222, y: 0.177, z: 0.066}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -793,7 +793,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.016765356, y: 0.032897085, z: 0.26945364}
+  m_Size: {x: -0.24, y: 0.07, z: 0.26945364}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1559686000731856258
 MonoBehaviour:
@@ -1315,7 +1315,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1778,6 +1778,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8438548354221869621}
     m_Modifications:
+    - target: {fileID: 3223103740110457766, guid: 54b7eb24974855041972c307d5e7e373, type: 3}
+      propertyPath: _screenBorder
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 4539759688033133836, guid: 54b7eb24974855041972c307d5e7e373, type: 3}
       propertyPath: m_Name
       value: Warning Canvas
