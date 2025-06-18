@@ -74,7 +74,7 @@ public class Zombie : MonoBehaviour
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
     {
-        if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform) && receiver.CompareTag("Zombie"))
+        if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
         {
             currentState = ZombieState.GETHIT;
             //Debug.Log("LEVASTE COM UM PAO");
@@ -100,8 +100,6 @@ public class Zombie : MonoBehaviour
             if (hp < 1)
             {
                 //Debug.Log("Parte que acertou:" + hitPart.transform.name);
-                receiver.tag = "Dead";
-                SetTagInChildren(receiver, "Dead");
                 StartCoroutine(OnDeath(hitPart, sender.transform.position, receiver));
             }
         }
@@ -111,6 +109,8 @@ public class Zombie : MonoBehaviour
     {
         Died?.Invoke();
         death = true;
+        receiver.tag = "Dead";
+        SetTagInChildren(receiver, "Dead");
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = true;
         if (obstacle != null) obstacle.enabled = false;

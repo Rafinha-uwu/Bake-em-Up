@@ -247,8 +247,9 @@ public class Oven : ToolCooker
 
         GetComponent<Animator>().Play("Stop_Oven");
         OnOvenTurnOff?.Invoke();
+        turnOffSound();
 
-		_warningHelper.Hide();
+        _warningHelper.Hide();
         Smoke.SetActive(false);
         Burned.SetActive(false);
     }
@@ -436,7 +437,13 @@ public class Oven : ToolCooker
     private void PlayEndMixSound()
     {
         _audioSource.clip = end_sound;
-        _audioSource.loop = false;
         _audioSource.Play();
+        _audioSource.clip = cooking_sound;
+    }
+
+    private void turnOffSound()
+    {
+        _audioSource.Stop();
+        _audioSource.loop = false;
     }
 }

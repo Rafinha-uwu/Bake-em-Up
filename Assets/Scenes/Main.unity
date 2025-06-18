@@ -4328,30 +4328,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1195303707}
     m_Modifications:
-    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2949708435516075507, guid: 14cdfdb024b9a1e4daece5d3333d2289, type: 3}
       propertyPath: m_Name
       value: Bowl
@@ -4394,6 +4370,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8343320233315851656, guid: 14cdfdb024b9a1e4daece5d3333d2289, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215836083453985707, guid: fe1452a974d5e7e4e865012accbb61bd, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6971,10 +6971,12 @@ MonoBehaviour:
   - {fileID: 1123534343}
   waveDisplay: {fileID: 2132992698}
   timeDisplay: {fileID: 1273604957}
+  _bakedRecipeToStart: []
   garageDoor: {fileID: 459222397}
   AutoStart: 0
   CountTime: 10
   CountOn: 0
+  blackout: {fileID: 0}
 --- !u!82 &1267802724
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8176,6 +8178,7 @@ MonoBehaviour:
   _dish1: {fileID: 902523905}
   _dish2: {fileID: 1621703872}
   _basket: {fileID: 891425764}
+  WaveStarted: 0
 --- !u!1001 &1461934972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12477,68 +12480,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1618863493926017032, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
-      propertyPath: m_Motor.force
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1618863493926017032, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
-      propertyPath: m_Spring.damper
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1618863493926017032, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
-      propertyPath: m_Motor.targetVelocity
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1815982695008075942, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2189352765935476573, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
       propertyPath: m_Name
       value: fridge
       objectReference: {fileID: 0}
-    - target: {fileID: 2286421204443506936, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 8312544754787658674, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8312544754787658674, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6593814841556527886}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
---- !u!1 &6593814841556527885 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8312544754787658674, guid: bb1ecf77c3b0aa944b4e04dd6fd1e6e8, type: 3}
-  m_PrefabInstance: {fileID: 6593814841556527884}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &6593814841556527886
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6593814841556527885}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.91396683, y: 1.1514301, z: 0.062167402}
-  m_Center: {x: -0.0056989626, y: 0.056989457, z: 0.37858817}
 --- !u!1001 &7425554628444514012
 PrefabInstance:
   m_ObjectHideFlags: 0

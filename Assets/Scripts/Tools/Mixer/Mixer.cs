@@ -172,6 +172,7 @@ public class Mixer : ToolCooker
             GetComponent<Animator>().Play("Stop_Mix");
             _bowl.gameObject.GetComponent<Animator>().SetBool("Shake", false);
             _particles.SetActive(false);
+			turnOffSound();
         }
 	}
 
@@ -272,10 +273,16 @@ public class Mixer : ToolCooker
 		_audioSource.Play();
 	}
 
+	private void turnOffSound()
+	{
+		_audioSource.Stop();
+        _audioSource.loop = false;
+    }
+
 	private void PlayEndMixSound()
 	{
 		_audioSource.clip = end_sound;
-		_audioSource.loop = false;
 		_audioSource.Play();
-	}
+        _audioSource.clip = mixing_sound;
+    }
 }

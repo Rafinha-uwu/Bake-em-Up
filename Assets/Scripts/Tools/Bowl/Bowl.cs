@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEditor.Experimental.GraphView;
 
 [RequireComponent(typeof(XRGrabInteractable)), RequireComponent(typeof(Resettable))]
 public class Bowl : ToolContainer
