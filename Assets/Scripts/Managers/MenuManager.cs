@@ -3,12 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private GameObject optionsMenu; 
-
+    [SerializeField] private GameObject optionsMenu;
+    [SerializeField] private GameObject blackout;
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Main");
+        blackout.GetComponent<Animator>().Play("Dark");
+        Invoke("GoToMain", 5);
     }
 
 
@@ -30,7 +31,12 @@ public class MenuManager : MonoBehaviour
     {
         int savedWave = GameManager.Instance.LoadSavedWave();
         GameManager.Instance.lastWaveIndex = savedWave;
+        blackout.GetComponent<Animator>().Play("Dark");
+        Invoke("GoToMain", 5);
+    }
 
-        SceneManager.LoadScene("Main");
+    private void GoToMain()
+    {
+        SceneManager.LoadScene("1");
     }
 }

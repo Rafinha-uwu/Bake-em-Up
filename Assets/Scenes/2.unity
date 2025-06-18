@@ -6939,6 +6939,7 @@ MonoBehaviour:
   AutoStart: 0
   CountTime: 10
   CountOn: 0
+  blackout: {fileID: 0}
 --- !u!1 &1273604955
 GameObject:
   m_ObjectHideFlags: 0
@@ -11524,7 +11525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2134502982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11779,6 +11780,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2f02757641c6419469dbc9e82347cc50, type: 3}
       propertyPath: m_Name
       value: tv
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2f02757641c6419469dbc9e82347cc50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4083501151425157549, guid: 2f02757641c6419469dbc9e82347cc50, type: 3}
       propertyPath: m_LocalPosition.x
