@@ -37,7 +37,7 @@ public class Mixer : ToolCooker
 
 	private AudioSource _audioSource;
 	[SerializeField] private AudioClip mixing_sound;
-	[SerializeField] private AudioClip end_sound;
+	[SerializeField] private GameObject _sound;
 
 	private Bowl _bowl;
 
@@ -182,7 +182,7 @@ public class Mixer : ToolCooker
 			return;
 
 		_mixingComplete = true;
-		PlayEndMixSound();
+		_sound.GetComponent<AudioSource>().Play();
 
 		Bowl bowl = _socket.Interactable.transform.gameObject.GetComponent<Bowl>();
 		bowl.MakeDough();
@@ -279,10 +279,4 @@ public class Mixer : ToolCooker
         _audioSource.loop = false;
     }
 
-	private void PlayEndMixSound()
-	{
-		_audioSource.clip = end_sound;
-		_audioSource.Play();
-        _audioSource.clip = mixing_sound;
-    }
 }

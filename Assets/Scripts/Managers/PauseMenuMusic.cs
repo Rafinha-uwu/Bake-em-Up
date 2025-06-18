@@ -4,25 +4,28 @@ public class PauseMenuMusic : MonoBehaviour
 {
     private AudioSource _audioSource;
 
-    void Start()
-    {
-        _audioSource = GetComponent<AudioSource>();
-    }
 
     void OnEnable()
     {
+        if( _audioSource == null)
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
         if (_audioSource && !_audioSource.isPlaying)
         {
-            Debug.Log("Vou começar a tocar!!!!");
-            _audioSource.Play();
+            _audioSource.GetComponent<AudioSource>().Play();
         }
     }
 
     void OnDisable()
     {
+        if (_audioSource == null)
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
         if (_audioSource && _audioSource.isPlaying)
         {
-            _audioSource.Stop();
+            _audioSource.GetComponent<AudioSource>().Stop();
         }
     }
 }
