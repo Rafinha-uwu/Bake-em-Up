@@ -34,6 +34,8 @@ public class WaveSpawner : MonoBehaviour
 
     [SerializeField] private GameObject blackout;
 
+    private bool finni = false;
+
     private void Start()
     {
         LevelEvents.OnBakedNewRecipe += CheckBakedRecipe;
@@ -49,12 +51,12 @@ public class WaveSpawner : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-	private void OnDestroy()
-	{
-		LevelEvents.OnBakedNewRecipe -= CheckBakedRecipe;
-	}
+    private void OnDestroy()
+    {
+        LevelEvents.OnBakedNewRecipe -= CheckBakedRecipe;
+    }
 
-	public void Update()
+    public void Update()
     {
         if (CountOn)
         {
@@ -78,9 +80,9 @@ public class WaveSpawner : MonoBehaviour
         {
             StopWaves();
         }
-		if (isSpawning) return;
+        if (isSpawning) return;
 
-		isSpawning = true;
+        isSpawning = true;
         LevelManager.Instance.WaveStarted = true;
         currentWaveIndex = 0;
         waveCoroutine = StartCoroutine(SpawnWaveLoop());
@@ -99,14 +101,6 @@ public class WaveSpawner : MonoBehaviour
                 Destroy(zombie);
         }
         activeZombies.Clear();
-
-        /*
-        Transform playerTransform = Camera.main?.transform; // Or use a direct reference to the player object
-        if (playerTransform != null && LevelManager.Instance != null)
-        {
-            playerTransform.position = LevelManager.Instance.playerStartPosition.position;
-            playerTransform.rotation = LevelManager.Instance.playerStartPosition.rotation;
-        }*/
 
         isSpawning = true;
         currentWaveIndex = GameManager.Instance.lastWaveIndex;
@@ -132,12 +126,12 @@ public class WaveSpawner : MonoBehaviour
 
     private void CheckBakedRecipe(RecipeData recipe)
     {
-        if(isSpawning) return;
+        if (isSpawning) return;
 
         Debug.Log(recipe.ToString());
-        if (_bakedRecipeToStart.Contains(recipe)) 
+        if (_bakedRecipeToStart.Contains(recipe))
             StartWaves();
-	}
+    }
 
     private IEnumerator SpawnWaveLoop()
     {
@@ -179,27 +173,13 @@ public class WaveSpawner : MonoBehaviour
             currentWaveIndex++;
             CloseDoor();
 
-            switch (currentWaveIndex)
+            if (currentWaveIndex == 2)
             {
-                case 3:
-                    blackout.GetComponent<Animator>().Play("Dark");
-                    Invoke("LoadScene", 5);
-                    break;
-                case 5:
-                    blackout.GetComponent<Animator>().Play("Dark");
-                    Invoke("LoadScene", 5);
-                    break;
-                case 7:
-                    blackout.GetComponent<Animator>().Play("Dark");
-                    Invoke("LoadScene", 5);
-                    break;
-                case 9:
-                    blackout.GetComponent<Animator>().Play("Dark");
-                    Invoke("LoadScene", 5);
-                    break;
+                blackout.GetComponent<Animator>().Play("Dark");
+                Invoke("LoadScene", 5);
             }
 
-            if (!waveSet.isInfinite && currentWaveIndex >= waveSet.predefinedWaves.Length)
+            if (!waveSet.isInfinite && finni)
             {
                 // for end
                 garageDoor.GetComponentInChildren<Canvas>().enabled = true;
@@ -212,18 +192,20 @@ public class WaveSpawner : MonoBehaviour
 
     private void LoadScene()
     {
-        switch (currentWaveIndex)
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        switch (currentSceneName)
         {
-            case 3:
+            case "1":
                 SceneManager.LoadScene("2");
                 break;
-            case 5:
+            case "2":
                 SceneManager.LoadScene("3");
                 break;
-            case 7:
+            case "3":
                 SceneManager.LoadScene("4");
                 break;
-            case 9:
+            case "4":
                 SceneManager.LoadScene("5");
                 break;
         }
