@@ -6,11 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class XRSocketToolInteractor : XRSocketInteractor
 {
-	[HideInInspector]
-	public bool IsToolOn = false;
-
     [SerializeField]
-    private ToolContainerName _toolContainerName;
+    private ToolName _toolName;
 	
 	private IXRSelectInteractable _interactable;
 	public IXRSelectInteractable Interactable => _interactable;
@@ -43,9 +40,9 @@ public class XRSocketToolInteractor : XRSocketInteractor
 		bool canHover = base.CanHover(interactable);
 
 		bool correctTool = false;
-		if (interactable.transform.gameObject.TryGetComponent<ToolContainer>(out var tool))
+		if (interactable.transform.gameObject.TryGetComponent<Tool>(out var tool))
 		{
-			if(tool.ToolContainerName == _toolContainerName)
+			if(tool.ToolName == _toolName)
 				correctTool = true;
 		}
 
@@ -57,9 +54,9 @@ public class XRSocketToolInteractor : XRSocketInteractor
 		bool canSelect = base.CanSelect(interactable);
 
 		bool correctTool = false;
-		if (interactable.transform.gameObject.TryGetComponent<ToolContainer>(out var tool))
+		if (interactable.transform.gameObject.TryGetComponent<Tool>(out var tool))
 		{
-			if (tool.ToolContainerName == _toolContainerName)
+			if (tool.ToolName == _toolName)
 				correctTool = true;
 		}
 
@@ -78,7 +75,7 @@ public class XRSocketToolInteractor : XRSocketInteractor
 
 	private void SocketSelectExit(SelectExitEventArgs args)
 	{
-		if (_cooker == null || _interactable == null || IsToolOn)
+		if (_cooker == null || _interactable == null)
 			return;
 
 		_cooker.SocketSelectedExit(this);

@@ -10,8 +10,12 @@ public class IngredientController : MonoBehaviour
 	[SerializeField]
 	private Sprite _ingredientIcon;
 
+	[SerializeField]
+	private GameObject _visualPrefab;
+
 	public Sprite IngredientIcon => _ingredientIcon;
 	public IngredientName IngredientName => _ingredientName;
+	public GameObject VisualPrefab => _visualPrefab;
 
 	private void OnDestroy()
 	{

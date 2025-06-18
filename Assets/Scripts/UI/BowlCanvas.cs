@@ -18,6 +18,20 @@ public class BowlCanvas : ToolCanvas
 
 	private Dictionary<IngredientName, IngredientCanvasElement> _ingredientsInCanvas = new();
 
+	private Transform _lookAt;
+
+	private void Start()
+	{
+		_lookAt = Camera.main.transform;
+	}
+
+	protected override void LateUpdate()
+	{
+		base.LateUpdate();
+		transform.LookAt(_lookAt, Vector3.up);
+		transform.Rotate(0f, 180f, 0f);
+	}
+
 	public void AddIngredient(IngredientController ingredient)
 	{
 		GameObject ingredientElement = Instantiate(_ingredientCanvasElement, _groupParent);
@@ -53,5 +67,10 @@ public class BowlCanvas : ToolCanvas
 	public void ClearRecipe()
 	{
 		_recipeImage.sprite = _emptyRecipeSprite;
+	}
+
+	public void ChangeCanvasPosition(Transform canvasOffset)
+	{
+		AddTransformToFollow(canvasOffset);
 	}
 }

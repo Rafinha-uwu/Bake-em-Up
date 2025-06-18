@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-public class Balcony : MonoBehaviour
+public class Balcony : Tool
 {
     [SerializeField]
     private List<RecipeContainer> _breadContainers;
@@ -13,9 +13,6 @@ public class Balcony : MonoBehaviour
 
     public delegate void BalconyHandler();
     public event BalconyHandler OnBreadOnBalcony;
-
-    private bool gamestart = true;
-    public GameObject waveSpawner;
 
     private void OnDestroy()
     {
@@ -26,20 +23,15 @@ public class Balcony : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bread"))
         {
-            if (gamestart == true)
-            {
-                waveSpawner.GetComponent<WaveSpawner>().StartWaves();
-                gamestart = false;
-            }
-
-
             XRBaseInteractable interactable = other.gameObject.GetComponentInParent<XRBaseInteractable>();
             if (interactable.IsSelectedByLeft() || interactable.IsSelectedByRight())
                 return;
+            
+            Bread bread = other.gameObject.GetComponentInParent<Bread>();
+            if (bread.IsBurned())
+                return;
 
             OnBreadOnBalcony?.Invoke();
-
-            Bread bread = other.gameObject.GetComponentInParent<Bread>();
 
             RecipeData recipe = bread.GetRecipe();
 

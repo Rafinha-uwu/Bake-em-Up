@@ -8,7 +8,7 @@ public class TutorialSocketStep : TutorialStep
 	[SerializeField]
 	private ContainerTool _containerTool;
 
-	private enum ContainerTool { Bowl, Mixer, WoddenBoard, OvenDish, Oven, Balcony };
+	private enum ContainerTool { Bowl, Mixer, WoddenBoard, Oven };
 
 	private bool _socketSelected = false;
 
@@ -35,16 +35,53 @@ public class TutorialSocketStep : TutorialStep
 				woodenBoard.OnDoughRemovedFromBoard += SocketReleased;
 				break;
 
-			case ContainerTool.OvenDish:
-				break;
-
 			case ContainerTool.Oven:
 				Oven oven = TutorialManager.Instance.Oven;
 				oven.OnDishInOven += SocketSelected;
 				oven.OnDishExitedOven += SocketReleased;
 				break;
 
-			case ContainerTool.Balcony:
+			default:
+				break;
+		}
+	}
+
+	protected void OnDestroy()
+	{
+		switch (_containerTool)
+		{
+			case ContainerTool.Bowl:
+				Bowl bowl = TutorialManager.Instance.Bowl;
+				if(!bowl.IsUnityNull())
+					bowl.OnIngredientEntered -= SocketSelected;
+				return;
+
+			case ContainerTool.Mixer:
+				Mixer mixer = TutorialManager.Instance.Mixer;
+				if (!mixer.IsUnityNull())
+				{
+					mixer.OnSocketSelected -= SocketSelected;
+					mixer.OnSocketExited -= SocketReleased;
+
+				}
+				break;
+
+			case ContainerTool.WoddenBoard:
+				WoodenBoard woodenBoard = TutorialManager.Instance.WoodBoard;
+				if (!woodenBoard.IsUnityNull())
+				{
+					woodenBoard.OnDoughOnBoard -= SocketSelected;
+					woodenBoard.OnDoughRemovedFromBoard -= SocketReleased;
+				}
+				break;
+
+			case ContainerTool.Oven:
+				Oven oven = TutorialManager.Instance.Oven;
+				if (!oven.IsUnityNull())
+				{
+					oven.OnDishInOven -= SocketSelected;
+					oven.OnDishExitedOven -= SocketReleased;
+				}
 				break;
 
 			default:

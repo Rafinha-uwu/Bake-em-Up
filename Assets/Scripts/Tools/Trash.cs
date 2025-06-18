@@ -9,7 +9,10 @@ public class Trash : MonoBehaviour
 		if (other.CompareTag("Player"))
 			return;
 
-		GetComponent<Animator>().Play("Shake_Trash");
+		var interactable = other.gameObject.GetComponentInParent<XRGrabInteractable>();
+
+		if (!interactable.IsUnityNull() && interactable.isSelected)
+			return;
 
 		Resettable resettable = other.GetComponentInParent<Resettable>();
 		if (resettable != null)
@@ -18,13 +21,10 @@ public class Trash : MonoBehaviour
 		}
 		else
 		{
-			var interactable = other.gameObject.GetComponentInParent<XRGrabInteractable>();
-			if (interactable.isSelected)
-			{
-				interactable.interactionManager.SelectExit(interactable.firstInteractorSelecting, interactable);
-			}
-
-			Destroy(interactable.gameObject);
+			if (!interactable.IsUnityNull())
+				Destroy(interactable.gameObject);
 		}
+
+		GetComponent<Animator>().Play("Shake_Trash");
 	}
 }

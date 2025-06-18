@@ -19,9 +19,8 @@ public class FryerBasket : ToolContainer
 	public event BasketHandler OnBasketHasDough;
 	public event BasketHandler OnBasketEmpty;
 
-	protected override void Awake()
+	protected void Awake()
 	{
-		base.Awake();
 		_resettable = GetComponent<Resettable>();
 		_resettable.OnObjectReset += ClearBasket;
 	}

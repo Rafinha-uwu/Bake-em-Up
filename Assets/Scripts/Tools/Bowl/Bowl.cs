@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEditor.Experimental.GraphView;
 
 [RequireComponent(typeof(XRGrabInteractable)), RequireComponent(typeof(Resettable))]
 public class Bowl : ToolContainer
@@ -12,15 +15,34 @@ public class Bowl : ToolContainer
 	[SerializeField]
 	private BowlCanvas _bowlCanvas;
 
+	[SerializeField]
+	private Transform _canvasOffset;
+
+	[SerializeField]
+	private Mesh _defaultMesh;
+	[SerializeField]
+	private List<BowlDoughsMeshs> _bowlDoughMeshs = new();
+
+	[Serializable]
+	private class BowlDoughsMeshs
+	{
+		public RecipeData recipe;
+		public Mesh mesh;
+	}
+
 	private Dictionary<IngredientName, int> _ingredientsInside = new();
 
 	[HideInInspector]
 	public bool HasCompletedDough = false;
 	[HideInInspector]
+	public bool HasCompletedCream = false;
+	[HideInInspector]
 	public bool HasBadDough = false;
 	[HideInInspector]
 	public bool HasRecipeReady = false;
 	private Resettable _resettable;
+	[SerializeField]
+	private MeshFilter _filter;
 
 	private int _doughCount = 0;
 	private GameObject _dough = null;
@@ -30,9 +52,8 @@ public class Bowl : ToolContainer
 	public event BowlHandler OnRecipeNotReady;
 	public event BowlHandler OnIngredientEntered;
 
-	protected override void Awake()
+	protected void Awake()
 	{
-		base.Awake();
 		_resettable = GetComponent<Resettable>();
 		_resettable.OnObjectReset += ClearBowl;
     }
@@ -61,15 +82,22 @@ public class Bowl : ToolContainer
 
 		HasCompletedDough = true;
 
-		GameObject firstDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
-		InsertItem(firstDough);
+		Mesh bowlMesh = _bowlDoughMeshs.FirstOrDefault(obj => obj.recipe == _recipeData).mesh;
+		_filter.mesh = bowlMesh;
+		
+		_dough = _recipeData.doughPrefab;
+			
 
-		GameObject secondDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
-		InsertItem(secondDough);
+		//GameObject firstDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
+		//InsertItem(firstDough);
 
-		_dough = firstDough;
+		//GameObject secondDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
+		//InsertItem(secondDough);
 
-		_doughCount = 2;
+		//_dough = firstDough;
+
+		//_doughCount = 2;
+		_doughCount = 1;
 
 		_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 	}
@@ -81,8 +109,10 @@ public class Bowl : ToolContainer
 		HasBadDough = true;
 
 		_recipeData = RecipesManager.Instance.GetBadBread();
-		GameObject badDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
-		InsertItem(badDough);
+		Mesh bowlMesh = _bowlDoughMeshs.FirstOrDefault(obj => obj.recipe == _recipeData).mesh;
+		_filter.mesh = bowlMesh;
+		//GameObject badDough = Instantiate(_recipeData.doughPrefab, _container.transform.position, Quaternion.identity);
+		//InsertItem(badDough);
 
 		_doughCount = 1;
 
@@ -92,6 +122,7 @@ public class Bowl : ToolContainer
 	public void ClearBowl()
 	{
 		HasCompletedDough = false;
+		HasCompletedCream = false;
 		HasBadDough = false;
 		HasRecipeReady = false;
 
@@ -103,6 +134,8 @@ public class Bowl : ToolContainer
 			Destroy(child.gameObject);
 		}
 		_bowlCanvas.ClearCanvas();
+
+		_filter.mesh = _defaultMesh;
 
 		OnRecipeNotReady?.Invoke();
 	}
@@ -132,6 +165,16 @@ public class Bowl : ToolContainer
 			_bowlCanvas.DisableCanvas();
 	}
 
+	public void ResetCanvasPosition()
+	{
+		_bowlCanvas.AddTransformToFollow(_canvasOffset);
+	}
+
+	public void ChangeCanvasPosition(Transform canvasOffset)
+	{
+		_bowlCanvas.ChangeCanvasPosition(canvasOffset);
+	}
+
 	private void OnTriggerEnter(Collider other)
 	{
 		if (HasCompletedDough || HasBadDough)
@@ -151,25 +194,31 @@ public class Bowl : ToolContainer
 				return;
 			}
 
-			InsertItem(interactable.gameObject);
+			InsertItem(ingredient.gameObject);
 		}
 	}
 
 	private void InsertItem(GameObject obj)
 	{
-		SetLayerAllChildren(obj.transform, "Inside Bowl");
-		obj.transform.SetParent(_container.transform, true);
-		obj.transform.localPosition = Vector3.zero;
+		GameObject auxObj = obj;
 
 		if (obj.TryGetComponent<IngredientController>(out var ingredient))
 		{
-			obj.transform.localScale *= 0.5f;
-			AddIngredient(ingredient);
+			auxObj = AddIngredient(ingredient);
+			if (auxObj.IsUnityNull())
+				return;
+
+			auxObj.transform.localScale *= 0.5f;
 		}
+
+		SetLayerAllChildren(auxObj.transform, "Inside Bowl");
+		auxObj.transform.SetParent(_container.transform, true);
+		auxObj.transform.localPosition = Vector3.zero;
 	}
 
-	private void AddIngredient(IngredientController ingredient)
+	private GameObject AddIngredient(IngredientController ingredient)
 	{
+		GameObject ingredientVisual = null;
 		OnIngredientEntered?.Invoke();
 
 		IngredientName name = ingredient.IngredientName;
@@ -185,7 +234,12 @@ public class Bowl : ToolContainer
 				OnRecipeReady?.Invoke();
 				HasRecipeReady = true;
 			}
+
+			ingredientVisual = Instantiate(ingredient.VisualPrefab);
 		}
+
+		Destroy(ingredient.gameObject);
+		return ingredientVisual;
 	}
 
 	private void SetLayerAllChildren(Transform root, string layerName)

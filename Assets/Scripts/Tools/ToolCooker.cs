@@ -4,7 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public abstract class ToolCooker : Tool
 {
 	[SerializeField]
-	private Transform _transformForIndicatorHelper;
+	protected Transform _transformForIndicatorHelper;
 	protected WorldIndicatorHelper _warningHelper;
 	[SerializeField]
 	[Range(150, 200)]
@@ -32,7 +32,7 @@ public abstract class ToolCooker : Tool
 		_toolButton = GetComponentInChildren<ToolButton>();
 
 		_warningHelper = GetComponentInChildren<WorldIndicatorHelper>();
-		_warningHelper.SetTargetPosition(_transformForIndicatorHelper);
+		_warningHelper.SetTargetPosition(_transformForIndicatorHelper.position);
 		_warningHelper.Hide();
 	}
 
