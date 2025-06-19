@@ -26,7 +26,6 @@ public class Cream : MonoBehaviour
             CreamLocation.y -= 1.1f;
             Instantiate(GroundCream, CreamLocation, GroundCream.transform.rotation);
 
-            PlayStickySound();
             Destroy(gameObject);
         }
         else if (other.CompareTag("Ground"))
@@ -35,7 +34,6 @@ public class Cream : MonoBehaviour
             CreamLocation.y -= 0f;
             Instantiate(GroundCream, CreamLocation, GroundCream.transform.rotation);
 
-            PlayStickySound();
             Destroy(gameObject);
         }
     }
