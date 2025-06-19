@@ -70,6 +70,7 @@ public class Zombie : MonoBehaviour
                 PlayWalkSound();
             }
         }
+        Debug.Log("Posição de zombie" + this.name+ ":" + transform.position);
     }
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
@@ -112,7 +113,7 @@ public class Zombie : MonoBehaviour
         receiver.tag = "Dead";
         SetTagInChildren(receiver, "Dead");
         // Stop movement and enable obstacle
-        if (agent != null) agent.enabled = true;
+        if (agent != null) agent.enabled = false;
         if (obstacle != null) obstacle.enabled = false;
         agent.ResetPath();
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
