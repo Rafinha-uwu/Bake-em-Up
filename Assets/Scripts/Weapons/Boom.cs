@@ -15,14 +15,11 @@ public class Boom : MonoBehaviour
     private bool countdownStarted = false;
     private Vector3 BombLocation;
 
-    private AudioSource _audioSource;
-
     private bool TouchedGrass = false;
 
     void Start()
     {
         countdown = delay;
-        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -62,8 +59,6 @@ public class Boom : MonoBehaviour
         if (hasExploded) return;
 
         hasExploded = true;
-
-        _audioSource.Play();
 
         if (explosionEffect != null)
         {

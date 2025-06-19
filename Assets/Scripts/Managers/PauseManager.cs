@@ -24,6 +24,8 @@ public class PauseManager : MonoBehaviour
     [SerializeField]
     private GameObject tv;
 
+    private CanvasGroup canvasGroup;
+
     void OnEnable()
     {
         pauseAction.action.Enable();
@@ -33,6 +35,7 @@ public class PauseManager : MonoBehaviour
     {
         savedInteractorLayers = interactors[0].interactionLayers;
         Debug.Log(nothingLayer.value);
+        canvasGroup = pauseMenu.GetComponent<CanvasGroup>();
     }
     void OnDisable()
     {
@@ -75,7 +78,18 @@ public class PauseManager : MonoBehaviour
         if (optionsMenu != null)
         {
             optionsMenu.SetActive(!optionsMenu.activeSelf);
-            pauseMenu.GetComponent<Renderer>().enabled = !optionsMenu.activeSelf;
+            if (optionsMenu.activeSelf)
+            {
+                canvasGroup.alpha = 0f;          // Invisível
+                canvasGroup.interactable = false; // Não responde a eventos
+                canvasGroup.blocksRaycasts = false; // Não bloqueia clique
+            }
+            if (!optionsMenu.activeSelf)
+            {
+                canvasGroup.alpha = 1f;
+                canvasGroup.interactable = true;
+                canvasGroup.blocksRaycasts = true;
+            }
         }
     }
 
