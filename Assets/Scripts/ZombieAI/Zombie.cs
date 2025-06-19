@@ -110,8 +110,6 @@ public class Zombie : MonoBehaviour
     {
         Died?.Invoke();
         death = true;
-        receiver.tag = "Dead";
-        SetTagInChildren(receiver, "Dead");
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = false;
         if (obstacle != null) obstacle.enabled = false;
