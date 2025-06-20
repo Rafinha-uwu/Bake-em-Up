@@ -15,8 +15,8 @@
     <<declare $tutorialComplete = false>>
 
     Periquito: Olá, seja bem-vindo ao tutorial de como fazer pão.
-    Periquito: Vamos começar com a receita de pão duro como pedra.
-    Periquito: Atrás de você tem as receitas no quadro.
+    Military: Vamos começar com a receita de pão duro como pedra.
+    Scientist: Atrás de você tem as receitas no quadro.
     Periquito: Olhe cuidadosamente os ingredientes e o procedimento para fazê-las.
     <<wait  1>>
     <<start_tutorial Periquito>>
@@ -138,7 +138,7 @@ position: -85,-64
     Periquito: Testando dialogo sem audio para ver se continua ou termina.
     Periquito: 2 teste.
     <<set $showedRecipe = true>>
-    <<spawn_new_recipe "militar">>
+    <<spawn_new_recipe "military">>
 <<else>>
     <<if $showedRecipe && !$secondwave>>
         <<jump SecondWave>>
@@ -159,4 +159,5 @@ Periquito: 2
 Periquito: 1
 Periquito: Vamos começar quando esse texto aqui acabar, mas será que precisa de um wait?
 <<start_wave>>
+<<hang_up "military">>
 ===

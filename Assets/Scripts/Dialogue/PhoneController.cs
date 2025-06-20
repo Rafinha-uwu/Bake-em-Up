@@ -92,4 +92,10 @@ public class PhoneController : MonoBehaviour
 		_warningHelper.Show();
 		_isRinging = true;
     }
+
+	public void HangUpPhone()
+	{
+		_audioSource.Stop();
+		_audioSource.PlayOneShot(_hangUpClip);
+	}
 }

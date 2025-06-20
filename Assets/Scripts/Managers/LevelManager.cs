@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 using Yarn.Unity;
@@ -114,16 +115,26 @@ public class LevelManager : MonoBehaviour
 	[YarnCommand("spawn_new_recipe")]
 	public static void SpawnNewRecipe(string person)
 	{
-		Debug.Log("Spawnar nova receita");
-		if (person.Equals("militar", StringComparison.OrdinalIgnoreCase))
+		if (person.Equals("military", StringComparison.OrdinalIgnoreCase))
 		{
-			Debug.Log("no telefone do militar");
 			Instance.MilitarPhone.SpawnNewRecipe(Instance.SceneNewRecipe);
 		}
 		else if(person.Equals("scientist", StringComparison.OrdinalIgnoreCase))
 		{
-			Debug.Log("no telefone do cientista");
 			Instance.ScientistPhone.SpawnNewRecipe(Instance.SceneNewRecipe);
+		}
+	}
+
+	[YarnCommand("hang_up")]
+	public static void HangUpPhone(string person)
+	{
+		if (person.Equals("military", StringComparison.OrdinalIgnoreCase))
+		{
+			Instance.MilitarPhone.HangUpPhone();
+		}
+		else if (person.Equals("scientist", StringComparison.OrdinalIgnoreCase))
+		{
+			Instance.ScientistPhone.HangUpPhone();
 		}
 	}
 
