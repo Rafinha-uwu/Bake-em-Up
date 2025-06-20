@@ -2,15 +2,9 @@ using UnityEngine;
 
 public class Briefcase : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private GameObject AirStrike;
+    public void RainFire()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Instantiate(AirStrike, AirStrike.transform.position, AirStrike.transform.rotation);
     }
 }

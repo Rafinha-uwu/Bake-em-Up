@@ -7,7 +7,6 @@ public class Cure : MonoBehaviour
     {
         if (other.CompareTag("Zombie") || other.CompareTag("Ground"))
         {
-
             Instantiate(cureEffect, cureEffect.transform.position, cureEffect.transform.rotation);
             Destroy(gameObject);
         }

@@ -7,7 +7,6 @@ public class ParticleDamage : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        // Check if the collided object is the player
         if (other.gameObject.CompareTag("Zombie"))
         {
             GameObject test = other.gameObject;

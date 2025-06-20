@@ -7,18 +7,24 @@ public class EndGame : MonoBehaviour
 {
     public bool Military = false;
     public bool Scientist = false;
+    public bool On = false;
 
     [SerializeField] private GameObject blackout;
 
     public void Update()
     {
-        if (Military)
+        if (On)
         {
-            StartCoroutine(M());
-        }
-        else if (Scientist)
-        {
-            StartCoroutine(S());
+            if (Military)
+            {
+                StartCoroutine(M());
+                On = false;
+            }
+            else if (Scientist)
+            {
+                StartCoroutine(S());
+                On = false;
+            }
         }
     }
 
