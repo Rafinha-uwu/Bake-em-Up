@@ -255,6 +255,7 @@ public class WaveSpawner : MonoBehaviour
         {
             garageDoor.GetComponent<Animator>().SetBool("Open", true);
             _audioSource.Play();
+            ChangeNarrativeEvent.ChangeNarrator("Gameplay");
         }
     }
 

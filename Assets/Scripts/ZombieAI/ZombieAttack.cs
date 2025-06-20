@@ -33,27 +33,26 @@ public class ZombieAttack : MonoBehaviour
 
         if (roulotteInAttackRange && !isAttacking)
         {
-            StartCoroutine(PerformAttack());
+            isAttacking = true;
+            animator.logWarnings = false;
+            animator.SetBool("isRunning", false);
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isAttacking", true);
+            animator.applyRootMotion = false;
+            //StartCoroutine(PerformAttack());
         }
     }
 
     private IEnumerator PerformAttack()
     {
-        isAttacking = true;
-        animator.logWarnings = false;
-        animator.SetBool("isRunning", false);
-        animator.SetBool("isWalking", false);
-        animator.SetBool("isAttacking", true);
-        animator.applyRootMotion = false;
 
-        // Stop movement and enable obstacle
+
         if (agent != null) agent.enabled = false;
         if (obstacle != null) obstacle.enabled = true;
         if (rb != null)
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            //rb.isKinematic = true; // Only if you don't need physics anymore
         }
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, whatIsRoulotte);
