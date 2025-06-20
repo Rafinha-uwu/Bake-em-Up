@@ -29,7 +29,7 @@ public class Oven : ToolCooker
 
     private AudioSource _audioSource;
     [SerializeField] private AudioClip cooking_sound;
-    [SerializeField] private AudioClip end_sound;
+    [SerializeField] private GameObject _sound;
 
     private RecipeData _recipeDataDish1;
     private RecipeData _recipeDataDish2;
@@ -323,7 +323,7 @@ public class Oven : ToolCooker
         else if (!_heatingCompleteDish1 && _currentTimeDish1 >= _recipeDataDish1.OvenTime)
         {
 			MakeBread(_socket);
-            PlayEndMixSound();
+            _sound.GetComponent<AudioSource>().Play();
 
         }
     }
@@ -345,7 +345,7 @@ public class Oven : ToolCooker
         else if (!_heatingCompleteDish2 && _currentTimeDish2 >= _recipeDataDish2.OvenTime)
         {
             MakeBread(_socketDish2);
-            PlayEndMixSound();
+            _sound.GetComponent<AudioSource>().Play();
         }
 
     }
@@ -432,13 +432,6 @@ public class Oven : ToolCooker
         _audioSource.clip = cooking_sound;
         _audioSource.loop = true;
         _audioSource.Play();
-    }
-
-    private void PlayEndMixSound()
-    {
-        _audioSource.clip = end_sound;
-        _audioSource.Play();
-        _audioSource.clip = cooking_sound;
     }
 
     private void turnOffSound()

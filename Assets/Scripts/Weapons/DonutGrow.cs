@@ -7,6 +7,10 @@ public class DonutRoller : MonoBehaviour
     [SerializeField] private float growInterval = 1f;
     [SerializeField] private float maxScale = 5f;
 
+    private AudioSource _audioSource;
+    public AudioClip[] donutgrowth_sounds;
+
+
     private bool isRolling = false;
     private Rigidbody rb;
     [SerializeField]
@@ -14,11 +18,13 @@ public class DonutRoller : MonoBehaviour
     private float nextGrowTime = 0f;
     private Vector3 rollDirection;
     private Vector3 lastPosition;
+    private int sound_number = 0;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         lastPosition = transform.position;
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -30,8 +36,9 @@ public class DonutRoller : MonoBehaviour
             if (Time.time >= nextGrowTime)
             {
                 nextGrowTime = Time.time + growInterval;
-                transform.localScale *= growthRate;
 
+                transform.localScale *= growthRate;
+                PlayDonutSound();
                 if (transform.localScale.x >= maxScale)
                 {
                     Invoke("Die", 3);
@@ -80,5 +87,16 @@ public class DonutRoller : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
+    }
+
+
+    private void PlayDonutSound()
+    {
+        if (sound_number >= 0 && sound_number < donutgrowth_sounds.Length)
+        {
+            _audioSource.clip = donutgrowth_sounds[sound_number];
+            _audioSource.Play();
+            sound_number++;
+        }
     }
 }
