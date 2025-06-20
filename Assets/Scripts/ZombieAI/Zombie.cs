@@ -70,7 +70,6 @@ public class Zombie : MonoBehaviour
                 PlayWalkSound();
             }
         }
-        Debug.Log("Posição de zombie" + this.name+ ":" + transform.position);
     }
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)

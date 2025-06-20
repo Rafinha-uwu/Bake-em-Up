@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using Yarn.Unity;
 
 public class LevelManager : MonoBehaviour
 {
@@ -26,6 +28,16 @@ public class LevelManager : MonoBehaviour
 	private FryerBasket _basket;
 
     public bool WaveStarted = false;
+
+    public DialogueRunner DialogueRunner;
+
+    public WaveSpawner WaveSpawner;
+
+	public MilitarPhone MilitarPhone;
+
+	public ScientistPhone ScientistPhone;
+
+	public GameObject SceneNewRecipe;
 
 	private void Awake()
     {
@@ -88,6 +100,50 @@ public class LevelManager : MonoBehaviour
 		}
 
 		return _basket;
+	}
+
+	[YarnCommand("start_wave")]
+	public static void StartWaveAfterDialogue()
+	{
+        if (Instance.WaveSpawner.IsUnityNull())
+            throw new NullReferenceException("LevelManager.Instance has no WaveSpawner to start the wave after the dialogue");
+
+		Instance.WaveSpawner.StartAfterDialogue();
+	}
+
+	[YarnCommand("spawn_new_recipe")]
+	public static void SpawnNewRecipe(string person)
+	{
+		if (person.Equals("military", StringComparison.OrdinalIgnoreCase))
+		{
+			Instance.MilitarPhone.SpawnNewRecipe(Instance.SceneNewRecipe);
+		}
+		else if(person.Equals("scientist", StringComparison.OrdinalIgnoreCase))
+		{
+			Instance.ScientistPhone.SpawnNewRecipe(Instance.SceneNewRecipe);
+		}
+	}
+
+	[YarnCommand("hang_up")]
+	public static void HangUpPhone(string person)
+	{
+		if (person.Equals("military", StringComparison.OrdinalIgnoreCase))
+		{
+			Instance.MilitarPhone.HangUpPhone();
+		}
+		else if (person.Equals("scientist", StringComparison.OrdinalIgnoreCase))
+		{
+			Instance.ScientistPhone.HangUpPhone();
+		}
+	}
+
+	public void PhonePickedUp()
+	{
+		if(!Instance.MilitarPhone.IsUnityNull())
+			Instance.MilitarPhone.StopRinging();
+		
+		if(!Instance.ScientistPhone.IsUnityNull())
+			Instance.ScientistPhone.StopRinging();
 	}
 
 	private void OnDestroy()

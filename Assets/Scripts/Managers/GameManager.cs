@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public string sceneToContinue = "1";
     public int lastWaveIndex = 0;
 
     private void Awake()
@@ -18,15 +19,18 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void SaveProgress(int waveIndex)
+    public void SaveProgress(string scene, int waveIndex)
     {
+        sceneToContinue = scene;
         lastWaveIndex = waveIndex;
-        PlayerPrefs.SetInt("SavedWaveIndex", waveIndex);
+		PlayerPrefs.SetString("SavedSceneIndex", sceneToContinue);
+		PlayerPrefs.SetInt("SavedWaveIndex", lastWaveIndex);
         PlayerPrefs.Save();
     }
 
-    public int LoadSavedWave()
+    public void LoadSavedWave()
     {
-        return PlayerPrefs.GetInt("SavedWaveIndex", 0);
+		sceneToContinue = PlayerPrefs.GetString("SavedSceneIndex", "1");
+		lastWaveIndex = PlayerPrefs.GetInt("SavedWaveIndex", 0);
     }
 }

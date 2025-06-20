@@ -39,8 +39,7 @@ public class MenuManager : MonoBehaviour
     public void Continue()
     {
         PlayStartButtonSound();
-        int savedWave = GameManager.Instance.LoadSavedWave();
-        GameManager.Instance.lastWaveIndex = savedWave;
+        GameManager.Instance.LoadSavedWave();
         blackout.GetComponent<Animator>().Play("Dark");
         Invoke("GoToMain", 5);
     }

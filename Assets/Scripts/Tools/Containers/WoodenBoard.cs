@@ -97,7 +97,6 @@ public class WoodenBoard : MonoBehaviour
             particles.Play();
 
             if (_doughOnBoard.KneadDough()){
-				_audioSource.Play();
 				OnDoughKneaded?.Invoke();	
 			}
 

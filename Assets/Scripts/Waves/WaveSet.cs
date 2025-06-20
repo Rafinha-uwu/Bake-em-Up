@@ -7,7 +7,9 @@ public class WaveSet : ScriptableObject
     public bool isInfinite;
     public WaveData[] predefinedWaves;
 
-    public WaveData GenerateWave(int waveIndex)
+	public string SceneToLoadWhenFinished;
+
+	public WaveData GenerateWave(int waveIndex)
     {
         if (!isInfinite)
         {

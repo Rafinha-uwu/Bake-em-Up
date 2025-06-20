@@ -12,6 +12,9 @@ public class WorldIndicatorHelper : MonoBehaviour
     private RectTransform _backgroundTransform;
 	[SerializeField]
 	private float _screenBorder = 100f;
+
+	[SerializeField]
+	private GameObject _imageGroup;
     
 	private RectTransform _canvas;
     private Vector3 _targetPosition;
@@ -22,8 +25,11 @@ public class WorldIndicatorHelper : MonoBehaviour
 		_canvas = GetComponent<RectTransform>();
 	}
 
-	void Update()
+	void LateUpdate()
 	{
+		if (_imageGroup.IsUnityNull())
+			return;
+
 		if (!_hasPosition)
 			return;
 
@@ -50,11 +56,11 @@ public class WorldIndicatorHelper : MonoBehaviour
 		capped.y = Mathf.Clamp(capped.y, 0f + (_screenBorder/2) / Screen.height, 1f - (_screenBorder/2) / Screen.height);
 
 		Vector3 clampedScreenPos = Camera.main.ViewportToScreenPoint(capped);
+		clampedScreenPos.z = 1f;
 
 		//If is in front of player use the origin z distance to the camera
 		if(isBehind || isOffScreen)
 		{
-			clampedScreenPos.z = 1f;
 			RotatePointerTowardsTargetPosition(capped);
 		}
 		else
@@ -62,7 +68,13 @@ public class WorldIndicatorHelper : MonoBehaviour
 			_backgroundTransform.localEulerAngles = new Vector3(0, 0, -90f);
 		}
 
-		Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clampedScreenPos);			
+
+		//RectTransformUtility.ScreenPointToLocalPointInRectangle(
+		//	_canvas, clampedScreenPos, null, out var localPoint);
+
+		//_imageGroup.transform.localPosition = localPoint;
+
+		Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clampedScreenPos);
 
 		_canvas.position = worldPosition;
 
