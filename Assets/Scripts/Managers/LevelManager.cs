@@ -138,6 +138,15 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
+	public void PhonePickedUp()
+	{
+		if(!Instance.MilitarPhone.IsUnityNull())
+			Instance.MilitarPhone.StopRinging();
+		
+		if(!Instance.ScientistPhone.IsUnityNull())
+			Instance.ScientistPhone.StopRinging();
+	}
+
 	private void OnDestroy()
     {
         // Clear the static reference when this instance is destroyed

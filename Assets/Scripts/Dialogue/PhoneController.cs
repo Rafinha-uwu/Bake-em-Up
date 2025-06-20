@@ -74,11 +74,16 @@ public class PhoneController : MonoBehaviour
 		Instantiate(newRecipe, _spawnRecipePoint.position, _spawnRecipePoint.rotation);
 	}
 
-	private IEnumerator StartDialogue()
-    {
+	public void StopRinging()
+	{
 		_warningHelper.Hide();
 		_isRinging = false;
 		_audioSource.Stop();
+	}
+
+	private IEnumerator StartDialogue()
+    {
+		LevelManager.Instance.PhonePickedUp();
 		_audioSource.PlayOneShot(_pickUpClip);
 
 		yield return new WaitForSeconds(_pickUpClip.length);

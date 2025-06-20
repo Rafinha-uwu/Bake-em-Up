@@ -56,11 +56,11 @@ public class WorldIndicatorHelper : MonoBehaviour
 		capped.y = Mathf.Clamp(capped.y, 0f + (_screenBorder/2) / Screen.height, 1f - (_screenBorder/2) / Screen.height);
 
 		Vector3 clampedScreenPos = Camera.main.ViewportToScreenPoint(capped);
+		clampedScreenPos.z = 1f;
 
 		//If is in front of player use the origin z distance to the camera
 		if(isBehind || isOffScreen)
 		{
-			//clampedScreenPos.z = 1f;
 			RotatePointerTowardsTargetPosition(capped);
 		}
 		else
@@ -68,14 +68,15 @@ public class WorldIndicatorHelper : MonoBehaviour
 			_backgroundTransform.localEulerAngles = new Vector3(0, 0, -90f);
 		}
 
-		RectTransformUtility.ScreenPointToLocalPointInRectangle(
-			_canvas, clampedScreenPos, null, out var localPoint);
 
-		_imageGroup.transform.localPosition = localPoint;
+		//RectTransformUtility.ScreenPointToLocalPointInRectangle(
+		//	_canvas, clampedScreenPos, null, out var localPoint);
 
-		//Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clampedScreenPos);			
+		//_imageGroup.transform.localPosition = localPoint;
 
-		//_canvas.position = worldPosition;
+		Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clampedScreenPos);
+
+		_canvas.position = worldPosition;
 
 		//Turn the canvas to the player
 		_canvas.transform.LookAt(Camera.main.transform, Vector3.up);

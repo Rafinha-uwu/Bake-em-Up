@@ -46,10 +46,22 @@ public class DialogueUI : MonoBehaviour
 
 		Vector3 clampedScreenPos = Camera.main.ViewportToScreenPoint(capped);
 
-		RectTransformUtility.ScreenPointToLocalPointInRectangle(
-			_canvas, clampedScreenPos, null, out var localPoint);
 
-		_imageGroup.transform.localPosition = localPoint;
+		clampedScreenPos.z = 1f;
+
+		//if (isBehind || isOffScreen)
+		//{
+		//	clampedScreenPos.z = 1f;
+		//}
+
+		//RectTransformUtility.ScreenPointToLocalPointInRectangle(
+		//	_canvas, clampedScreenPos, null, out var localPoint);
+
+		//_imageGroup.transform.localPosition = localPoint;
+
+		Vector3 worldPosition = Camera.main.ScreenToWorldPoint(clampedScreenPos);
+
+		_canvas.position = worldPosition;
 
 		//Turn the canvas to the player
 		_canvas.transform.LookAt(Camera.main.transform, Vector3.up);
