@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity.Attributes;
 
 [CreateAssetMenu(menuName = "Waves/Wave Data")]
 public class WaveData : ScriptableObject
@@ -8,7 +9,7 @@ public class WaveData : ScriptableObject
     public float spawnInterval = 1f;
     public float startTimer = 10f;
 
-    public bool StartsAfterDialogue = true;
+    public bool StartsAfterDialogue = true;	
 
     [Header("Events to trigger when this wave starts")]
     public List<WaveEventBase> waveEvents = new List<WaveEventBase>();

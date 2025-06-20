@@ -716,7 +716,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 36a74ec3c7a5ace44beea71447dd21e1, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 6f305ad96365dc442b569c03b427a50b, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &179282559
 MonoBehaviour:
@@ -748,7 +748,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: e89ad95ad67aa3b4ca0e222c2be95cc1, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 31d6eacd62650f04b9616f6c4493d154, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1001 &227244511
 PrefabInstance:
@@ -1379,6 +1379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 480609274}
+  - component: {fileID: 480609275}
   m_Layer: 0
   m_Name: Periquito
   m_TagString: Untagged
@@ -1401,6 +1402,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &480609275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480609273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6224f148b2afa449fe345e5c5f0228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &550656955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3640,11 +3653,12 @@ MonoBehaviour:
   - {fileID: 1329584714}
   waveDisplay: {fileID: 2132992698}
   timeDisplay: {fileID: 1273604957}
-  _bakedRecipeToStart: []
+  _bakedRecipeToStart:
+  - {fileID: 11400000, guid: 3190366478569244baadac612ad0a977, type: 2}
+  - {fileID: 11400000, guid: c88f6dd8fd09c8d47a141ca835db5eca, type: 2}
   garageDoor: {fileID: 0}
   AutoStart: 0
-  CountTime: 10
-  CountOn: 0
+  blackout: {fileID: 0}
 --- !u!1 &1273604955
 GameObject:
   m_ObjectHideFlags: 0
@@ -3896,6 +3910,8 @@ MonoBehaviour:
   death: 0
   force: 50
   currentState: 0
+  zombie_scream: {fileID: 0}
+  hit_sound: {fileID: 0}
   HIT: {fileID: 0}
   EP: {fileID: 0}
   POW: {fileID: 0}
@@ -4197,6 +4213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1438060936}
   - component: {fileID: 1438060937}
+  - component: {fileID: 1438060938}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -4241,6 +4258,24 @@ MonoBehaviour:
   _basket: {fileID: 1398701807}
   WaveStarted: 0
   DialogueRunner: {fileID: 8309902628772323034}
+  WaveSpawner: {fileID: 0}
+  MilitarPhone: {fileID: 0}
+  ScientistPhone: {fileID: 0}
+  SceneNewRecipe: {fileID: 8642597337180340693, guid: fbe01a046c6b507458744b22ef605031, type: 3}
+--- !u!114 &1438060938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438060935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 861205310ed6158418ac2a256f3d0a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToContinue: 1
+  lastWaveIndex: 0
 --- !u!1001 &1461934972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5398,6 +5433,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7926407893433250442, guid: b71e23dd88326d34291794d61c029176, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5817,6 +5856,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5202924568780712598, guid: 55f02c2f8cc7b0d4691cf73edcdbdb59, type: 3}
+      propertyPath: _targetTransform
+      value: 
+      objectReference: {fileID: 611646606}
     - target: {fileID: 5877876434037992020, guid: 55f02c2f8cc7b0d4691cf73edcdbdb59, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5905,6 +5948,10 @@ PrefabInstance:
       propertyPath: _targetTransform
       value: 
       objectReference: {fileID: 1084868656}
+    - target: {fileID: 7580299487512341364, guid: 55f02c2f8cc7b0d4691cf73edcdbdb59, type: 3}
+      propertyPath: _bird
+      value: 
+      objectReference: {fileID: 480609275}
     - target: {fileID: 7580299487512341364, guid: 55f02c2f8cc7b0d4691cf73edcdbdb59, type: 3}
       propertyPath: _bowl
       value: 
@@ -6476,6 +6523,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1527370178508878992, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
+      propertyPath: autoAdvance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3122298113242485630, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.895
@@ -6516,6 +6567,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3301696879349567607, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301696879349567607, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301696879349567607, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3700823499751354445, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -6526,7 +6589,11 @@ PrefabInstance:
       objectReference: {fileID: 480609274}
     - target: {fileID: 6249436705156129451, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
       propertyPath: autoStart
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6249436705156129451, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
+      propertyPath: startNode
+      value: BirdTutorial
       objectReference: {fileID: 0}
     - target: {fileID: 6249436705156129451, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
       propertyPath: runSelectedOptionAsLine
@@ -6559,6 +6626,10 @@ PrefabInstance:
     - target: {fileID: 8042132258192832024, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
       propertyPath: m_Name
       value: Dialogue System
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571673662940845661, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
+      propertyPath: endLineWhenVoiceoverComplete
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9148377410892817962, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6734,7 +6805,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 64455181126996683, guid: a107528bae43c9c41875ff84db110953, type: 3}
       propertyPath: m_Name
-      value: Phone
+      value: Militar Phone
       objectReference: {fileID: 0}
     - target: {fileID: 4538088077417746531, guid: a107528bae43c9c41875ff84db110953, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6865,24 +6936,24 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 452625444}
   - {fileID: 694501352}
-  - {fileID: 2118042392}
-  - {fileID: 150242193322840236}
-  - {fileID: 290233561}
-  - {fileID: 90235212}
-  - {fileID: 2021066852}
-  - {fileID: 229031798}
-  - {fileID: 1195303707}
-  - {fileID: 706397769}
   - {fileID: 690216151}
   - {fileID: 2049376299}
   - {fileID: 1084079480}
   - {fileID: 1267802722}
   - {fileID: 1438060936}
-  - {fileID: 1906731691}
   - {fileID: 550656955}
   - {fileID: 4448122770247649240}
+  - {fileID: 7230878172420178633}
+  - {fileID: 90235212}
+  - {fileID: 2118042392}
+  - {fileID: 150242193322840236}
+  - {fileID: 290233561}
+  - {fileID: 2021066852}
+  - {fileID: 229031798}
+  - {fileID: 1195303707}
+  - {fileID: 706397769}
+  - {fileID: 1906731691}
   - {fileID: 1143660483}
   - {fileID: 421354033}
   - {fileID: 1572796670}
-  - {fileID: 7230878172420178633}
   - {fileID: 480609274}

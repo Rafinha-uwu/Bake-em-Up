@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2993424723270352652}
   m_Layer: 0
-  m_Name: Left Hand Canvas Attach
+  m_Name: Canvas Attach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 450738327017232041}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.09500006, y: 0, z: -0.112}
+  m_LocalPosition: {x: -0.075, y: 0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -94,37 +94,6 @@ Transform:
   - {fileID: 7429167585475684352}
   m_Father: {fileID: 67044638455859507}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4413664473521131584
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8510731004620136458}
-  m_Layer: 0
-  m_Name: Right Hand Canvas Attach
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8510731004620136458
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4413664473521131584}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.09500006, y: 0, z: 0.112}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 67044638455859507}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &6823219085582743299
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,7 +280,6 @@ Transform:
   - {fileID: 8537673482563904839}
   - {fileID: 2150757926715000915}
   - {fileID: 2993424723270352652}
-  - {fileID: 8510731004620136458}
   - {fileID: 3978631360038128934}
   - {fileID: 3480169037934382624}
   m_Father: {fileID: 0}
@@ -502,8 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _toolName: 0
-  _canvasTransformRightHand: {fileID: 8510731004620136458}
-  _canvasTransformLeftHand: {fileID: 2993424723270352652}
+  _canvasTransform: {fileID: 2993424723270352652}
   _remainingCream: 5
   _pastryBagCanvas: {fileID: 8997091177590544425}
   _lineRenderer: {fileID: 4904151809349795454}
@@ -700,7 +667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.112
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_LocalRotation.w
@@ -720,11 +687,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.095
+      value: -0.075
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 6557940358507428854, guid: b7993c07be471f5439a2a36eb9458951, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

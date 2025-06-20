@@ -8,9 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class PastryBag : ToolContainer
 {
 	[SerializeField]
-	private Transform _canvasTransformRightHand;
-	[SerializeField]
-	private Transform _canvasTransformLeftHand; 
+	private Transform _canvasTransform;
 	public int _remainingCream = 0;
 	private int _maxCream = 0;
 	private bool _grabbed = false;
@@ -42,6 +40,7 @@ public class PastryBag : ToolContainer
 
 	protected void Awake()
 	{
+		_pastryBagCanvas.AddTransformToFollow(_canvasTransform);
 		_pastryBagCanvas.UpdateCounter(_remainingCream);
 
 		_interactable = GetComponent<XRGrabInteractable>();
@@ -120,8 +119,6 @@ public class PastryBag : ToolContainer
 		if (args.interactorObject.transform.CompareTag("Player"))
 		{
 			_grabbed = true;
-			Transform canvasFollow = args.interactableObject.IsSelectedByLeft() ? _canvasTransformLeftHand : _canvasTransformRightHand;
-			_pastryBagCanvas.AddTransformToFollow(canvasFollow);
 			EnableCanvas();
 		}
 	}

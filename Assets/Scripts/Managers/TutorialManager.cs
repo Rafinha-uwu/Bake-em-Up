@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class TutorialManager : MonoBehaviour
     [SerializeField]
     private List<TutorialConditionStep> _tutorialConditionSteps;
 
+	[Header("Dialogue")]
+	[SerializeField]
+	private SerializableDictionary<int, string> _tutorialAndDialogueConditions = new();
+
+	[SerializeField]
+	private BirdTutorial _bird;
+
+	[Header("Scene Objects")]
 	[SerializeField]
 	private Bowl _bowl;
 	public Bowl Bowl => _bowl;
@@ -76,13 +85,18 @@ public class TutorialManager : MonoBehaviour
 	{
 		if(_tutorialConditionSteps[_currentTutorialCondition].GetInstanceID() == condition.GetInstanceID())
 		{
+			string dialogueCondition = _tutorialAndDialogueConditions[_currentTutorialCondition];
+			LevelManager.Instance.DialogueRunner.VariableStorage.SetValue(dialogueCondition, true);
+
 			if (_currentTutorialCondition == _tutorialConditionSteps.Count - 1)
 			{
+				_bird.FinishTutorial();
 				Destroy(gameObject);
 				_indicatorHelper.Hide();
 				return;
 			}
 
+			_bird.ResetDialogue();
 			_currentTutorialCondition++;
 			_tutorialConditionSteps[_currentTutorialCondition].StartCondition(_indicatorHelper);
 		}
@@ -97,6 +111,11 @@ public class TutorialManager : MonoBehaviour
 		{
 			_currentTutorialCondition--;
 			_tutorialConditionSteps[_currentTutorialCondition].StartCondition(_indicatorHelper);
+
+			string dialogueCondition = _tutorialAndDialogueConditions[_currentTutorialCondition];
+			LevelManager.Instance.DialogueRunner.VariableStorage.SetValue(dialogueCondition, false);
+
+			_bird.ResetDialogue();
 		}
 	}
 }

@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using TMPro;
 using UnityEngine;
 using Yarn.Unity;
 
-#nullable enable
+//#nullable enable
 
 public class DialoguePositionView : DialoguePresenterBase
 {
@@ -29,11 +30,9 @@ public class DialoguePositionView : DialoguePresenterBase
 
 	public override YarnTask RunLineAsync(LocalizedLine line, LineCancellationToken token)
 	{
-		Transform targetTransform = null;
-
-		if (string.IsNullOrEmpty(line.CharacterName) || !_characterPosition.TryGetValue(line.CharacterName, out targetTransform))
+		if (string.IsNullOrEmpty(line.CharacterName) || !_characterPosition.TryGetValue(line.CharacterName, out Transform targetTransform))
 		{
-			Debug.LogError($"Can't set dialogue world position due to empty charactername or no character found in the dict<string, Transform>", this);
+			throw new NullReferenceException($"Can't set dialogue world position due to empty charactername or no character found in the dict<string, Transform>");
 		}
 
 		_dialogueUI.SetTargetPosition(targetTransform);

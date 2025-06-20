@@ -22,8 +22,14 @@ public class PhoneController : MonoBehaviour
 	[SerializeField]
 	private AudioClip _hangUpClip;
 
-	private string _nodeName;
-    private bool _isRinging;
+	[Header("Dialogue")]
+	[SerializeField]
+	private string _phoneNodeName;
+
+	[SerializeField]
+	private Transform _spawnRecipePoint;
+
+	private bool _isRinging;
 
     private XRBaseInteractable _interactable;
 	private WorldIndicatorHelper _warningHelper;
@@ -33,10 +39,10 @@ public class PhoneController : MonoBehaviour
 		_interactable = GetComponent<XRBaseInteractable>();
         _interactable.selectEntered.AddListener(StartDialogue);
 
-        LevelEvents.OnPhoneStartRinging += StartPhoneRinging;
+        LevelEvents.OnPhonesStartRinging += StartPhoneRinging;
 	}
 
-	private void Start()
+	protected virtual void Start()
 	{
 		_warningHelper = GetComponentInChildren<WorldIndicatorHelper>();
 		_warningHelper.SetTargetPosition(_transformForIndicatorHelper.position);
@@ -46,7 +52,7 @@ public class PhoneController : MonoBehaviour
 	private void OnDestroy()
 	{
 		_interactable.selectEntered.RemoveListener(StartDialogue);
-		LevelEvents.OnPhoneStartRinging -= StartPhoneRinging;
+		LevelEvents.OnPhonesStartRinging -= StartPhoneRinging;
 	}
 
 	private void LateUpdate()
@@ -63,7 +69,12 @@ public class PhoneController : MonoBehaviour
         StartCoroutine(StartDialogue());
     }
 
-    private IEnumerator StartDialogue()
+	public void SpawnNewRecipe(GameObject newRecipe)
+	{
+		Instantiate(newRecipe, _spawnRecipePoint.position, _spawnRecipePoint.rotation);
+	}
+
+	private IEnumerator StartDialogue()
     {
 		_warningHelper.Hide();
 		_isRinging = false;
@@ -73,13 +84,12 @@ public class PhoneController : MonoBehaviour
 		yield return new WaitForSeconds(_pickUpClip.length);
 
 		if (!LevelManager.Instance.DialogueRunner.IsDialogueRunning)
-			LevelManager.Instance.DialogueRunner.StartDialogue(_nodeName);
+			LevelManager.Instance.DialogueRunner.StartDialogue(_phoneNodeName);
 	}
 
-    private void StartPhoneRinging(string nodeName)
+    private void StartPhoneRinging()
     {
 		_warningHelper.Show();
 		_isRinging = true;
-        _nodeName = nodeName;
     }
 }

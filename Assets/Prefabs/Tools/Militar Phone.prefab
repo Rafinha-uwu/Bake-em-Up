@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4538088077417746531}
   - component: {fileID: 2469464285144581735}
-  - component: {fileID: 1704151494323322590}
+  - component: {fileID: 8349167182174111202}
   - component: {fileID: 5061953202607075456}
   m_Layer: 0
-  m_Name: Phone
+  m_Name: Militar Phone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,6 +35,7 @@ Transform:
   - {fileID: 2496301322571714487}
   - {fileID: 7262438871904672066}
   - {fileID: 1413557104378591928}
+  - {fileID: 6332264068462548116}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2469464285144581735
@@ -110,7 +111,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
---- !u!114 &1704151494323322590
+--- !u!114 &8349167182174111202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 64455181126996683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62f08e97608250c419bda2381105ed4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 77f08c325cc2f564b98edd74d2d1e25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transformForIndicatorHelper: {fileID: 1413557104378591928}
@@ -127,6 +128,8 @@ MonoBehaviour:
   _ringingClip: {fileID: 8300000, guid: 95f376c18fca3284590fc1f4ac46de5d, type: 3}
   _pickUpClip: {fileID: 8300000, guid: 7fa66f652fe55f9489e3046c9bd124c6, type: 3}
   _hangUpClip: {fileID: 8300000, guid: d12e04df6e96bd442b2f2b0f85fb02cd, type: 3}
+  _phoneNodeName: MilitarPhone
+  _spawnRecipePoint: {fileID: 6332264068462548116}
 --- !u!82 &5061953202607075456
 AudioSource:
   m_ObjectHideFlags: 0
@@ -255,6 +258,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4538088077417746531}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6215999367217483439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6332264068462548116}
+  m_Layer: 0
+  m_Name: Spawn Recipe Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6332264068462548116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215999367217483439}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.921897, z: 0, w: -0.38743514}
+  m_LocalPosition: {x: 0.233, y: 0.034, z: 0.238}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4538088077417746531}
+  m_LocalEulerAnglesHint: {x: 0, y: -225.59, z: 0}
 --- !u!1 &7669258481525624617
 GameObject:
   m_ObjectHideFlags: 0
