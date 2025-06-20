@@ -270,11 +270,13 @@ public class WaveSpawner : MonoBehaviour
     {
         garageDoor.GetComponent<Animator>().SetBool("Open", true);
         _audioSource.Play();
+        ChangeNarrativeEvent.ChangeNarrator("Gameplay");
     }
 
     public void CloseDoor()
     {
         garageDoor.GetComponent<Animator>().SetBool("Open", false);
         _audioSource.Play();
+        ChangeNarrativeEvent.ChangeNarrator("military");
     }
 }

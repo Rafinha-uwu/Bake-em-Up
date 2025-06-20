@@ -40,7 +40,7 @@ public class RoulotteHealth : MonoBehaviour
             hp -= damage;
             float healthPercentage = hp / maxHealth;
             healthBarFill.fillAmount = healthPercentage;
-            healthDisplay.text = $"{hp} - HP";
+            //healthDisplay.text = $"{hp} - HP";
             _damageFX.PlayFX();
             if (hp < 1)
             {   
