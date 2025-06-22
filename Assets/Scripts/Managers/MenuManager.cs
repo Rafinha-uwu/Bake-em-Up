@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -9,10 +10,24 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private AudioClip start_sound;
 
     [SerializeField] private GameObject blackout;
+    [SerializeField] private GameObject continue_button;
+
+    [SerializeField] private Sprite blocked_continue;
+    [SerializeField] private Sprite available_continue;
 
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        if(GameManager.Instance.lastWaveIndex > 0)
+        {
+            continue_button.GetComponent<Image>().sprite = available_continue;
+            continue_button.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            continue_button.GetComponent<Image>().sprite = blocked_continue;
+            continue_button.GetComponent<Button>().interactable = false;
+        }
     }
     public void StartGame()
     {
