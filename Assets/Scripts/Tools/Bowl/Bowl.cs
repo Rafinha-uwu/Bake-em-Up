@@ -22,10 +22,21 @@ public class Bowl : ToolContainer
 	[SerializeField]
 	private List<BowlDoughsMeshs> _bowlDoughMeshs = new();
 
+	[SerializeField]
+	private List<BowlIngredientsMeshs> _bowlIngredientsMeshs = new();
+
 	[Serializable]
 	private class BowlDoughsMeshs
 	{
 		public RecipeData recipe;
+		public Mesh mesh;
+	}
+
+	[Serializable]
+	private class BowlIngredientsMeshs
+	{
+		public RecipeData recipe;
+		public IngredientName ingredient;
 		public Mesh mesh;
 	}
 
@@ -199,25 +210,14 @@ public class Bowl : ToolContainer
 
 	private void InsertItem(GameObject obj)
 	{
-		GameObject auxObj = obj;
-
 		if (obj.TryGetComponent<IngredientController>(out var ingredient))
 		{
-			auxObj = AddIngredient(ingredient);
-			if (auxObj.IsUnityNull())
-				return;
-
-			auxObj.transform.localScale *= 0.5f;
+			AddIngredient(ingredient);
 		}
-
-		SetLayerAllChildren(auxObj.transform, "Inside Bowl");
-		auxObj.transform.SetParent(_container.transform, true);
-		auxObj.transform.localPosition = Vector3.zero;
 	}
 
-	private GameObject AddIngredient(IngredientController ingredient)
+	private void AddIngredient(IngredientController ingredient)
 	{
-		GameObject ingredientVisual = null;
 		OnIngredientEntered?.Invoke();
 
 		IngredientName name = ingredient.IngredientName;
@@ -232,21 +232,19 @@ public class Bowl : ToolContainer
 				_bowlCanvas.UpdateRecipe(_recipeData.recipeSprite);
 				OnRecipeReady?.Invoke();
 				HasRecipeReady = true;
+
+				Mesh bowlMesh = _bowlIngredientsMeshs.FirstOrDefault(obj => obj.recipe == _recipeData).mesh;
+				_filter.mesh = bowlMesh;
 			}
 
-			ingredientVisual = Instantiate(ingredient.VisualPrefab);
+		}
+
+		if (!HasRecipeReady && (name == IngredientName.Flour || name == IngredientName.Water))
+		{
+			Mesh bowlMesh = _bowlIngredientsMeshs.FirstOrDefault(obj => obj.ingredient == name).mesh;
+			_filter.mesh = bowlMesh;
 		}
 
 		Destroy(ingredient.gameObject);
-		return ingredientVisual;
-	}
-
-	private void SetLayerAllChildren(Transform root, string layerName)
-	{
-		var children = root.GetComponentsInChildren<Transform>(includeInactive: true);
-		foreach (var child in children)
-		{
-			child.gameObject.layer = LayerMask.NameToLayer(layerName);
-		}
 	}
 }

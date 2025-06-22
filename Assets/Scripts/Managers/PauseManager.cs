@@ -5,6 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PauseManager : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class PauseManager : MonoBehaviour
     private InteractionLayerMask nothingLayer;
     [SerializeField]
     private GameObject tv;
+
+    public List<AudioSource> gameplayAudioSources;
+    private List<AudioSource> pausedAudioSources = new List<AudioSource>();
 
     private CanvasGroup canvasGroup;
 
@@ -53,6 +57,29 @@ public class PauseManager : MonoBehaviour
     {
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
+        if (isPaused)
+        {
+            foreach (AudioSource audio in gameplayAudioSources)
+            {
+                if (audio.isPlaying)
+                {
+                    audio.Pause();
+                    pausedAudioSources.Add(audio);
+                }
+            }
+        }
+        else
+        {
+            foreach (AudioSource audio in pausedAudioSources)
+            {
+                if (audio != null)
+                {
+                    audio.UnPause();
+                }
+            }
+
+            pausedAudioSources.Clear();
+        }
         pauseMenu.SetActive(isPaused);
         //darkBackgroundPanel.SetActive(isPaused);
 
