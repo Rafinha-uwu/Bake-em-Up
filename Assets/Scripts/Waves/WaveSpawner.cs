@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
-using System.Linq;
+using Yarn.Unity;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -18,10 +19,9 @@ public class WaveSpawner : MonoBehaviour
     private List<RecipeData> _bakedRecipeToStart = new();
 
     private int currentWaveIndex = 0;
-    private bool isSpawning = false;
-    private Coroutine waveCoroutine;
-    private int holdWaveIndex = -1;
-    private List<GameObject> activeZombies = new List<GameObject>();
+    private bool isSpawning = true;
+    private bool _finishedEnemies = true;
+    private List<GameObject> activeZombies = new();
     private AudioSource _audioSource;
 
     public int CurrentWave => currentWaveIndex + 1;
@@ -29,27 +29,43 @@ public class WaveSpawner : MonoBehaviour
     public GameObject garageDoor;
 
     [SerializeField] private bool AutoStart = false;
-    [SerializeField] private float CountTime = 0;
-    [SerializeField] private bool CountOn = true;
+    private float _countTime = 0;
+    private bool _countOn = true;
 
     [SerializeField] private GameObject blackout;
 
-    private bool finni = false;
-
     private void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         LevelEvents.OnBakedNewRecipe += CheckBakedRecipe;
+        LevelManager.Instance.WaveSpawner = this;
+        
         if (GameManager.Instance != null)
         {
             currentWaveIndex = GameManager.Instance.lastWaveIndex;
+            if (currentWaveIndex == 2)
+                currentWaveIndex = 0;
+		}
+		
+        if (waveSet.isInfinite)
+		{
+			WaveData wave = waveSet.GenerateWave(0);
+
+			foreach (var waveEvent in wave.waveEvents)
+			{
+				waveEvent.Execute();
+			}
+		}
+
+		if (AutoStart)
+        {
+			StartWave();
         }
 
-        if (AutoStart)
-        {
-            StartWaves();
-        }
-        _audioSource = GetComponent<AudioSource>();
-    }
+		DisplayWaveText(CurrentWave);
+
+		GameManager.Instance.SaveProgress(SceneManager.GetActiveScene().name, currentWaveIndex);
+	}
 
     private void OnDestroy()
     {
@@ -58,179 +74,141 @@ public class WaveSpawner : MonoBehaviour
 
     public void Update()
     {
-        if (CountOn)
+        if (waveSet.isInfinite && _countOn)
         {
-            if (CountTime > 0)
+            if (_countTime > 0)
             {
-                CountTime -= Time.deltaTime;
-                timeDisplay.text = $"{(int)CountTime}";
+                _countTime -= Time.deltaTime;
+                timeDisplay.text = $"{(int)_countTime}";
             }
-            else if (CountTime <= 0f)
+            else if (_countTime <= 0f)
             {
                 timeDisplay.text = $"{0}";
-                CountOn = false;
+                _countOn = false;
             }
         }
-
     }
 
-    public void StartWaves()
+    public void StartWave()
     {
-        if (GameManager.Instance != null)
-        {
-            StopWaves();
-        }
-        if (isSpawning) return;
+		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
+        if (!CheckCanStartWave(wave)) return;
 
-        isSpawning = true;
         LevelManager.Instance.WaveStarted = true;
-        currentWaveIndex = 0;
-        waveCoroutine = StartCoroutine(SpawnWaveLoop());
-    }
+		_finishedEnemies = false;
 
-
-    public void Restart()
-    {
-        StopWaves();
-        if (isSpawning) return;
-
-        // Destroy all active zombies
-        foreach (GameObject zombie in activeZombies)
+        if (waveSet.isInfinite)
         {
-            if (zombie != null)
-                Destroy(zombie);
+			_countTime = wave.startTimer;
+            _countOn = true;
+            StartCoroutine(WaitTimeUntilStart(wave));
         }
-        activeZombies.Clear();
-
-        isSpawning = true;
-        currentWaveIndex = GameManager.Instance.lastWaveIndex;
-        waveCoroutine = StartCoroutine(SpawnWaveLoop());
-    }
-
-    public void StopWaves()
-    {
-        isSpawning = false;
-        if (waveCoroutine != null)
-            StopCoroutine(waveCoroutine);
-        GameManager.Instance.SaveProgress(currentWaveIndex);
-    }
-
-    public void ResumeWaves()
-    {
-        if (!isSpawning)
+        else
         {
-            isSpawning = true;
-            waveCoroutine = StartCoroutine(SpawnWaveLoop());
+		    OpenDoor();
+            StartCoroutine(SpawnEnemy(wave));
         }
-    }
+	}
+
+    public void StartAfterDialogue()
+    {
+		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
+        if (wave.StartsAfterDialogue)
+            StartWave();
+	}
+
+    private bool CheckCanStartWave(WaveData wave)
+    {
+		if (GameManager.Instance == null)
+			return false;
+
+		if (!_finishedEnemies) return false;
+
+		if (wave.IsUnityNull())
+			throw new NullReferenceException("WaveData missing");
+
+        return true;
+	}
+
+    private IEnumerator WaitTimeUntilStart(WaveData wave)
+    {
+        yield return new WaitForSeconds(_countTime);
+		
+        OpenDoor();
+		StartCoroutine(SpawnEnemy(wave));
+	}
+
+    private void WaveFinished()
+    {
+		_finishedEnemies = true;
+		currentWaveIndex++;
+		GameManager.Instance.SaveProgress(SceneManager.GetActiveScene().name, currentWaveIndex);
+		DisplayWaveText(CurrentWave);
+
+        if (waveSet.isInfinite)
+        {
+            StartWave();
+            return;
+        }
+
+		if (currentWaveIndex == 2)
+		{
+			CloseDoor();
+            if(!blackout.IsUnityNull())
+			    blackout.GetComponent<Animator>().Play("Dark");
+			Invoke(nameof(LoadScene), 5);
+            return;
+        }
+
+        LevelEvents.PhonesStartRinging();
+	}
 
     private void CheckBakedRecipe(RecipeData recipe)
     {
-        if (isSpawning) return;
+        if (!_finishedEnemies) return;
 
-        Debug.Log(recipe.ToString());
-        if (_bakedRecipeToStart.Contains(recipe))
-            StartWaves();
-    }
-
-    private IEnumerator SpawnWaveLoop()
-    {
-        while (true)
-        {
-            WaveData wave = waveSet.GenerateWave(currentWaveIndex);
-            if (wave == null)
-                yield break;
-
-            DisplayWaveText(CurrentWave);
-
-            // Trigger wave events
-            if (holdWaveIndex != currentWaveIndex)
-            {
-                foreach (var waveEvent in wave.waveEvents)
-                {
-                    waveEvent?.Execute();
-                }
-            }
-            holdWaveIndex = currentWaveIndex;
-
-            CountTime = wave.startTimer;
-            CountOn = true;
-            yield return new WaitForSeconds(wave.startTimer);
-
-            OpenDoor();
-
-            for (int i = 0; i < wave.numberOfEnemies; i++)
-            {
-                SpawnEnemy(wave);
-                yield return new WaitForSeconds(wave.spawnInterval);
-            }
-
-            while (activeZombies.Count > 0)
-            {
-                yield return null;
-            }
-
-            currentWaveIndex++;
-            CloseDoor();
-
-            if (currentWaveIndex == 2)
-            {
-                blackout.GetComponent<Animator>().Play("Dark");
-                Invoke("LoadScene", 5);
-            }
-
-            if (!waveSet.isInfinite && finni)
-            {
-                // for end
-                garageDoor.GetComponentInChildren<Canvas>().enabled = true;
-                break;
-            }
-        }
-        GameManager.Instance.SaveProgress(currentWaveIndex);
-        isSpawning = false;
+		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
+		if (_bakedRecipeToStart.Contains(recipe) && !wave.StartsAfterDialogue)
+            StartWave();
     }
 
     private void LoadScene()
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
+        string scene = waveSet.SceneToLoadWhenFinished;
 
-        switch (currentSceneName)
-        {
-            case "1":
-                SceneManager.LoadScene("2");
-                break;
-            case "2":
-                SceneManager.LoadScene("3");
-                break;
-            case "3":
-                SceneManager.LoadScene("4");
-                break;
-            case "4":
-                SceneManager.LoadScene("5");
-                break;
-        }
+		if (!string.IsNullOrWhiteSpace(scene))
+            SceneManager.LoadScene(scene);
     }
 
-    private void SpawnEnemy(WaveData wave)
+    private IEnumerator SpawnEnemy(WaveData wave)
     {
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        GameObject selectedPrefab = GetWeightedRandomZombie(wave.zombieSpawnOptions);
-        if (selectedPrefab == null) return;
-
-        GameObject enemy = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
-        activeZombies.Add(enemy);
-        enemy.GetComponent<Zombie>()?.Died.AddListener(() => OnZombieDeath(enemy));
-        NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
-
-        if (agent != null && LevelManager.Instance != null)
+        for (int i = 0; i < wave.numberOfEnemies; i++)
         {
-            Vector3 target = LevelManager.Instance.targetZombies.position;
-            Vector3 right = LevelManager.Instance.targetZombies.right;
-            float sideWidth = LevelManager.Instance.roulote.GetComponent<Renderer>().bounds.size.x;
-            Vector3 randomPoint = EnemyNavigation.GetRandomPointOnSide(target, right, sideWidth, 0f);
-            agent.SetDestination(randomPoint);
-        }
-    }
+            Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
+            GameObject selectedPrefab = GetWeightedRandomZombie(wave.zombieSpawnOptions);
+            if (selectedPrefab == null)
+				throw new NullReferenceException("Zombie prefab missing");
+
+            GameObject enemy = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
+            activeZombies.Add(enemy);
+
+            enemy.GetComponent<Zombie>().Died.AddListener(() => OnZombieDeath(enemy));
+            
+            NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
+            if (agent != null && LevelManager.Instance != null)
+            {
+                Vector3 target = LevelManager.Instance.targetZombies.position;
+                Vector3 right = LevelManager.Instance.targetZombies.right;
+                float sideWidth = LevelManager.Instance.roulote.GetComponent<Renderer>().bounds.size.x;
+                Vector3 randomPoint = EnemyNavigation.GetRandomPointOnSide(target, right, sideWidth, 0f);
+                agent.SetDestination(randomPoint);
+            }
+
+			yield return new WaitForSeconds(wave.spawnInterval);
+		}
+
+		isSpawning = false;
+	}
 
     private GameObject GetWeightedRandomZombie(List<ZombieSpawnOption> options)
     {
@@ -241,7 +219,7 @@ public class WaveSpawner : MonoBehaviour
         foreach (var option in options)
             totalWeight += option.weight;
 
-        int randomValue = Random.Range(0, totalWeight);
+        int randomValue = UnityEngine.Random.Range(0, totalWeight);
         int cumulativeWeight = 0;
 
         foreach (var option in options)
@@ -264,17 +242,28 @@ public class WaveSpawner : MonoBehaviour
     private void OnZombieDeath(GameObject zombie)
     {
         activeZombies.Remove(zombie);
-    }
+        Debug.Log(activeZombies.Count);
+		if(!isSpawning && activeZombies.Count == 0)
+		{
+            WaveFinished();
+		}
+	}
 
     public void OpenDoor()
     {
-        garageDoor.GetComponent<Animator>().SetBool("Open", true);
-        _audioSource.Play();
+        if (!garageDoor.IsUnityNull())
+        {
+            garageDoor.GetComponent<Animator>().SetBool("Open", true);
+            _audioSource.Play();
+        }
     }
 
     public void CloseDoor()
     {
-        garageDoor.GetComponent<Animator>().SetBool("Open", false);
-        _audioSource.Play();
+        if (!garageDoor.IsUnityNull())
+        {
+            garageDoor.GetComponent<Animator>().SetBool("Open", false);
+            _audioSource.Play();
+        }
     }
 }

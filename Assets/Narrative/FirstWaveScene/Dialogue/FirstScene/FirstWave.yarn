@@ -1,0 +1,163 @@
+﻿title: BirdTutorial
+---
+<<once>>
+    <<declare $firstRecipe = false>>
+    <<declare $turnOnMixer = false>>
+    <<declare $mixingComplete = false>>
+    <<declare $turnOffMixer = false>>
+    <<declare $doughOnBoard = false>>
+    <<declare $kneadDough = false>>
+    <<declare $openOven = false>>
+    <<declare $doughsOnOven = false>>
+    <<declare $turnOnOven = false>>
+    <<declare $heatingComplete = false>>
+    <<declare $turnOffOven = false>>
+    <<declare $tutorialComplete = false>>
+
+    Periquito: Olá, seja bem-vindo ao tutorial de como fazer pão.
+    Military: Vamos começar com a receita de pão duro como pedra.
+    Scientist: Atrás de você tem as receitas no quadro.
+    Periquito: Olhe cuidadosamente os ingredientes e o procedimento para fazê-las.
+    <<wait  1>>
+    <<start_tutorial Periquito>>
+<<else>>
+    <<if !$firstRecipe>>
+        <<jump FirstRecipe>>
+    <<elseif !$turnOnMixer>>
+        <<jump TurnOnMixer>>
+    <<elseif !$mixingComplete>>
+        <<jump MixingComplete>>
+    <<elseif !$turnOffMixer>>
+        <<jump TurnOffMixer>>
+    <<elseif !$doughOnBoard>>
+        <<jump DoughOnBoard>>
+    <<elseif !$kneadDough>>     
+        <<jump KneadDough>>
+    <<elseif !$openOven>>       
+        <<jump OpenOven>>
+    <<elseif !$doughsOnOven>>
+        <<jump DoughsOnOven>>
+    <<elseif !$turnOnOven>>
+        <<jump TurnOnOven>>
+    <<elseif !$heatingComplete>>
+        <<jump HeatingComplete>>
+    <<elseif !$turnOffOven>>
+        <<jump TurnOffOven>>
+    <<elseif !$tutorialComplete>>
+        <<jump TutorialComplete>>
+    <<endif>>
+<<endonce>>
+===
+
+title: FirstRecipe
+---
+Periquito: Ingredients.
+Periquito: Bowl Bowl.
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOnMixer
+---
+Periquito: Bowl.
+Periquito: Mixer.
+Periquito: Button.
+<<finished_dialogue Periquito>>
+===
+
+title: MixingComplete
+---
+Periquito: Mixing Mixing Mixing.
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOffMixer
+---
+Periquito: Button Button.
+<<finished_dialogue Periquito>>
+===
+
+title: DoughOnBoard
+---
+Periquito: Bowl.
+Periquito: Board Board.
+<<finished_dialogue Periquito>>
+===
+
+title: KneadDough
+---
+Periquito: Knead Knead.
+<<finished_dialogue Periquito>>
+===
+
+title: OpenOven
+---
+Periquito: Oven Oven.
+<<finished_dialogue Periquito>>
+===
+
+title: DoughsOnOven
+---
+Periquito: Tray.
+Periquito: Doughs.
+Periquito: Oven.
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOnOven
+---
+Periquito: Close Close.
+<<finished_dialogue Periquito>>
+===
+
+title: HeatingComplete
+---
+Periquito: Heating Heating.
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOffOven
+---
+Periquito: Open Open.
+<<finished_dialogue Periquito>>
+===
+
+title: TutorialComplete
+---
+Periquito: Bread.
+Periquito: Table.
+Periquito: Yummy.
+===
+
+title: MilitarPhone
+position: -85,-64
+---
+<<once>>
+    <<declare $showedRecipe = false>>
+    <<declare $secondwave = false>>
+    Periquito: Alô, testando. #line:teste-audio-01
+    Periquito: Testando dialogo sem audio para ver se continua ou termina.
+    Periquito: 2 teste.
+    <<set $showedRecipe = true>>
+    <<spawn_new_recipe "military">>
+<<else>>
+    <<if $showedRecipe && !$secondwave>>
+        <<jump SecondWave>>
+    <<endif>>
+<<endonce>>
+
+
+===
+
+title: SecondWave
+position: -29,161
+---
+<<set $secondwave = true>>
+Periquito: Estamos na segunda wave.
+Periquito: Vamos ver se essa wave vai começar quando esté dialogo acabar.
+Periquito: 3
+Periquito: 2
+Periquito: 1
+Periquito: Vamos começar quando esse texto aqui acabar, mas será que precisa de um wait?
+<<start_wave>>
+<<hang_up "military">>
+===
