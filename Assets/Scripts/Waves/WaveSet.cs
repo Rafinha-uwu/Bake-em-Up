@@ -1,32 +1,71 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "WaveSet", menuName = "Waves/New Wave Set")]
+[CreateAssetMenu(menuName = "Waves/Wave Set")]
 public class WaveSet : ScriptableObject
 {
-    public bool isInfinite;
-    public WaveData[] predefinedWaves;
+    [Header("Wave Set Configuration")]
+    public bool isInfinite = false;
+    public string SceneToLoadWhenFinished = "";
 
-	public string SceneToLoadWhenFinished;
+    [Header("Normal Wave Mode")]
+    [Tooltip("Pre-defined waves for normal mode")]
+    public List<WaveData> waves = new List<WaveData>();
 
-	public WaveData GenerateWave(int waveIndex)
+    /// <summary>
+    /// Generates or retrieves a wave based on the wave index
+    /// </summary>
+    public virtual WaveData GenerateWave(int waveIndex)
     {
-        if (!isInfinite)
+        // For normal wave sets, return from the predefined list
+        if (!isInfinite && waves != null && waveIndex < waves.Count)
         {
-            Debug.Log($"wave: {waveIndex}");
-            if (waveIndex < predefinedWaves.Length)
-                return predefinedWaves[waveIndex];
-            return null;
+            return waves[waveIndex];
         }
 
-        // Dynamically generate an empty shell wave (for survival mode only)
-        var wave = ScriptableObject.CreateInstance<WaveData>();
-        wave.name = $"Wave {waveIndex + 1}";
-        wave.numberOfEnemies = Mathf.Min(5 + waveIndex * 2, 100);
-        wave.spawnInterval = Mathf.Max(0.3f, 1.2f - waveIndex * 0.05f);
-        wave.waveEvents = new List<WaveEventBase>();
-        wave.zombieSpawnOptions = new List<ZombieSpawnOption>(); // <- Leave empty unless survival logic is needed
+        // For infinite mode, this will be overridden by EndlessWaveSet
+        if (isInfinite)
+        {
+            Debug.LogWarning($"[WaveSet] Infinite mode enabled but GenerateWave not overridden in {name}");
+        }
 
-        return wave;
+        return null;
+    }
+
+    /// <summary>
+    /// Get the total number of waves (for normal mode)
+    /// </summary>
+    public virtual int GetWaveCount()
+    {
+        if (isInfinite)
+            return int.MaxValue; // Infinite waves
+
+        return waves != null ? waves.Count : 0;
+    }
+
+    /// <summary>
+    /// Check if there are more waves available
+    /// </summary>
+    public virtual bool HasMoreWaves(int currentWaveIndex)
+    {
+        if (isInfinite)
+            return true;
+
+        return currentWaveIndex < GetWaveCount();
+    }
+
+    private void OnValidate()
+    {
+        // Validation for normal wave mode
+        if (!isInfinite && waves != null)
+        {
+            for (int i = 0; i < waves.Count; i++)
+            {
+                if (waves[i] == null)
+                {
+                    Debug.LogWarning($"[WaveSet] Wave {i} is null in {name}");
+                }
+            }
+        }
     }
 }

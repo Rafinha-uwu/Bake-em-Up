@@ -8,6 +8,7 @@ using Yarn.Unity;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
+	public GameObject roulote_object;
     public Transform roulote;
     public Transform targetZombies;
     public Transform playerStartPosition;

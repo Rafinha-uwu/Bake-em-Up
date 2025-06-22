@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 631ca64c48e6b4a4ab8983ee1ea4aea0, type: 3}
+  m_Name: EndlessWaveData
+  m_EditorClassIdentifier: 
+  baseNumberOfEnemies: 5
+  enemyIncreasePerWave: 2
+  maxEnemiesPerWave: 50
+  baseSpawnInterval: 2
+  minSpawnInterval: 0.5
+  spawnIntervalDecrease: 0.1
+  timeBetweenWaves: 15
+  minTimeBetweenWaves: 5
+  timeBetweenWavesDecrease: 0.5
+  zombieTypes:
+  - zombiePrefab: {fileID: 4147965484912393555, guid: 615dc514dba89c444a8b5e9db16741f6, type: 3}
+    zombieName: Normal Zombie
+    unlockAtWave: 0
+    baseWeight: 70
+    weightProgression: 2
+    weightChangePerWave: 1
+    peakWave: 0
+  - zombiePrefab: {fileID: 3448211457137866123, guid: 03e182331be81434c9d682cd859e6577, type: 3}
+    zombieName: Ranged Zombie
+    unlockAtWave: 3
+    baseWeight: 40
+    weightProgression: 0
+    weightChangePerWave: 2
+    peakWave: 0
+  - zombiePrefab: {fileID: 4147965484912393555, guid: 8ec649acd27afb749ae05100a9a3c1cf, type: 3}
+    zombieName: Armored Zombie
+    unlockAtWave: 5
+    baseWeight: 50
+    weightProgression: 0
+    weightChangePerWave: 2
+    peakWave: 0
+  - zombiePrefab: {fileID: 7085024602934246232, guid: 6fa70c5506f7ade449ef1926b55a712d, type: 3}
+    zombieName: Baby Zombie
+    unlockAtWave: 7
+    baseWeight: 45
+    weightProgression: 1
+    weightChangePerWave: 1
+    peakWave: 0
+  difficultySpike: 5
+  spikeDifficultyMultiplier: 1.5

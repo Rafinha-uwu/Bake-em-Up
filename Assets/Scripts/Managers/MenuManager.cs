@@ -31,6 +31,17 @@ public class MenuManager : MonoBehaviour
     }
     public void StartGame()
     {
+        PlayerPrefs.SetInt("IsEndlessMode", 0);
+        PlayerPrefs.Save();
+        PlayStartButtonSound();
+        blackout.GetComponent<Animator>().Play("Dark");
+        Invoke("GoToMain", 5);
+    }
+
+    public void StartEndlessMode()
+    {
+        PlayerPrefs.SetInt("IsEndlessMode", 1);
+        PlayerPrefs.Save();
         PlayStartButtonSound();
         blackout.GetComponent<Animator>().Play("Dark");
         Invoke("GoToMain", 5);

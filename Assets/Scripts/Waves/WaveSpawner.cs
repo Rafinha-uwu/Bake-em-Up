@@ -10,11 +10,17 @@ using Yarn.Unity;
 
 public class WaveSpawner : MonoBehaviour
 {
-    [SerializeField] private WaveSet waveSet;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private TextMeshProUGUI waveDisplay;
     [SerializeField] private TextMeshProUGUI timeDisplay;
     [SerializeField] private TextMeshProUGUI zombies_remainingDisplay;
+
+    [SerializeField] private WaveSet waveSet; // Para modo normal
+    [SerializeField] private EndlessWaveSet endlessWaveSet; // Para endless mode
+    [SerializeField] private bool useEndlessMode = false;
+
+    private bool _isEndlessActive = false;
+    private int _endlessWavesSurvived = 0;
 
     [SerializeField]
     private List<RecipeData> _bakedRecipeToStart = new();
@@ -38,35 +44,50 @@ public class WaveSpawner : MonoBehaviour
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+
+        useEndlessMode = PlayerPrefs.GetInt("IsEndlessMode", 0) == 1;
+
+        if (useEndlessMode)
+        {
+            Debug.Log("Modo Endless ativado!");
+            // Sua lógica para endless mode
+        }
         LevelEvents.OnBakedNewRecipe += CheckBakedRecipe;
         LevelManager.Instance.WaveSpawner = this;
-        
-        if (GameManager.Instance != null)
+
+        // Choose which wave set to use
+        if (useEndlessMode && endlessWaveSet != null)
+        {
+            waveSet = endlessWaveSet;
+            _isEndlessActive = true;
+            currentWaveIndex = 0; // Always start from 0 in endless mode
+        }
+        else if (GameManager.Instance != null)
         {
             currentWaveIndex = GameManager.Instance.lastWaveIndex;
             if (currentWaveIndex == 2)
                 currentWaveIndex = 0;
-		}
-		
-        if (waveSet.isInfinite)
-		{
-			WaveData wave = waveSet.GenerateWave(0);
-
-			foreach (var waveEvent in wave.waveEvents)
-			{
-				waveEvent.Execute();
-			}
-		}
-
-		if (AutoStart)
-        {
-			StartWave();
         }
 
-		DisplayWaveText(CurrentWave);
+        if (waveSet.isInfinite)
+        {
+            WaveData wave = waveSet.GenerateWave(0);
+            // No events in endless mode - wave events removed
+        }
 
-		GameManager.Instance.SaveProgress(SceneManager.GetActiveScene().name, currentWaveIndex);
-	}
+        if (AutoStart)
+        {
+            StartWave();
+        }
+
+        DisplayWaveText(CurrentWave);
+
+        // Only save progress if not in endless mode
+        if (!_isEndlessActive && GameManager.Instance != null)
+        {
+            GameManager.Instance.SaveProgress(SceneManager.GetActiveScene().name, currentWaveIndex);
+        }
+    }
 
     private void OnDestroy()
     {
@@ -101,7 +122,7 @@ public class WaveSpawner : MonoBehaviour
 
         if (waveSet.isInfinite)
         {
-			_countTime = wave.startTimer;
+            _countTime = wave.startTimer;
             _countOn = true;
             StartCoroutine(WaitTimeUntilStart(wave));
         }
@@ -142,10 +163,33 @@ public class WaveSpawner : MonoBehaviour
 
     private void WaveFinished()
     {
-		_finishedEnemies = true;
-		currentWaveIndex++;
-		GameManager.Instance.SaveProgress(SceneManager.GetActiveScene().name, currentWaveIndex);
-		DisplayWaveText(CurrentWave);
+        _finishedEnemies = true;
+        currentWaveIndex++;
+
+        if (_isEndlessActive)
+        {
+            _endlessWavesSurvived++;
+
+            // Check if roulotte is still alive
+            if (IsRoullotteDestroyed())
+            {
+                EndEndlessMode();
+                return;
+            }
+
+            // Continue endless mode
+            DisplayWaveText(CurrentWave);
+            StartWave();
+            return;
+        }
+
+        // Original wave mode logic
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SaveProgress(SceneManager.GetActiveScene().name, currentWaveIndex);
+        }
+
+        DisplayWaveText(CurrentWave);
 
         if (waveSet.isInfinite)
         {
@@ -153,17 +197,67 @@ public class WaveSpawner : MonoBehaviour
             return;
         }
 
-		if (currentWaveIndex == 2)
-		{
-			CloseDoor();
-            if(!blackout.IsUnityNull())
-			    blackout.GetComponent<Animator>().Play("Dark");
-			Invoke(nameof(LoadScene), 5);
+        if (currentWaveIndex == 2)
+        {
+            CloseDoor();
+            if (!blackout.IsUnityNull())
+                blackout.GetComponent<Animator>().Play("Dark");
+            Invoke(nameof(LoadScene), 5);
             return;
         }
 
         LevelEvents.PhonesStartRinging();
-	}
+    }
+
+    private bool IsRoullotteDestroyed()
+    {
+        // Assumindo que tens um component de vida na roulotte
+        if (LevelManager.Instance != null && LevelManager.Instance.roulote_object != null)
+        {
+            var healthComponent = LevelManager.Instance.roulote_object.GetComponent<RoulotteHealth>();
+            if (healthComponent != null)
+            {
+                return healthComponent.hp <= 0;
+            }
+        }
+        return false;
+    }
+
+    private void EndEndlessMode()
+    {
+        Debug.Log($"Endless Mode Ended! Waves Survived: {_endlessWavesSurvived}");
+
+        // Save high score
+        SaveEndlessScore();
+
+        // Show game over screen or load main menu
+        CloseDoor();
+        if (!blackout.IsUnityNull())
+            blackout.GetComponent<Animator>().Play("Dark");
+
+        Invoke(nameof(LoadEndlessGameOver), 3f);
+    }
+
+    private void SaveEndlessScore()
+    {
+        if (GameManager.Instance != null)
+        {
+            int currentBest = PlayerPrefs.GetInt("EndlessBestScore", 0);
+            if (_endlessWavesSurvived > currentBest)
+            {
+                PlayerPrefs.SetInt("EndlessBestScore", _endlessWavesSurvived);
+                PlayerPrefs.Save();
+                Debug.Log($"New Endless Mode High Score: {_endlessWavesSurvived}");
+            }
+        }
+    }
+
+    private void LoadEndlessGameOver()
+    {
+        // Load game over scene or main menu
+        SceneManager.LoadScene("GameOver"); // Substitui pelo nome da tua scene
+    }
+
 
     private void CheckBakedRecipe(RecipeData recipe)
     {
@@ -238,7 +332,14 @@ public class WaveSpawner : MonoBehaviour
     {
         if (waveDisplay != null)
         {
-            waveDisplay.text = $"Wave {waveNumber}";
+            if (_isEndlessActive)
+            {
+                waveDisplay.text = $"Endless Wave {waveNumber}";
+            }
+            else
+            {
+                waveDisplay.text = $"Wave {waveNumber}";
+            }
         }
     }
     private void OnZombieDeath(GameObject zombie)
@@ -268,5 +369,35 @@ public class WaveSpawner : MonoBehaviour
             garageDoor.GetComponent<Animator>().SetBool("Open", false);
             _audioSource.Play();
         }
+    }
+
+    public void StartEndlessMode()
+    {
+        if (endlessWaveSet != null)
+        {
+            useEndlessMode = true;
+            waveSet = endlessWaveSet;
+            _isEndlessActive = true;
+            currentWaveIndex = 0;
+            _endlessWavesSurvived = 0;
+
+            DisplayWaveText(CurrentWave);
+            StartWave();
+        }
+    }
+
+    // Propriedades públicas para UI
+    public bool IsEndlessMode => _isEndlessActive;
+    public int EndlessWavesSurvived => _endlessWavesSurvived;
+    public int EndlessBestScore => PlayerPrefs.GetInt("EndlessBestScore", 0);
+
+    // Método para obter estatísticas da wave atual (para UI)
+    public EndlessWaveStats GetCurrentWaveStats()
+    {
+        if (_isEndlessActive && endlessWaveSet != null)
+        {
+            return endlessWaveSet.GetWaveStats(currentWaveIndex);
+        }
+        return new EndlessWaveStats();
     }
 }

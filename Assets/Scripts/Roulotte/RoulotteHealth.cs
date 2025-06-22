@@ -8,7 +8,7 @@ public class RoulotteHealth : MonoBehaviour
     public Image healthBarFill;
     private float maxHealth = 300f;
 
-    [SerializeField] private int hp = 300;
+    public int hp = 300;
     [SerializeField]
     private TakeDamageFX _damageFX;
 
