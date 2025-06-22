@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 2361574533666442992}
   - component: {fileID: 6099068491258626401}
   - component: {fileID: 6256771641112778283}
+  - component: {fileID: 4756535971319958406}
   m_Layer: 0
   m_Name: Cure
   m_TagString: Untagged
@@ -176,3 +177,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.15379113, y: 0.15202415, z: 0.14849114}
   m_Center: {x: -0.00088331103, y: 0.0017665029, z: -0.00000011920929}
+--- !u!114 &4756535971319958406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540049434311828712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db4285a5ab5fee458925780995dfed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Military: 0
+  Scientist: 1
+  On: 0
+  blackout: {fileID: 0}
