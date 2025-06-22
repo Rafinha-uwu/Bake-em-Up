@@ -14,6 +14,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private TextMeshProUGUI waveDisplay;
     [SerializeField] private TextMeshProUGUI timeDisplay;
+    [SerializeField] private TextMeshProUGUI zombies_remainingDisplay;
 
     [SerializeField]
     private List<RecipeData> _bakedRecipeToStart = new();
@@ -86,6 +87,7 @@ public class WaveSpawner : MonoBehaviour
                 timeDisplay.text = $"{0}";
                 _countOn = false;
             }
+            zombies_remainingDisplay.text = $"{(int)activeZombies.Count}";
         }
     }
 

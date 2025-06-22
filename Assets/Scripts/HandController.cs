@@ -16,7 +16,7 @@ public class HandController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!animator) return
+        if (!animator) return;
         float gripValue = gripInput.action.ReadValue<float>();
         float triggerValue = triggerInput.action.ReadValue<float>();
 
