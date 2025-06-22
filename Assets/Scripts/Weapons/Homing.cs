@@ -72,7 +72,7 @@ public class Homing : MonoBehaviour
 
         foreach (GameObject zombie in zombies)
         {
-            if (zombie.transform.position.z < transform.position.z)
+            if (zombie.transform.position.z < transform.position.z || zombie.GetComponent<Zombie>().death)
                 continue;
 
             float distance = Vector3.Distance(transform.position, zombie.transform.position);
