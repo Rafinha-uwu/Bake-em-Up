@@ -14,10 +14,12 @@
     <<declare $turnOffOven = false>>
     <<declare $tutorialComplete = false>>
 
-    Periquito: Olá, seja bem-vindo ao tutorial de como fazer pão.
-    Military: Vamos começar com a receita de pão duro como pedra.
-    Scientist: Atrás de você tem as receitas no quadro.
-    Periquito: Olhe cuidadosamente os ingredientes e o procedimento para fazê-las.
+    Periquito: Chirp-chirp! Good morning! Wee-oo!
+    Periquito: Josepeh! Peeep!.
+    Periquito: Love you! Doo-doo!
+    Periquito: Let's make! Scree. Bread!
+    Periquito: Look! Peep! Recepies! Chirp!
+    Periquito: On the board!
     <<wait  1>>
     <<start_tutorial Periquito>>
 <<else>>
@@ -51,81 +53,84 @@
 
 title: FirstRecipe
 ---
-Periquito: Ingredients.
-Periquito: Bowl Bowl.
+Periquito: Ingredients!
+Periquito: Bowl! Chirp! Bowl!
 <<finished_dialogue Periquito>>
 ===
 
 title: TurnOnMixer
 ---
 Periquito: Bowl.
-Periquito: Mixer.
-Periquito: Button.
+Periquito: Mixer!
+Periquito: Button!
 <<finished_dialogue Periquito>>
 ===
 
 title: MixingComplete
 ---
-Periquito: Mixing Mixing Mixing.
+Periquito: Mixing Mixing! Doo-doo! Mixing!
 <<finished_dialogue Periquito>>
 ===
 
 title: TurnOffMixer
 ---
-Periquito: Button Button.
+Periquito: Button Button!
 <<finished_dialogue Periquito>>
 ===
 
 title: DoughOnBoard
 ---
 Periquito: Bowl.
-Periquito: Board Board.
+Periquito: Board! Scree! Board!
 <<finished_dialogue Periquito>>
 ===
 
 title: KneadDough
 ---
-Periquito: Knead Knead.
+Periquito: Knead Knead! Squish-squish!
 <<finished_dialogue Periquito>>
 ===
 
 title: OpenOven
 ---
-Periquito: Oven Oven.
+Periquito: Oven Oven! Ding!
 <<finished_dialogue Periquito>>
 ===
 
 title: DoughsOnOven
 ---
-Periquito: Tray.
-Periquito: Doughs.
+Periquito: Tray! Clank!
+Periquito: Doughs! Squish!
 Periquito: Oven.
 <<finished_dialogue Periquito>>
 ===
 
 title: TurnOnOven
 ---
-Periquito: Close Close.
+Periquito: Close Close! Slam!
 <<finished_dialogue Periquito>>
 ===
 
 title: HeatingComplete
 ---
-Periquito: Heating Heating.
+Periquito: Heating Heating! Whir!
 <<finished_dialogue Periquito>>
 ===
 
 title: TurnOffOven
 ---
-Periquito: Open Open.
+Periquito: Open Open! Creak!
 <<finished_dialogue Periquito>>
 ===
 
 title: TutorialComplete
 ---
-Periquito: Bread.
-Periquito: Table.
-Periquito: Yummy.
+Periquito: Bread! Sniff-Sniff!
+Periquito: Table! Thud!
+Periquito: Yummy!
+Periquito: wEE-oo! Look! People!
+Periquito: Hungry! Scree! Hungry!
+Periquito: Give Bread!
 ===
 
 title: MilitarPhone
