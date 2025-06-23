@@ -16,8 +16,6 @@ public class RoulotteHealth : MonoBehaviour
 
     private AudioSource _audioSource;
 
-    [SerializeField] private TextMeshProUGUI healthDisplay;
-
     public List<GameObject> Holes = new();
 
     private void OnEnable()
