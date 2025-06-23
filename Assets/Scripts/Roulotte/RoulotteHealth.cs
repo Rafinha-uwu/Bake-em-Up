@@ -14,8 +14,6 @@ public class RoulotteHealth : MonoBehaviour
 
     private AudioSource _audioSource;
 
-    [SerializeField] private TextMeshProUGUI healthDisplay;
-
     private void OnEnable()
     {
         HitEvent.OnHit += GetHit;
@@ -40,7 +38,6 @@ public class RoulotteHealth : MonoBehaviour
             hp -= damage;
             float healthPercentage = hp / maxHealth;
             healthBarFill.fillAmount = healthPercentage;
-            //healthDisplay.text = $"{hp} - HP";
             _damageFX.PlayFX();
             if (hp < 1)
             {   
