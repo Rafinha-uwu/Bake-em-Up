@@ -71,7 +71,7 @@ public class WaveSpawner : MonoBehaviour
 
         if (waveSet.isInfinite)
         {
-            WaveData wave = waveSet.GenerateWave(0);
+            StartWave();
             // No events in endless mode - wave events removed
         }
 
@@ -112,11 +112,11 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    public void StartWave()
+
+    public void StartWave(WaveData? wavedata = null)
     {
 		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
         if (!CheckCanStartWave(wave)) return;
-
         LevelManager.Instance.WaveStarted = true;
 		_finishedEnemies = false;
 
@@ -124,14 +124,19 @@ public class WaveSpawner : MonoBehaviour
         {
             _countTime = wave.startTimer;
             _countOn = true;
+            
             StartCoroutine(WaitTimeUntilStart(wave));
+
+            
+
         }
         else
         {
-		    OpenDoor();
             StartCoroutine(SpawnEnemy(wave));
         }
 	}
+
+    
 
     public void StartAfterDialogue()
     {
@@ -354,6 +359,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void OpenDoor()
     {
+        Debug.Log("A tentar abrir a porta da garagem");
         if (!garageDoor.IsUnityNull())
         {
             garageDoor.GetComponent<Animator>().SetBool("Open", true);

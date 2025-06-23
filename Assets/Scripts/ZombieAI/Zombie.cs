@@ -86,7 +86,6 @@ public class Zombie : MonoBehaviour
             Collider hitCollider = receiver.GetComponent<Collider>();
             //Debug.Log("Collider que acertou:" + hitCollider.name);
             RagdollPart hitPart = hitCollider != null ? hitCollider.GetComponent<RagdollPart>() : null;
-
             // Array of your object options
             GameObject[] options = new GameObject[] { HIT, EP, POW };
 
@@ -109,10 +108,10 @@ public class Zombie : MonoBehaviour
     {
         Died?.Invoke();
         death = true;
+        agent.ResetPath();
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = false;
         if (obstacle != null) obstacle.enabled = false;
-        agent.ResetPath();
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         yield return new WaitForSeconds(0.1f);
         //EnableRagdoll();
@@ -132,6 +131,7 @@ public class Zombie : MonoBehaviour
 
         foreach (RagdollPart part in GetComponentsInChildren<RagdollPart>())
         {
+            Debug.Log(part.name);
             part.Activate();
         }
 

@@ -51,6 +51,7 @@ public class EndlessWaveData : ScriptableObject
     /// </summary>
     public WaveData GenerateWave(int waveNumber)
     {
+        Debug.Log("VAmos tentar gerar algo?");
         WaveData generatedWave = CreateInstance<WaveData>();
 
         // Calculate enemy count

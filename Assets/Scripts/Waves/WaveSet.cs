@@ -20,6 +20,7 @@ public class WaveSet : ScriptableObject
         // For normal wave sets, return from the predefined list
         if (!isInfinite && waves != null && waveIndex < waves.Count)
         {
+            Debug.Log("Agr vamos aqui");
             return waves[waveIndex];
         }
 
