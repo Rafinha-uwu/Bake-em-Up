@@ -5,22 +5,25 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Center : MonoBehaviour
 {
     public XROrigin xrOrigin;
+    public Transform desiredHeadsetPosition; // Where you want the headset to appear (position only)
 
     void Start()
     {
-        Invoke("RecenterRig", 0.5f); // Small delay to ensure headset is tracked
+        StartCoroutine(AlignHeadset());
     }
 
-    void RecenterRig()
+    System.Collections.IEnumerator AlignHeadset()
     {
-        // Get current headset position relative to origin
+        yield return new WaitForSeconds(0.1f); // Wait for tracking to initialize
+
         Transform cameraTransform = xrOrigin.Camera.transform;
-        Vector3 headsetPosition = cameraTransform.position;
+        Vector3 headsetWorldPos = cameraTransform.position;
 
-        // Zero out Y axis if you only want to recenter on XZ plane
-        Vector3 offset = new Vector3(headsetPosition.x, 0, headsetPosition.z);
+        // Calculate position offset (ignore Y to keep real-world head height)
+        Vector3 offset = desiredHeadsetPosition.position - headsetWorldPos;
+        offset.y = 0; // Preserve headset's vertical position
 
-        // Move the rig so that headset appears at world (0, 0, 0)
-        xrOrigin.MoveCameraToWorldLocation(xrOrigin.transform.position - offset);
+        // Move the whole XR Rig
+        xrOrigin.transform.position += offset;
     }
 }

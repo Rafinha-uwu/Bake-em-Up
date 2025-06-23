@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717c12e2a4cfe764ab2580b1135e10fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Lifetime: 15
+  m_Lifetime: 25
 --- !u!1 &6055573336876323042
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +97,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -3925,7 +3925,7 @@ ParticleSystem:
     quality: 0
     voxelSize: 0.5
     collisionMessages: 1
-    collidesWithDynamic: 0
+    collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
     enabled: 0

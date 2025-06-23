@@ -139,8 +139,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75119a234697a80459aabdbaf527792b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 1
+  hp: 5
+  Died:
+    m_PersistentCalls:
+      m_Calls: []
+  death: 0
+  force: 50
   currentState: 0
+  zombie_scream: {fileID: 0}
+  hit_sound: {fileID: 0}
+  HIT: {fileID: 0}
+  EP: {fileID: 0}
+  POW: {fileID: 0}
 --- !u!54 &6148674821850191667
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -181,6 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 5
+  isAttacking: 0
   attackRange: 1
   roulotteInAttackRange: 0
   whatIsRoulotte:
