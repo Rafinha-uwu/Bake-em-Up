@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 481d91e192d64bd4b988a769a242292f, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: a659ca20a956a8b4ebe47b24c927df8e, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 5037aa8d73249b342aac2109559e6199, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -1622,6 +1622,7 @@ MonoBehaviour:
   distance: 2
   heightOffset: 0
   followSpeed: 5
+  angleThreshold: 15
 --- !u!114 &202149142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3735,9 +3736,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarFill: {fileID: 0}
+  maxHealth: 300
   hp: 300
   _damageFX: {fileID: 456787259}
-  healthDisplay: {fileID: 2010539014}
+  Holes: []
 --- !u!64 &456787258
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10001,17 +10003,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9404394e4ad7034a9c7ed586675332d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveSet: {fileID: 11400000, guid: 66cc1e15f38af6c4986096da1e99f5f4, type: 2}
   spawnPoints:
   - {fileID: 1985459052}
   - {fileID: 1329584714}
   - {fileID: 1123534343}
   waveDisplay: {fileID: 2132992698}
   timeDisplay: {fileID: 1273604957}
+  zombies_remainingDisplay: {fileID: 0}
+  waveSet: {fileID: 11400000, guid: 66cc1e15f38af6c4986096da1e99f5f4, type: 2}
+  endlessWaveSet: {fileID: 0}
+  useEndlessMode: 0
   _bakedRecipeToStart:
   - {fileID: 11400000, guid: 3190366478569244baadac612ad0a977, type: 2}
   - {fileID: 11400000, guid: c88f6dd8fd09c8d47a141ca835db5eca, type: 2}
   garageDoor: {fileID: 459222397}
+  tutorial_manager: {fileID: 0}
+  dialogue_system: {fileID: 0}
   AutoStart: 0
   blackout: {fileID: 1812179371}
 --- !u!82 &1267802724
@@ -12193,6 +12200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75605dfeb957e894c8c04681e82c51d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roulote_object: {fileID: 0}
   roulote: {fileID: 38384281}
   targetZombies: {fileID: 38384281}
   playerStartPosition: {fileID: 288363149}
@@ -15004,7 +15012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedBakingSet: {fileID: 11400000, guid: 6023e2874e4acae4aa861f8c57a10843, type: 2}
-  sceneGUID: 2ec7b1f0f8e92914e984e99bacf91fcc
+  sceneGUID: 9f2cf1a7c3e24ce4cb15f29c9a459dbc
   obsoleteAsset: {fileID: 0}
   obsoleteCellSharedDataAsset: {fileID: 0}
   obsoleteCellSupportDataAsset: {fileID: 0}
