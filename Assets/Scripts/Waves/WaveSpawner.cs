@@ -53,7 +53,7 @@ public class WaveSpawner : MonoBehaviour
         if (useEndlessMode)
         {
             tutorial_manager.SetActive(false);
-            dialogue_system.SetActive(false)e;
+            dialogue_system.SetActive(false);
         }
     }
 
