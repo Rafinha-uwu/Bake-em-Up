@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,13 +8,17 @@ using UnityEngine.UI;
 public class RoulotteHealth : MonoBehaviour
 {
     public Image healthBarFill;
-    private float maxHealth = 300f;
+    public float maxHealth = 300f;
 
     public int hp = 300;
     [SerializeField]
     private TakeDamageFX _damageFX;
 
     private AudioSource _audioSource;
+
+    [SerializeField] private TextMeshProUGUI healthDisplay;
+
+    public List<GameObject> Holes = new();
 
     private void OnEnable()
     {
@@ -37,10 +43,23 @@ public class RoulotteHealth : MonoBehaviour
             _audioSource.Play();
             hp -= damage;
             float healthPercentage = hp / maxHealth;
-            healthBarFill.fillAmount = healthPercentage;
+            if (healthBarFill != null)
+            {
+                healthBarFill.fillAmount = healthPercentage;
+            }
+            //healthDisplay.text = $"{hp} - HP";
             _damageFX.PlayFX();
+
+            if (hp <= (maxHealth * 0.9) && hp > (maxHealth * 0.5))
+            {
+                //50 50
+            }
+            if (hp <= (maxHealth * 0.5) && hp >= 1)
+            {
+                //100
+            }
             if (hp < 1)
-            {   
+            {
                 EndGame();
             }
         }

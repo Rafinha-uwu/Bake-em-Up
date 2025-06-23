@@ -17,6 +17,8 @@ public class Boom : MonoBehaviour
 
     private bool TouchedGrass = false;
 
+    public bool cOn = true;
+
     void Start()
     {
         countdown = delay;
@@ -39,6 +41,7 @@ public class Boom : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (hasExploded) return;
+        if (!cOn) return;
 
         if (collision.gameObject.CompareTag("Zombie"))
         {

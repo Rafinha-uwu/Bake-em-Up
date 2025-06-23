@@ -7,9 +7,10 @@ public class ParticleDamage : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        // Check if the collided object is the player
+        Debug.Log("Col");
         if (other.gameObject.CompareTag("Zombie"))
         {
+            Debug.Log("Hit");
             GameObject test = other.gameObject;
             HitEvent.GetHit(damage, transform.gameObject, test);
         }
