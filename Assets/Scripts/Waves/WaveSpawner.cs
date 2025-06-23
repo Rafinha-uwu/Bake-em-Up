@@ -35,17 +35,33 @@ public class WaveSpawner : MonoBehaviour
 
     public GameObject garageDoor;
 
+    [SerializeField]
+    private GameObject tutorial_manager;
+
+    [SerializeField]
+    private GameObject dialogue_system;
+
     [SerializeField] private bool AutoStart = false;
     private float _countTime = 0;
     private bool _countOn = true;
 
     [SerializeField] private GameObject blackout;
 
+    private void Awake()
+    {
+        useEndlessMode = PlayerPrefs.GetInt("IsEndlessMode", 0) == 1;
+        if (useEndlessMode)
+        {
+            tutorial_manager.SetActive(false);
+            dialogue_system.SetActive(false)e;
+        }
+    }
+
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
 
-        useEndlessMode = PlayerPrefs.GetInt("IsEndlessMode", 0) == 1;
+        
 
         if (useEndlessMode)
         {
@@ -108,7 +124,6 @@ public class WaveSpawner : MonoBehaviour
                 timeDisplay.text = $"{0}";
                 _countOn = false;
             }
-            zombies_remainingDisplay.text = $"{(int)activeZombies.Count}";
         }
     }
 
@@ -292,6 +307,7 @@ public class WaveSpawner : MonoBehaviour
 
             GameObject enemy = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
             activeZombies.Add(enemy);
+            zombies_remainingDisplay.text = $"{(int)activeZombies.Count}";
 
             enemy.GetComponent<Zombie>().Died.AddListener(() => OnZombieDeath(enemy));
             
@@ -350,8 +366,9 @@ public class WaveSpawner : MonoBehaviour
     private void OnZombieDeath(GameObject zombie)
     {
         activeZombies.Remove(zombie);
-        Debug.Log(activeZombies.Count);
-		if(!isSpawning && activeZombies.Count == 0)
+
+        zombies_remainingDisplay.text = $"{(int)activeZombies.Count}";
+        if (!isSpawning && activeZombies.Count == 0)
 		{
             WaveFinished();
 		}

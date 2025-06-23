@@ -106,9 +106,11 @@ public class Zombie : MonoBehaviour
 
     IEnumerator OnDeath(RagdollPart hitPart, Vector3 senderPosition, GameObject receiver)
     {
+        Debug.Log("Agente: " + agent.isActiveAndEnabled);
+        agent.ResetPath();
         Died?.Invoke();
         death = true;
-        agent.ResetPath();
+        
         // Stop movement and enable obstacle
         if (agent != null) agent.enabled = false;
         if (obstacle != null) obstacle.enabled = false;
@@ -131,7 +133,6 @@ public class Zombie : MonoBehaviour
 
         foreach (RagdollPart part in GetComponentsInChildren<RagdollPart>())
         {
-            Debug.Log(part.name);
             part.Activate();
         }
 
