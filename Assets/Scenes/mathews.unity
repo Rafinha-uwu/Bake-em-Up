@@ -4074,7 +4074,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8408,8 +8408,22 @@ MonoBehaviour:
   - {fileID: 3919182}
   nothingLayer:
     m_Bits: 0
-  tv: {fileID: 0}
-  gameplayAudioSources: []
+  tv: {fileID: 1930074117}
+  gameplayAudioSources:
+  - {fileID: 2118042394}
+  - {fileID: 456787260}
+  - {fileID: 8702230442418415617, guid: b438f497fc54f514b94e6d73d7de52d3, type: 3}
+  - {fileID: 8091553654277099130, guid: ca487981d6fc4d141bfeab6d3de02bad, type: 3}
+  - {fileID: 6584461172601384057, guid: 6f94754d88f49f84fb6dba2eca1a7de5, type: 3}
+  - {fileID: 8907583754947685296, guid: 93e046901a37be64b8bd2e13e9a9ae5f, type: 3}
+  - {fileID: -7514665610749460856, guid: 94222a4bf435ede459987c5acce09306, type: 3}
+  - {fileID: -5764175616306847290, guid: 87298aa535b40c343ac5d77d55354d18, type: 3}
+  - {fileID: 5156606284111567656, guid: 7c2e8fa097100b14581a7b998f498348, type: 3}
+  - {fileID: 2199901812652941712, guid: d4f8e4faa6a1aef45a5d0aef35c8a786, type: 3}
+  - {fileID: 2906408295699223167, guid: 8ec649acd27afb749ae05100a9a3c1cf, type: 3}
+  - {fileID: 7178530111650399792, guid: 6fa70c5506f7ade449ef1926b55a712d, type: 3}
+  - {fileID: 2906408295699223167, guid: 615dc514dba89c444a8b5e9db16741f6, type: 3}
+  - {fileID: 1361408786361751570, guid: 03e182331be81434c9d682cd859e6577, type: 3}
 --- !u!4 &1195136591
 Transform:
   m_ObjectHideFlags: 0
@@ -14195,6 +14209,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1930074117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1044882089826842271, guid: 25b09f381a3568d4fbe2e9fb9e989010, type: 3}
+  m_PrefabInstance: {fileID: 1930074113}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1932257190
 GameObject:
   m_ObjectHideFlags: 0
@@ -14682,6 +14701,10 @@ PrefabInstance:
       propertyPath: startNode
       value: BirdTutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 6249436705156129451, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
+      propertyPath: yarnProject
+      value: 
+      objectReference: {fileID: 7545569452688597077, guid: eda9ad8eebb6e994f9ca01f018776379, type: 3}
     - target: {fileID: 8042132258192832024, guid: daec64e59fdf6ae40b1f6d535771b3e9, type: 3}
       propertyPath: m_Name
       value: Dialogue System
@@ -15355,6 +15378,11 @@ PrefabInstance:
 --- !u!4 &2118042393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1767192434, guid: b71e23dd88326d34291794d61c029176, type: 3}
+  m_PrefabInstance: {fileID: 2118042392}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &2118042394 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3542347729718872685, guid: b71e23dd88326d34291794d61c029176, type: 3}
   m_PrefabInstance: {fileID: 2118042392}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2119181689
