@@ -30,11 +30,11 @@ public class WaveSpawner : MonoBehaviour
     private bool _finishedEnemies = true;
     private List<GameObject> activeZombies = new();
     private AudioSource _audioSource;
+    public AudioSource audioSource2;
     
     [SerializeField] private AudioClip cookingMusic_sound;
     [SerializeField] private AudioClip normalWaveMusic_sound;
     [SerializeField] private AudioClip lastWaveMusic_sound;
-    [SerializeField] private AudioClip open_garage;
 
     public int CurrentWave => currentWaveIndex + 1;
 
@@ -377,9 +377,7 @@ public class WaveSpawner : MonoBehaviour
         if (!garageDoor.IsUnityNull())
         {
             garageDoor.GetComponent<Animator>().SetBool("Open", true);
-            _audioSource.clip = open_garage;
-            _audioSource.loop = false;
-            _audioSource.Play();
+            audioSource2.Play();
             ChangeNarrativeEvent.ChangeNarrator("Gameplay");
             if(currentWaveIndex == 9)
             {
@@ -397,9 +395,7 @@ public class WaveSpawner : MonoBehaviour
         if (!garageDoor.IsUnityNull())
         {
             garageDoor.GetComponent<Animator>().SetBool("Open", false);
-            _audioSource.clip = open_garage;
-            _audioSource.loop = false;
-            _audioSource.Play();
+            audioSource2.Play();
             PlayCookMusicSound();
         }
     }

@@ -20,7 +20,7 @@ public class Zombie : MonoBehaviour
 
     public ZombieState currentState = ZombieState.WALKING;
 
-    private NavMeshObstacle obstacle;
+    protected NavMeshObstacle obstacle;
     private Rigidbody[] _ragdollRigidboddies;
     protected NavMeshAgent agent;
     protected Animator animator;

@@ -12,7 +12,6 @@ public class EnemyRangedAI : Zombie
     public float projectileSpeed = 20f;
     private bool isAttacking;
 
-    private NavMeshObstacle obstacle;
     private float fireCooldown;
 
     [SerializeField] private AudioClip throw_sound;
