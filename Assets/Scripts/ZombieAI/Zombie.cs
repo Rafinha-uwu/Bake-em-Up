@@ -74,7 +74,7 @@ public class Zombie : MonoBehaviour
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
     {
-        if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
+        if (!death && sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
         {
             currentState = ZombieState.GETHIT;
             //Debug.Log("LEVASTE COM UM PAO");

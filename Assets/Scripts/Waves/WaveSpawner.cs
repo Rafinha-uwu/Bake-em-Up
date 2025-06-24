@@ -132,6 +132,7 @@ public class WaveSpawner : MonoBehaviour
     {
 		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
         if (!CheckCanStartWave(wave)) return;
+
         LevelManager.Instance.WaveStarted = true;
 		_finishedEnemies = false;
 
@@ -141,17 +142,13 @@ public class WaveSpawner : MonoBehaviour
             _countOn = true;
             
             StartCoroutine(WaitTimeUntilStart(wave));
-
-            
-
         }
         else
         {
-            StartCoroutine(SpawnEnemy(wave));
+			OpenDoor();
+			StartCoroutine(SpawnEnemy(wave));
         }
 	}
-
-    
 
     public void StartAfterDialogue()
     {
@@ -183,6 +180,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void WaveFinished()
     {
+        Debug.Log("Acabou os zombies: " + currentWaveIndex);
         _finishedEnemies = true;
         currentWaveIndex++;
 
@@ -210,12 +208,6 @@ public class WaveSpawner : MonoBehaviour
         }
 
         DisplayWaveText(CurrentWave);
-
-        if (waveSet.isInfinite)
-        {
-            StartWave();
-            return;
-        }
 
         if (currentWaveIndex == 2)
         {
