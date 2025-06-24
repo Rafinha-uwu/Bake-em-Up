@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class HandController : MonoBehaviour
 {
-    InputActionReference gripInput;
-    InputActionReference triggerInput;
+    public InputActionReference gripInput;
+    public InputActionReference triggerInput;
 
     private Animator animator;
     private void Awake()
