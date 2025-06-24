@@ -30,6 +30,11 @@ public class WaveSpawner : MonoBehaviour
     private bool _finishedEnemies = true;
     private List<GameObject> activeZombies = new();
     private AudioSource _audioSource;
+    
+    [SerializeField] private AudioClip cookingMusic_sound;
+    [SerializeField] private AudioClip normalWaveMusic_sound;
+    [SerializeField] private AudioClip lastWaveMusic_sound;
+    [SerializeField] private AudioClip open_garage;
 
     public int CurrentWave => currentWaveIndex + 1;
 
@@ -372,8 +377,18 @@ public class WaveSpawner : MonoBehaviour
         if (!garageDoor.IsUnityNull())
         {
             garageDoor.GetComponent<Animator>().SetBool("Open", true);
+            _audioSource.clip = open_garage;
+            _audioSource.loop = false;
             _audioSource.Play();
             ChangeNarrativeEvent.ChangeNarrator("Gameplay");
+            if(currentWaveIndex == 9)
+            {
+                LastWaveMusicSound();
+            }
+            else
+            {
+                PlayNormalWaveMusicSound();
+            }
         }
     }
 
@@ -382,7 +397,10 @@ public class WaveSpawner : MonoBehaviour
         if (!garageDoor.IsUnityNull())
         {
             garageDoor.GetComponent<Animator>().SetBool("Open", false);
+            _audioSource.clip = open_garage;
+            _audioSource.loop = false;
             _audioSource.Play();
+            PlayCookMusicSound();
         }
     }
 
@@ -415,4 +433,26 @@ public class WaveSpawner : MonoBehaviour
         }
         return new EndlessWaveStats();
     }
+
+    private void PlayCookMusicSound()
+    {
+        _audioSource.clip = cookingMusic_sound;
+        _audioSource.loop = true;
+        _audioSource.Play();
+    }
+
+    private void LastWaveMusicSound()
+    {
+        _audioSource.clip = lastWaveMusic_sound;
+        _audioSource.loop = true;
+        _audioSource.Play();
+    }
+
+    private void PlayNormalWaveMusicSound()
+    {
+        _audioSource.clip = normalWaveMusic_sound;
+        _audioSource.loop = true;
+        _audioSource.Play();
+    }
+
 }

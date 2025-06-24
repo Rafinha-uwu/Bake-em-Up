@@ -441,6 +441,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87890c133e5a0ff48a1b2ddade1a242f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 1
+  Died:
+    m_PersistentCalls:
+      m_Calls: []
+  death: 0
+  force: 50
+  currentState: 0
+  zombie_scream: {fileID: 0}
+  hit_sound: {fileID: 0}
+  HIT: {fileID: 0}
+  EP: {fileID: 0}
+  POW: {fileID: 0}
   projectilePrefab: {fileID: 3726088781157610482, guid: 8f8400230a422a6489845d7aee545d4c, type: 3}
   firePoint: {fileID: 3861972681088394258}
   attackDamage: 5

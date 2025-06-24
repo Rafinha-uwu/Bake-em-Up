@@ -15,7 +15,6 @@ public class EnemyRangedAI : Zombie
     private NavMeshObstacle obstacle;
     private float fireCooldown;
 
-    private AudioSource _audioSource;
     [SerializeField] private AudioClip throw_sound;
 
     protected override void Start()

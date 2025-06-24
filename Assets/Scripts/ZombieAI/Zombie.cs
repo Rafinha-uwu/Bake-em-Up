@@ -24,7 +24,7 @@ public class Zombie : MonoBehaviour
     private Rigidbody[] _ragdollRigidboddies;
     protected NavMeshAgent agent;
     protected Animator animator;
-    private AudioSource _audioSource;
+    protected AudioSource _audioSource;
     [SerializeField] private AudioClip zombie_scream;
     [SerializeField] private AudioClip hit_sound;
 
