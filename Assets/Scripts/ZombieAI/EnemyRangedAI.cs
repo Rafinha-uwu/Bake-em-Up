@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRangedAI : MonoBehaviour
+public class EnemyRangedAI : Zombie
 {
     private Transform roulotte;
     public GameObject projectilePrefab;
@@ -12,21 +12,20 @@ public class EnemyRangedAI : MonoBehaviour
     public float projectileSpeed = 20f;
     private bool isAttacking;
 
-    private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
     private float fireCooldown;
-    private Animator animator;
 
     private AudioSource _audioSource;
     [SerializeField] private AudioClip throw_sound;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         roulotte = LevelManager.Instance.roulote;
-        agent = GetComponent<NavMeshAgent>();
+        //agent = GetComponent<NavMeshAgent>();
         fireCooldown = 0f;
-        animator = GetComponent<Animator>();
-        _audioSource = GetComponent<AudioSource>();
+        //animator = GetComponent<Animator>();
+        //_audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -38,7 +37,7 @@ public class EnemyRangedAI : MonoBehaviour
             //agent.ResetPath();
             transform.LookAt(new Vector3(roulotte.position.x, transform.position.y, roulotte.position.z)); // flat look
 
-            if (fireCooldown <= 0f)
+            if (fireCooldown <= 0f && !death)
             {
                 Shoot();
                 HitEvent.GetHit(attackDamage, gameObject, roulotte.gameObject);
