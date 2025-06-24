@@ -1,0 +1,169 @@
+﻿title: BirdTutorial
+---
+<<once>>
+    <<declare $firstRecipe = false>>
+    <<declare $turnOnMixer = false>>
+    <<declare $mixingComplete = false>>
+    <<declare $turnOffMixer = false>>
+    <<declare $doughOnBoard = false>>
+    <<declare $kneadDough = false>>
+    <<declare $openOven = false>>
+    <<declare $doughsOnOven = false>>
+    <<declare $turnOnOven = false>>
+    <<declare $heatingComplete = false>>
+    <<declare $turnOffOven = false>>
+    <<declare $tutorialComplete = false>>
+
+    <<wait  5>>
+    Periquito: Chirp-chirp! Good morning! Wee-oo!
+    Periquito: Josepeh! Peeep!.
+    Periquito: Love you! Doo-doo!
+    Periquito: Let's make! Scree. Bread!
+    Periquito: Look! Peep! Recepies! Chirp!
+    Periquito: On the board!
+    <<wait  1>>
+    <<start_tutorial Periquito>>
+<<else>>
+    <<if !$firstRecipe>>
+        <<jump FirstRecipe>>
+    <<elseif !$turnOnMixer>>
+        <<jump TurnOnMixer>>
+    <<elseif !$mixingComplete>>
+        <<jump MixingComplete>>
+    <<elseif !$turnOffMixer>>
+        <<jump TurnOffMixer>>
+    <<elseif !$doughOnBoard>>
+        <<jump DoughOnBoard>>
+    <<elseif !$kneadDough>>     
+        <<jump KneadDough>>
+    <<elseif !$openOven>>       
+        <<jump OpenOven>>
+    <<elseif !$doughsOnOven>>
+        <<jump DoughsOnOven>>
+    <<elseif !$turnOnOven>>
+        <<jump TurnOnOven>>
+    <<elseif !$heatingComplete>>
+        <<jump HeatingComplete>>
+    <<elseif !$turnOffOven>>
+        <<jump TurnOffOven>>
+    <<elseif !$tutorialComplete>>
+        <<jump TutorialComplete>>
+    <<endif>>
+<<endonce>>
+===
+
+title: FirstRecipe
+---
+Periquito: Ingredients!
+Periquito: Bowl! Chirp! Bowl!
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOnMixer
+---
+Periquito: Bowl.
+Periquito: Mixer!
+Periquito: Button!
+<<finished_dialogue Periquito>>
+===
+
+title: MixingComplete
+---
+Periquito: Mixing Mixing! Doo-doo! Mixing!
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOffMixer
+---
+Periquito: Button Button!
+<<finished_dialogue Periquito>>
+===
+
+title: DoughOnBoard
+---
+Periquito: Bowl.
+Periquito: Board! Scree! Board!
+<<finished_dialogue Periquito>>
+===
+
+title: KneadDough
+---
+Periquito: Knead Knead! Squish-squish!
+<<finished_dialogue Periquito>>
+===
+
+title: OpenOven
+---
+Periquito: Oven Oven! Ding!
+<<finished_dialogue Periquito>>
+===
+
+title: DoughsOnOven
+---
+Periquito: Tray! Clank!
+Periquito: Doughs! Squish!
+Periquito: Oven.
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOnOven
+---
+Periquito: Close Close! Slam!
+<<finished_dialogue Periquito>>
+===
+
+title: HeatingComplete
+---
+Periquito: Heating Heating! Whir!
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOffOven
+---
+Periquito: Open Open! Creak!
+<<finished_dialogue Periquito>>
+===
+
+title: TutorialComplete
+---
+Periquito: Bread! Sniff-Sniff!
+Periquito: Table! Thud!
+Periquito: Yummy!
+Periquito: wEE-oo! Look! People!
+Periquito: Hungry! Scree! Hungry!
+Periquito: Give Bread!
+===
+
+title: MilitarPhone
+position: -85,-64
+---
+<<once>>
+    <<declare $showedRecipe = false>>
+    <<declare $secondwave = false>>
+    Periquito: Alô, testando. #line:teste-audio-01
+    Periquito: Testando dialogo sem audio para ver se continua ou termina.
+    Periquito: 2 teste.
+    <<start_wave>>
+    <<set $showedRecipe = true>>
+<<else>>
+    <<if $showedRecipe && !$secondwave>>
+        <<jump SecondWave>>
+    <<endif>>
+<<endonce>>
+
+
+===
+
+title: SecondWave
+position: -29,161
+---
+<<set $secondwave = true>>
+Periquito: Estamos na segunda wave.
+Periquito: Vamos ver se essa wave vai começar quando esté dialogo acabar.
+Periquito: 3
+Periquito: 2
+Periquito: 1
+Periquito: Vamos começar quando esse texto aqui acabar, mas será que precisa de um wait?
+<<start_wave>>
+<<hang_up "military">>
+===

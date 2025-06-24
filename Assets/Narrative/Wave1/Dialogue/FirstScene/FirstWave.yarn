@@ -143,8 +143,8 @@ position: -85,-64
     Periquito: Alô, testando. #line:teste-audio-01
     Periquito: Testando dialogo sem audio para ver se continua ou termina.
     Periquito: 2 teste.
-    <<start_wave>>
     <<set $showedRecipe = true>>
+    <<spawn_new_recipe "military">>
 <<else>>
     <<if $showedRecipe && !$secondwave>>
         <<jump SecondWave>>
