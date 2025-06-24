@@ -74,7 +74,7 @@ public class Zombie : MonoBehaviour
 
     public void GetHit(int damage, GameObject sender, GameObject receiver)
     {
-        if (!death && sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
+        if (sender.CompareTag("Bread") && receiver.transform.IsChildOf(transform))
         {
             currentState = ZombieState.GETHIT;
             //Debug.Log("LEVASTE COM UM PAO");
@@ -96,7 +96,7 @@ public class Zombie : MonoBehaviour
             // Instantiate it at hitPart's position
             Instantiate(chosenPrefab, hitPart.transform.position, Quaternion.identity);
 
-            if (hp < 1)
+            if (hp < 1 && !death)
             {
                 //Debug.Log("Parte que acertou:" + hitPart.transform.name);
                 StartCoroutine(OnDeath(hitPart, sender.transform.position, receiver));
