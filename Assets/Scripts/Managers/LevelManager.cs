@@ -42,6 +42,9 @@ public class LevelManager : MonoBehaviour
 
 	public GameObject SecondRecipe;
 
+	public GameObject Barrels;
+	public GameObject PasteBag;
+
 	public bool SpawnedFirstRecipe = false;
 
 	private void Awake()
@@ -108,16 +111,16 @@ public class LevelManager : MonoBehaviour
 	}
 
 	[YarnCommand("spawn_pastry_bag")]
-	public static void SpawnPastryBag()
+	public void SpawnPastryBag()
 	{
-		//Fazer codigo para spawnar o segundo pastry bag na cena
-	}
+		PasteBag.SetActive(true);
+    }
 
 	[YarnCommand("spawn_barrels")]
-	public static void SpawnBarrels()
+	public void SpawnBarrels()
 	{
-		//Fazer codigo para spawnar os barrils
-	}
+        Barrels.SetActive(true);
+    }
 
 	[YarnCommand("start_ringing_phones")]
 	public static void StartPhonesRinging()
