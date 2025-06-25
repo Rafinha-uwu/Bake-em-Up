@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class StartPhones : MonoBehaviour
 {
-    void Start()
-    {
-		LevelEvents.PhonesStartRinging();
+	private bool hasExecuted = false;
+
+	void LateUpdate()
+	{
+		if (!hasExecuted)
+		{
+			LevelEvents.PhonesStartRinging();
+			hasExecuted = true;
+		}
 	}
 }
