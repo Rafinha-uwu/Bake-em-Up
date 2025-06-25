@@ -30,7 +30,7 @@ public class EndGame : MonoBehaviour
 
     public IEnumerator S()
     {
-        //LevelManager.Instance.DialogueRunner.StartDialogue("Scientist_END");
+        LevelManager.Instance.DialogueRunner.StartDialogue("Scientist_END");
         yield return new WaitForSeconds(6f);
         blackout.GetComponent<Animator>().Play("Dark");
 
@@ -38,7 +38,7 @@ public class EndGame : MonoBehaviour
 
     public IEnumerator M()
     {
-        //LevelManager.Instance.DialogueRunner.StartDialogue("Military_END");
+        LevelManager.Instance.DialogueRunner.StartDialogue("Military_END");
         yield return new WaitForSeconds(6f);
         blackout.GetComponent<Animator>().Play("Dark");
     }

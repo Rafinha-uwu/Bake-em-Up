@@ -390,7 +390,7 @@ public class WaveSpawner : MonoBehaviour
             }
             else
             {
-                //LevelManager.Instance.DialogueRunner.StartDialogue("Scientist_Cure");
+                LevelManager.Instance.DialogueRunner.StartDialogue("Scientist_Cure");
                 
             }
 
