@@ -77,19 +77,12 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             if (m_TriggerInput != null)
             {
                 var triggerVal = m_TriggerInput.ReadValue();
-                //Debug.Log("Trigger:" + triggerVal);
-                //animator.SetFloat("Trigger", triggerVal);
-                //m_TriggerTransform.localRotation = Quaternion.Euler(Mathf.Lerp(m_TriggerXAxisRotationRange.x, m_TriggerXAxisRotationRange.y, triggerVal), 0f, 0f);
             }
 
             if (m_GripInput != null)
             {
                 var gripVal = m_GripInput.ReadValue();
-                //Debug.Log("Grip:" + gripVal);
                 animator.SetInteger("Grip", (int)gripVal);
-                Debug.Log(animator.GetCurrentAnimatorStateInfo(0).IsName("Relaxed"));
-                //var currentPos = m_GripTransform.localPosition;
-                //m_GripTransform.localPosition = new Vector3(Mathf.Lerp(m_GripRightRange.x, m_GripRightRange.y, gripVal), currentPos.y, currentPos.z);
             }
         }
     }

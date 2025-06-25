@@ -74,7 +74,7 @@ public class WaveSpawner : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
 
-
+        
 
         if (useEndlessMode)
         {
@@ -146,8 +146,7 @@ public class WaveSpawner : MonoBehaviour
         WaveData wave = waveSet.GenerateWave(currentWaveIndex);
         if (!CheckCanStartWave(wave)) return;
 
-        LevelManager.Instance.WaveStarted = true;
-        _finishedEnemies = false;
+		_finishedEnemies = false;
 
         if (waveSet.isInfinite)
         {
@@ -289,9 +288,12 @@ public class WaveSpawner : MonoBehaviour
     {
         if (!_finishedEnemies) return;
 
-        WaveData wave = waveSet.GenerateWave(currentWaveIndex);
-        if (_bakedRecipeToStart.Contains(recipe) && !wave.StartsAfterDialogue)
+		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
+		if (_bakedRecipeToStart.Contains(recipe) && !wave.StartsAfterDialogue)
+        {
             StartWave();
+			LevelManager.Instance.WaveStarted = true;
+		}
     }
 
     private void LoadScene()

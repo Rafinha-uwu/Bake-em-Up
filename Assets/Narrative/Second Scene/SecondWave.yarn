@@ -1,0 +1,43 @@
+﻿title: MilitarPhone
+---
+<<once>>
+    <<declare $thirdwave = false>>
+    Military: A-tten-tion! #line:S3-01-military
+    Military: Good job soldier. #line:S3-02-military
+    Military: But the battle is far from over! #line:S3-03-military
+    Military: We brought one of our scientists in efforts to help you in your missions. #line:S3-04-military
+    Military: To save your country and protect the government! #line:S3-05-military
+
+    Scientist: Can I speak now? #line:S3-06-scientist
+    Scientist: Anyway... #line:S3-07-scientist
+    Scientist: So, we studied why your bread was so effective against the infected. #line:S3-08-scientist
+    Scientist: And if seems they are intolerant to gliadin and glutenin! #line:S3-09-scientist
+    Scientist: Unfortunately, while experimenting on them. #line:S3-10-scientist
+    Scientist: They… let’s say… adapted. #line:S3-11-scientist
+
+    <<spawn_new_recipe "military">>
+    Scientist: So… to counter this #line:S3-12-scientist
+    Scientist: We also designed a new weapon for you to use. #line:S3-13-scientist
+    Scientist: A pastry bag. #line:S3-14-scientist
+    Scientist: Seems fair after all we… *Static sound* Hey!! #line:S3-15-scientist
+
+    Military: The next wave will be arriving soon. #line:S3-16-military
+    Military: You must prepare keep fighting! #line:S3-17-military
+    <<hang_up "military">>
+<<else>>
+    <<if !$thirdwave>>
+        <<jump ThirdWave>>
+    <<endif>>
+<<endonce>>
+===
+
+title: ThirdWave
+---
+<<set $thirdwave = true>>
+Military: Our radars have detected a brief pause. #line:S4-01-military
+Military: Use this time to recharge soldier! #line:S4-02-military
+<<wait  30>>
+<<start_wave>>
+Military: Hey! They are coming! Be ready! #line:S4-03-military
+<<hang_up "military">>
+===

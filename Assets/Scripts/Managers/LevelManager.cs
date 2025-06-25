@@ -40,6 +40,10 @@ public class LevelManager : MonoBehaviour
 
 	public GameObject SceneNewRecipe;
 
+	public GameObject SecondRecipe;
+
+	public bool SpawnedFirstRecipe = false;
+
 	private void Awake()
     {
 		if (Instance != null && Instance != this)
@@ -103,6 +107,24 @@ public class LevelManager : MonoBehaviour
 		return _basket;
 	}
 
+	[YarnCommand("spawn_pastry_bag")]
+	public static void SpawnPastryBag()
+	{
+		//Fazer codigo para spawnar o segundo pastry bag na cena
+	}
+
+	[YarnCommand("spawn_barrels")]
+	public static void SpawnBarrels()
+	{
+		//Fazer codigo para spawnar os barrils
+	}
+
+	[YarnCommand("start_ringing_phones")]
+	public static void StartPhonesRinging()
+	{
+		LevelEvents.PhonesStartRinging();
+	}
+
 	[YarnCommand("start_wave")]
 	public static void StartWaveAfterDialogue()
 	{
@@ -117,11 +139,23 @@ public class LevelManager : MonoBehaviour
 	{
 		if (person.Equals("military", StringComparison.OrdinalIgnoreCase))
 		{
-			Instance.MilitarPhone.SpawnNewRecipe(Instance.SceneNewRecipe);
+			if (!Instance.SpawnedFirstRecipe)
+			{
+				Instance.MilitarPhone.SpawnNewRecipe(Instance.SceneNewRecipe);
+				Instance.SpawnedFirstRecipe = true;
+			}
+			else
+				Instance.MilitarPhone.SpawnNewRecipe(Instance.SecondRecipe);
 		}
 		else if(person.Equals("scientist", StringComparison.OrdinalIgnoreCase))
 		{
-			Instance.ScientistPhone.SpawnNewRecipe(Instance.SceneNewRecipe);
+			if (!Instance.SpawnedFirstRecipe)
+			{
+				Instance.ScientistPhone.SpawnNewRecipe(Instance.SceneNewRecipe);
+				Instance.SpawnedFirstRecipe = true;
+			}
+			else
+				Instance.ScientistPhone.SpawnNewRecipe(Instance.SecondRecipe);
 		}
 	}
 
