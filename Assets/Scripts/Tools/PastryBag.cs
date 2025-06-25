@@ -107,6 +107,8 @@ public class PastryBag : ToolContainer
 			if (auxBowl.HasCompletedDough && auxBowl.GetDough().CompareTag("Cream"))
 			{
 				auxBowl.GetRecipe(out _recipeData);
+				Debug.Log(_recipeData.name);
+				LevelEvents.BakedNewRecipe(_recipeData);
 				AddCream();
 				auxBowl.DoughRemoved();
 				return;

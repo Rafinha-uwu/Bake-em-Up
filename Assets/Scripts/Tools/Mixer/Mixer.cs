@@ -226,7 +226,7 @@ public class Mixer : ToolCooker
 				}
 
 				if (!_bowl.HasBadDough)
-					OnSocketSelected();
+					OnSocketSelected?.Invoke();
 
 				_mixerCanvas.SetRecipe(_recipeData.recipeSprite);
 				_mixerCanvas.UpdateTimer(_currentTime, _recipeData.MixerTime, _badTimer);

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -35,8 +36,8 @@ public class MenuManager : MonoBehaviour
         PlayerPrefs.Save();
         PlayStartButtonSound();
         blackout.GetComponent<Animator>().Play("Dark");
-        Invoke("GoToMain", 5);
-    }
+		StartCoroutine(GoToMain());
+	}
 
     public void StartEndlessMode()
     {
@@ -44,8 +45,8 @@ public class MenuManager : MonoBehaviour
         PlayerPrefs.Save();
         PlayStartButtonSound();
         blackout.GetComponent<Animator>().Play("Dark");
-        Invoke("GoToMain", 5);
-    }
+		StartCoroutine(GoToMain());
+	}
 
 
     public void ToggleOptionsMenu()
@@ -67,14 +68,20 @@ public class MenuManager : MonoBehaviour
         PlayStartButtonSound();
         GameManager.Instance.LoadSavedWave();
         blackout.GetComponent<Animator>().Play("Dark");
-        Invoke("GoToMain", 5);
+        StartCoroutine(GoToMain());
     }
 
-    private void GoToMain()
+    private IEnumerator GoToMain()
     {
-        SceneManager.LoadScene("mathews");
-    }
+        //SceneManager.LoadScene("mathews");
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("mathews");
 
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+	}
 
     private void PlayStartButtonSound()
     {

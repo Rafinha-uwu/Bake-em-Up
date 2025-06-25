@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -73,8 +74,6 @@ public class WaveSpawner : MonoBehaviour
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
-
-        
 
         if (useEndlessMode)
         {
@@ -171,8 +170,8 @@ public class WaveSpawner : MonoBehaviour
 
     private bool CheckCanStartWave(WaveData wave)
     {
-        if (GameManager.Instance == null)
-            return false;
+        //if (GameManager.Instance == null)
+        //    return false;
 
         if (!_finishedEnemies) return false;
 
@@ -227,7 +226,7 @@ public class WaveSpawner : MonoBehaviour
         {
             if (!blackout.IsUnityNull())
                 blackout.GetComponent<Animator>().Play("Dark");
-            Invoke(nameof(LoadScene), 5);
+            StartCoroutine(LoadScene());
             return;
         }
 
@@ -260,7 +259,7 @@ public class WaveSpawner : MonoBehaviour
         if (!blackout.IsUnityNull())
             blackout.GetComponent<Animator>().Play("Dark");
 
-        Invoke(nameof(LoadEndlessGameOver), 3f);
+        StartCoroutine(LoadEndlessGameOver());
     }
 
     private void SaveEndlessScore()
@@ -277,31 +276,50 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    private void LoadEndlessGameOver()
+    private IEnumerator LoadEndlessGameOver()
     {
         // Load game over scene or main menu
-        SceneManager.LoadScene("GameOver"); // Substitui pelo nome da tua scene
-    }
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameOver");
 
+		while (!asyncLoad.isDone)
+		{
+			yield return null;
+		}
+	}
 
     private void CheckBakedRecipe(RecipeData recipe)
     {
         if (!_finishedEnemies) return;
 
+        bool ready = false;
+
 		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
-		if (_bakedRecipeToStart.Contains(recipe) && !wave.StartsAfterDialogue)
+        foreach(var auxRecipe in _bakedRecipeToStart)
         {
-            StartWave();
+			if (auxRecipe.id == recipe.id)
+                ready = true;
+		}
+
+		if (ready && !wave.StartsAfterDialogue)
+        {
+			StartWave();
 			LevelManager.Instance.WaveStarted = true;
 		}
     }
 
-    private void LoadScene()
+    private IEnumerator LoadScene()
     {
         string scene = waveSet.SceneToLoadWhenFinished;
 
         if (!string.IsNullOrWhiteSpace(scene))
-            SceneManager.LoadScene(scene);
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
+
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+        }
     }
 
     private IEnumerator SpawnEnemy(WaveData wave)
