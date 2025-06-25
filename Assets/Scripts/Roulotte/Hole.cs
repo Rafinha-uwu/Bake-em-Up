@@ -23,6 +23,7 @@ public class Hole : MonoBehaviour
         int heal = Mathf.FloorToInt(health.maxHealth * 0.1f);
         health.hp += heal;
         health.currentHoles--;
+        health.ShowHealth();
 
         gameObject.SetActive(false);
     }
