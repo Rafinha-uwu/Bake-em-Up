@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndGame : MonoBehaviour
 {
@@ -30,16 +31,17 @@ public class EndGame : MonoBehaviour
 
     public IEnumerator S()
     {
-        LevelManager.Instance.DialogueRunner.StartDialogue("Scientist_END");
+        LevelManager.Instance.DialogueRunner.StartDialogue("ScientistFinal");
         yield return new WaitForSeconds(6f);
         blackout.GetComponent<Animator>().Play("Dark");
+        SceneManager.LoadScene("Main Menu");
 
     }
 
     public IEnumerator M()
     {
-        LevelManager.Instance.DialogueRunner.StartDialogue("Military_END");
+        LevelManager.Instance.DialogueRunner.StartDialogue("MilitarFinal");
         yield return new WaitForSeconds(6f);
-        blackout.GetComponent<Animator>().Play("Dark");
+        blackout.GetComponent<Animator>().Play("Main Menu");
     }
 }

@@ -111,15 +111,15 @@ public class LevelManager : MonoBehaviour
 	}
 
 	[YarnCommand("spawn_pastry_bag")]
-	public void SpawnPastryBag()
+	public static void SpawnPastryBag()
 	{
-		PasteBag.SetActive(true);
+        Instance.PasteBag.SetActive(true);
     }
 
 	[YarnCommand("spawn_barrels")]
-	public void SpawnBarrels()
+	public static void SpawnBarrels()
 	{
-        Barrels.SetActive(true);
+        Instance.Barrels.SetActive(true);
     }
 
 	[YarnCommand("start_ringing_phones")]

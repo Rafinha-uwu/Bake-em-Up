@@ -7,9 +7,8 @@ Anonymous: They must solve it. #line:S9-03-anom
 Anonymous: They are both planning something big. #line:S9-04-anom
 Anonymous: Which side will you choose. #line:S9-05-anom
 Anonymous: When they call back. #line:S9-06-anom
+<<start_wave>>
 
-<<wait  3>>
-<<start_ringing_phones>>
 ===
 
 title: ScientistPhone
@@ -24,7 +23,12 @@ title: ScientistPhone
     Scientist: Thank you for everything. #line:S10-07-scientist
     <<start_wave>>
     <<hang_up "scientist">>
-<<else>>
+<<endonce>>
+===
+
+title: Scientist_Cure
+---
+<<once>>
     Scientist: We got it! #line:S10-08-scientist
     Scientist: We can finally put an end to this! #line:S10-09-scientist
     Scientist: So, turns out. #line:S10-10-scientist
@@ -32,7 +36,6 @@ title: ScientistPhone
     Scientist: It will take a long time to mix. #line:S10-12-scientist
     Scientist: So prepare accordingly. #line:S10-13-scientist
     Scientist: Good luck. #line:S10-14-scientist
-    <<start_wave>>
     <<hang_up "scientist">>
 <<endonce>>
 ===
