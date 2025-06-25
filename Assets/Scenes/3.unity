@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 2da2de586ab412b408df8b338fc97dfd, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 2
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 5431951505569543570}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4507,7 +4507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16358,6 +16358,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8296260147850158463, guid: b71e23dd88326d34291794d61c029176, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16995,25 +16999,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4265967641538595231, guid: 4be109a4ed9570b42b18ac6b06b6f234, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4525132435223664019, guid: 4be109a4ed9570b42b18ac6b06b6f234, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4802249331152190199, guid: 4be109a4ed9570b42b18ac6b06b6f234, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7123514386338677768, guid: 4be109a4ed9570b42b18ac6b06b6f234, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4be109a4ed9570b42b18ac6b06b6f234, type: 3}
+--- !u!108 &5431951505569543570 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 6296561590264954597, guid: 4be109a4ed9570b42b18ac6b06b6f234, type: 3}
+  m_PrefabInstance: {fileID: 5431951505569543569}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6593814841556527884
 PrefabInstance:
   m_ObjectHideFlags: 0
