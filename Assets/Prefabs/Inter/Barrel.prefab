@@ -9752,6 +9752,8 @@ MonoBehaviour:
   blastRadius: 5
   explosionForce: 5000
   explosionEffect: {fileID: 2579326276023195693, guid: 94222a4bf435ede459987c5acce09306, type: 3}
+  delayBetweenExplosions: 0.1
+  explosionRadius: 2
   cOn: 0
 --- !u!1 &6987284672836827008
 GameObject:
@@ -24296,6 +24298,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 932591679852599969}
     m_Modifications:
+    - target: {fileID: 270239734216768265, guid: bc2bb80f21e946e4b8927eff4f7a8188, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1408282289585012838, guid: bc2bb80f21e946e4b8927eff4f7a8188, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.7198019

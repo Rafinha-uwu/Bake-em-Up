@@ -362,12 +362,30 @@ public class WaveSpawner : MonoBehaviour
         if (waveDisplay != null)
         {
             if (_isEndlessActive)
-            {
+            {          
                 waveDisplay.text = $"Endless Wave {waveNumber}";
             }
             else
             {
-                waveDisplay.text = $"Wave {waveNumber}";
+                switch (waveSet.SceneToLoadWhenFinished)
+                {
+                    case "2":
+                        waveDisplay.text = $"Wave {waveNumber}";
+                        break;
+                    case "3":
+                        waveDisplay.text = $"Wave {waveNumber +2}";
+                        break;
+                    case "4":
+                        waveDisplay.text = $"Wave {waveNumber +4}";
+                        break;
+                    case "5":
+                        waveDisplay.text = $"Wave {waveNumber +6}";
+                        break;
+                    default:
+                        waveDisplay.text = $"Wave {waveNumber + 8}";
+                        break;
+
+                }               
             }
         }
     }

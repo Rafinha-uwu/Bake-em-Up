@@ -8,6 +8,7 @@ public class Barrel : MonoBehaviour
         if (other.gameObject.CompareTag("Bread"))
         {
             GetComponent<Boom>().Explode();
+            GetComponentInChildren<MeshRenderer>().enabled = false;
         }
 
     }
