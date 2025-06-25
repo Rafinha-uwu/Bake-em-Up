@@ -1,0 +1,148 @@
+﻿title: BirdTutorial
+---
+<<once>>
+    <<declare $firstRecipe = false>>
+    <<declare $turnOnMixer = false>>
+    <<declare $mixingComplete = false>>
+    <<declare $turnOffMixer = false>>
+    <<declare $doughOnBoard = false>>
+    <<declare $kneadDough = false>>
+    <<declare $openOven = false>>
+    <<declare $doughsOnOven = false>>
+    <<declare $turnOnOven = false>>
+    <<declare $heatingComplete = false>>
+    <<declare $turnOffOven = false>>
+    <<declare $tutorialComplete = false>>
+
+    <<wait  3>>
+    Periquito: Wree! Woo! Scree! #line:S1-01-bird
+    Periquito: Josepeh! Peeep!. #line:S1-02-bird
+    Periquito: Love you, love you! Doo-doo! #line:S1-03-bird
+    Periquito: Let's make! Scree. Bread! #line:S1-04-bird
+    Periquito: Look! Peep! Recepies! Chirp! #line:S1-05-bird
+    Periquito: On the board, On the board! #line:S1-06-bird
+    <<wait  1>>
+    <<start_tutorial Periquito>>
+<<else>>
+    <<if !$firstRecipe>>
+        <<jump FirstRecipe>>
+    <<elseif !$turnOnMixer>>
+        <<jump TurnOnMixer>>
+    <<elseif !$mixingComplete>>
+        <<jump MixingComplete>>
+    <<elseif !$turnOffMixer>>
+        <<jump TurnOffMixer>>
+    <<elseif !$doughOnBoard>>
+        <<jump DoughOnBoard>>
+    <<elseif !$kneadDough>>     
+        <<jump KneadDough>>
+    <<elseif !$openOven>>       
+        <<jump OpenOven>>
+    <<elseif !$doughsOnOven>>
+        <<jump DoughsOnOven>>
+    <<elseif !$turnOnOven>>
+        <<jump TurnOnOven>>
+    <<elseif !$heatingComplete>>
+        <<jump HeatingComplete>>
+    <<elseif !$turnOffOven>>
+        <<jump TurnOffOven>>
+    <<elseif !$tutorialComplete>>
+        <<jump TutorialComplete>>
+    <<endif>>
+<<endonce>>
+===
+
+title: FirstRecipe
+---
+Periquito: Ingredients! Ingredients! #line:S1-07-bird
+Periquito: Bowl! #line:S1-08-bird
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOnMixer
+---
+Periquito: Bowl. #line:S1-09-bird
+Periquito: Mixer! #line:S1-10-bird
+Periquito: Button! #line:S1-11-bird
+<<finished_dialogue Periquito>>
+===
+
+title: MixingComplete
+---
+Periquito: Mixing Mixing! Doo-doo! Mixing! #line:S1-12-bird
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOffMixer
+---
+Periquito: Press the Button! #line:S1-13-bird
+<<finished_dialogue Periquito>>
+===
+
+title: DoughOnBoard
+---
+Periquito: Bowl. Doo-doo! #line:S1-14-bird
+Periquito: Board! Board! #line:S1-15-bird
+<<finished_dialogue Periquito>>
+===
+
+title: KneadDough
+---
+Periquito: Knead Knead! #line:S1-16-bird
+<<finished_dialogue Periquito>>
+===
+
+title: OpenOven
+---
+Periquito: Oven Oven! #line:S1-17-bird
+<<finished_dialogue Periquito>>
+===
+
+title: DoughsOnOven
+---
+Periquito: Tray! #line:S1-18-bird
+Periquito: Dough! #line:S1-19-bird
+Periquito: Oven. #line:S1-20-bird
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOnOven
+---
+Periquito: Close Close! Scree! #line:S1-21-bird
+<<finished_dialogue Periquito>>
+===
+
+title: HeatingComplete
+---
+Periquito: Heating! Whir! #line:S1-22-bird
+<<finished_dialogue Periquito>>
+===
+
+title: TurnOffOven
+---
+Periquito: Open Open! Creak! #line:S1-23-bird
+<<finished_dialogue Periquito>>
+===
+
+title: TutorialComplete
+---
+Periquito: Bread! Bread! #line:S1-24-bird
+Periquito: Table! Wree! #line:S1-25-bird
+Periquito: Yummy! #line:S1-26-bird
+Periquito: Wee-oo! Look! People! People! #line:S1-27-bird
+Periquito: Wree! Throw the bread! Throw the bread! #line:S1-28-bird
+===
+
+title: MilitarPhone
+---
+Military: A-tten-tion! #line:S2-01-military
+Military: In the name of the Catility government. #line:S2-02-military
+Military: Our country thanks you for your service! #line:S2-03-military
+Military: We have sent a communication device to keep you up to date #line:S2-04-military
+Military: With our plans to stop the apocalypse. #line:S2-05-military
+Military: Your innovative technique seems to work, so keep at it! #line:S2-06-military
+Military: In the meanwhile, or researchers are hard at it looking for a solution. #line:S2-07-military
+Military: Good luck! #line:S2-08-military
+<<start_wave>>
+<<hang_up "military">>
+===

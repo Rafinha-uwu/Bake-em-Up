@@ -1,0 +1,76 @@
+﻿title: NinethWave
+---
+<<wait  2>>
+Anonymous: Neither of them caused this. #line:S9-01-anom 
+Anonymous: But now... #line:S9-02-anom
+Anonymous: They must solve it. #line:S9-03-anom
+Anonymous: They are both planning something big. #line:S9-04-anom
+Anonymous: Which side will you choose. #line:S9-05-anom
+Anonymous: When they call back. #line:S9-06-anom
+
+<<wait  3>>
+<<start_ringing_phones>>
+===
+
+title: ScientistPhone
+---
+<<once>>
+    Scientist: This is it! #line:S10-01-scientist
+    Scientist: We are so close to finishing the cure. #line:S10-02-scientist
+    Scientist: We will give the recipe once we perfect it so you can make it and use it on the infected. #line:S10-03-scientist
+    Scientist: But be careful, as I cannot promise your safety when inhaling the cure. #line:S10-04-scientist
+    Scientist: We don’t have time to test the results of it. #line:S10-05-scientist
+    Scientist: On an uninfected subject. #line:S10-06-scientist
+    Scientist: Thank you for everything. #line:S10-07-scientist
+    <<start_wave>>
+    <<hang_up "scientist">>
+<<else>>
+    Scientist: We got it! #line:S10-08-scientist
+    Scientist: We can finally put an end to this! #line:S10-09-scientist
+    Scientist: So, turns out. #line:S10-10-scientist
+    Scientist: You just need to mix every single ingredient you got. #line:S10-11-scientist
+    Scientist: It will take a long time to mix. #line:S10-12-scientist
+    Scientist: So prepare accordingly. #line:S10-13-scientist
+    Scientist: Good luck. #line:S10-14-scientist
+    <<start_wave>>
+    <<hang_up "scientist">>
+<<endonce>>
+===
+
+title: ScientistFinal
+---
+Scientist: It’s working. #line:final-01-scientist
+Scientist: The infection is reverting! #line:final-02-scientist
+Scientist: Your sacrifice was worth it. #line:final-03-scientist
+Scientist: You will be remembered for efforts to save the world. #line:final-04-scientist 
+Scientist: Thank you. #line:final-05-scientist
+<<hang_up "scientist">>
+===
+
+title: MilitarPhone
+---
+<<once>>
+    Military: Soldier, its time. #line:S10-01-military
+    Military: We have built it. A flour airstrike. #line:S10-02-military
+    Military: We must destroy the infected zone. #line:S10-03-military
+    Military: Your food truck will be destroyed in the process. #line:S10-04-military
+    Military: Do not threat though. #line:S10-05-military
+    Military: we will send a helicopter to rescue you. #line:S10-06-military
+    Military: We want you to join our forces. #line:S10-07-military
+    Military: Together we can save the people, Catility and the world! #line:S10-08-military
+    Military: Get ready and stand your ground while we get there! #line:S10-09-military
+    <<hang_up "military">>
+    <<start_wave>>
+<<else>>
+    <<hang_up "military">>
+    <<start_wave>>
+<<endonce>>
+===
+
+title: MilitarFinal
+---
+Military: We are here! #line:final-01-military
+Military: No soldier left behind, get on! #line:final-02-military
+Military: They are going to nuke the place! #line:final-03-military
+<<hang_up "military">>
+===

@@ -1,0 +1,50 @@
+﻿title: MilitarPhone
+---
+<<once>>
+    <<declare $fifthwave = false>>
+    Scientist: Good job! #line:S5-01-scientist
+    Scientist: Your efforts are buying us time #line:S5-02-scientist
+    Scientist: To understand what when wrong and find a cure. #line:S5-03-scientist
+
+    Military: Killing them is the priority! #line:S5-04-military
+    Military: To keep the people of Catility safe! #line:S5-05-military
+    Military: These things are getting stronger. #line:S5-06-military
+    Military: Some even grew bigger! #line:S5-07-military
+
+    Scientist: Although I believe in permanent solution #line:S5-08-scientist
+    Scientist: It is true that they are getting stronger. #line:S5-09-scientist
+    <<spawn_new_recipe "military">>    
+    Scientist: So we developed another recipe to help you #line:S5-10-scientist
+    Scientist: While we try to find a solution. #line:S5-11-scientist
+    <<hang_up "military">>
+<<else>>
+    <<if !$fifthwave>>
+        <<jump FifthWave>>
+    <<endif>>
+<<endonce>>
+===
+
+title: FifthWave
+---
+<<set $fifthwave = true>>
+Military: You must use what you have in hand soldier! #line:S6-01-military
+Military: Use the cream to glue the walls back together if you must! #line:S6-02-military
+Military: The government is doing their best #line:S6-03-military
+Miltary: To solve the issue! #line:S6-04-military
+
+Scientist: As they should. #line:S6-05-scientist
+Scientist: They got us in this mess in the first place with their impatience! #line:S6-06-scientist
+
+Military: The government has the best interests of the people at front! #line:S6-07-military
+
+Scientist: Right... #line:S6-08-scientist
+
+Military: Remember who you work for! #line:S6-09-military
+
+Scientist: Is that a threat? #line:S6-10-scientist
+
+<<wait  10>>
+<<start_wave>>
+Scientist: Watch out! They are coming! #line:S6-11-scientist>>
+<<hang_up "military">>
+===

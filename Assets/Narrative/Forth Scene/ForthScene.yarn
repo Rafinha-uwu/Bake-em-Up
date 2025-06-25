@@ -1,0 +1,75 @@
+﻿title: ScientistPhone
+---
+<<once>>
+    <<declare $seventhwave = false>>
+    Scientist: Baker, it’s me! #line:S7-01-scientist
+    Scientist: The military doesn’t want the people to know. #line:S7-02-scientist
+    Scientist: That the government is responsible for this outbreak! #line:S7-03-scientist
+    Scientist: We were trying to do good! #line:S7-04-scientist
+    Scientist: But they rushed the project and started testing on people to soon! #line:S7-05-scientist
+    Scientist: The formula is very unstable. #line:S7-06-scientist
+    Scientist: That’s why It keeps changing and adapting! #line:S7-07-scientist
+    Scientist: The smaller infected are faster to avoid attacks! #line:S7-08-scientist
+
+    <<spawn_new_recipe "scientist">>  
+    Scientist: I will give you another recipe to help you with this. #line:S7-09-scientist
+    Scientist: That will make them slow down! #line:S7-10-scientist
+    Scientist: I have to go! #line:S7-11-scientist
+    Scientist: Remember! #line:S7-12-scientist
+    Scientist: Only one phone works at the time. #line:S7-13-scientist
+    Scientist: So you can only talk to one of us from now on! #line:S7-14-scientist
+    <<hang_up "scientist">>
+<<else>>
+    <<if !$seventhwave>>
+        <<jump SeventhWave_Scientist>>
+    <<endif>>
+<<endonce>>
+===
+
+title: SeventhWave_Scientist
+---
+<<set $seventhwave = true>>
+Scientist: Glad you made the right choice. #line:S8-01-scientist
+Scientist: Now, focus! #line:S8-02-scientist
+Scientist: There are hoards coming your way with a variety of mutations. #line:S8-03-scientist
+<<spawn_new_recipe "scientist">>
+Scientist: We developed another recipe to help you out. #line:S8-04-scientist
+Scientist: A donut that grows and takes them out in line! #line:S8-05-scientist
+Scientist: Also, we gave you a second pastry bag. #line:S8-06-scientist
+<<spawn_pastry_bag>>
+Scientist: As we need to use everything we have! #line:S8-07-scientist
+Scientist: They are weak to the gluten in your recipes due to the origin of the outbreak! #line:S8-08-scientist
+Scientist: We were trying to find a cure for gluten intolerance. #line:S8-09-scientist
+Scientist: But the idea of baking a fortune our of it. #line:S8-10-scientist
+Scientist: Made the government push for human testing way to soon. #line:S8-11-scientist
+Scientist: The patient escaped somehow and started the outbreak. #line:S8-12-scientist
+Scientist: And now we have to pick up the pieces. #line:S8-13-scientist
+<<hang_up "scientist">>
+<<start_wave>>
+===
+
+title: MilitarPhone
+---
+Military: Good choice soldier! #line:S8-01-military
+Military: Now let’s get serious! #line:S8-02-military
+Military: As our radars see. #line:S8-03-military
+Military: Packs of them coming. #line:S8-04-military
+Military: The stronger, smarter and faster. #line:S8-05-military
+Military: Are more common than the original ones. #line:S8-06-military
+Military: You will need to fill your arsenal. #line:S8-07-military
+Military: We scattered explosive barrels in your area. #line:S8-08-military
+Military: Use them to your advantage. #line:S8-09-military
+<<spawn_barrels>>
+<<spawn_new_recipe "military">>
+Military: There is also a new recipe. #line:S8-10-military
+Military: That those nerds left behind. #line:S8-11-military
+Military: Before isolating themselves to their ratholes. #line:S8-12-military
+Military: They are to focus on finding a cure. #line:S8-13-military
+Military: Fighting against us. #line:S8-14-military
+Military: While the superior pressure us. #line:S8-15-military
+Military: So this doesn’t get of control. #line:S8-16-military
+Military: We already failed once by letting the patience 0 escape. #line:S8-17-military
+Military: We cannot make more mistakes! #line:S8-18-military
+<<hang_up "military">>
+<<start_wave>>
+===
