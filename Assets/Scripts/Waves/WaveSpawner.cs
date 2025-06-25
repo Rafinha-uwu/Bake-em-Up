@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Receiver.Primitives;
 using Yarn.Unity;
 
 public class WaveSpawner : MonoBehaviour
@@ -31,7 +32,7 @@ public class WaveSpawner : MonoBehaviour
     private List<GameObject> activeZombies = new();
     private AudioSource _audioSource;
     public AudioSource audioSource2;
-    
+
     [SerializeField] private AudioClip cookingMusic_sound;
     [SerializeField] private AudioClip normalWaveMusic_sound;
     [SerializeField] private AudioClip lastWaveMusic_sound;
@@ -52,6 +53,13 @@ public class WaveSpawner : MonoBehaviour
 
     [SerializeField] private GameObject blackout;
 
+    public bool End = false;
+
+    private float zombiesKilled;
+
+    public bool Military;
+    public float ZombieTreshHold;
+
     private void Awake()
     {
         useEndlessMode = PlayerPrefs.GetInt("IsEndlessMode", 0) == 1;
@@ -66,7 +74,7 @@ public class WaveSpawner : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
 
-        
+
 
         if (useEndlessMode)
         {
@@ -135,59 +143,60 @@ public class WaveSpawner : MonoBehaviour
 
     public void StartWave(WaveData? wavedata = null)
     {
-		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
+        WaveData wave = waveSet.GenerateWave(currentWaveIndex);
         if (!CheckCanStartWave(wave)) return;
 
         LevelManager.Instance.WaveStarted = true;
-		_finishedEnemies = false;
+        _finishedEnemies = false;
 
         if (waveSet.isInfinite)
         {
             _countTime = wave.startTimer;
             _countOn = true;
-            
+
             StartCoroutine(WaitTimeUntilStart(wave));
         }
         else
         {
-			OpenDoor();
-			StartCoroutine(SpawnEnemy(wave));
+            OpenDoor();
+            StartCoroutine(SpawnEnemy(wave));
         }
-	}
+    }
 
     public void StartAfterDialogue()
     {
-		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
+        WaveData wave = waveSet.GenerateWave(currentWaveIndex);
         if (wave.StartsAfterDialogue)
             StartWave();
-	}
+    }
 
     private bool CheckCanStartWave(WaveData wave)
     {
-		if (GameManager.Instance == null)
-			return false;
+        if (GameManager.Instance == null)
+            return false;
 
-		if (!_finishedEnemies) return false;
+        if (!_finishedEnemies) return false;
 
-		if (wave.IsUnityNull())
-			throw new NullReferenceException("WaveData missing");
+        if (wave.IsUnityNull())
+            throw new NullReferenceException("WaveData missing");
 
         return true;
-	}
+    }
 
     private IEnumerator WaitTimeUntilStart(WaveData wave)
     {
         yield return new WaitForSeconds(_countTime);
-		
+
         OpenDoor();
-		StartCoroutine(SpawnEnemy(wave));
-	}
+        StartCoroutine(SpawnEnemy(wave));
+    }
 
     private void WaveFinished()
     {
         Debug.Log("Acabou os zombies: " + currentWaveIndex);
         _finishedEnemies = true;
         currentWaveIndex++;
+        zombiesKilled = 0;
 
         if (_isEndlessActive)
         {
@@ -213,10 +222,10 @@ public class WaveSpawner : MonoBehaviour
         }
 
         DisplayWaveText(CurrentWave);
+        CloseDoor();
 
         if (currentWaveIndex == 2)
         {
-            CloseDoor();
             if (!blackout.IsUnityNull())
                 blackout.GetComponent<Animator>().Play("Dark");
             Invoke(nameof(LoadScene), 5);
@@ -280,8 +289,8 @@ public class WaveSpawner : MonoBehaviour
     {
         if (!_finishedEnemies) return;
 
-		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
-		if (_bakedRecipeToStart.Contains(recipe) && !wave.StartsAfterDialogue)
+        WaveData wave = waveSet.GenerateWave(currentWaveIndex);
+        if (_bakedRecipeToStart.Contains(recipe) && !wave.StartsAfterDialogue)
             StartWave();
     }
 
@@ -289,7 +298,7 @@ public class WaveSpawner : MonoBehaviour
     {
         string scene = waveSet.SceneToLoadWhenFinished;
 
-		if (!string.IsNullOrWhiteSpace(scene))
+        if (!string.IsNullOrWhiteSpace(scene))
             SceneManager.LoadScene(scene);
     }
 
@@ -300,14 +309,14 @@ public class WaveSpawner : MonoBehaviour
             Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
             GameObject selectedPrefab = GetWeightedRandomZombie(wave.zombieSpawnOptions);
             if (selectedPrefab == null)
-				throw new NullReferenceException("Zombie prefab missing");
+                throw new NullReferenceException("Zombie prefab missing");
 
             GameObject enemy = Instantiate(selectedPrefab, spawnPoint.position, Quaternion.identity);
             activeZombies.Add(enemy);
             zombies_remainingDisplay.text = $"{(int)activeZombies.Count}";
 
             enemy.GetComponent<Zombie>().Died.AddListener(() => OnZombieDeath(enemy));
-            
+
             NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
             if (agent != null && LevelManager.Instance != null)
             {
@@ -318,11 +327,11 @@ public class WaveSpawner : MonoBehaviour
                 agent.SetDestination(randomPoint);
             }
 
-			yield return new WaitForSeconds(wave.spawnInterval);
-		}
+            yield return new WaitForSeconds(wave.spawnInterval);
+        }
 
-		isSpawning = false;
-	}
+        isSpawning = false;
+    }
 
     private GameObject GetWeightedRandomZombie(List<ZombieSpawnOption> options)
     {
@@ -365,11 +374,26 @@ public class WaveSpawner : MonoBehaviour
         activeZombies.Remove(zombie);
 
         zombies_remainingDisplay.text = $"{(int)activeZombies.Count}";
+        zombiesKilled++;
         if (!isSpawning && activeZombies.Count == 0)
-		{
+        {
             WaveFinished();
-		}
-	}
+        }
+
+        if (currentWaveIndex == 2 && End && zombiesKilled > ZombieTreshHold)
+        {
+            if (Military)
+            {
+                gameObject.GetComponent<EndGame>().On = true;
+            }
+            else
+            {
+                //LevelManager.Instance.DialogueRunner.StartDialogue("Scientist_Cure");
+                
+            }
+
+        }
+    }
 
     public void OpenDoor()
     {
@@ -379,7 +403,7 @@ public class WaveSpawner : MonoBehaviour
             garageDoor.GetComponent<Animator>().SetBool("Open", true);
             audioSource2.Play();
             ChangeNarrativeEvent.ChangeNarrator("Gameplay");
-            if(currentWaveIndex == 9)
+            if (currentWaveIndex == 2 && End)
             {
                 LastWaveMusicSound();
             }

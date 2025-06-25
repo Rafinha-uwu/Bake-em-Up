@@ -19,8 +19,10 @@ public class Hole : MonoBehaviour
 
         if (!other.TryGetComponent<Cream>(out var cream)) return;
 
+        gameObject.GetComponent<AudioSource>().Play();
         int heal = Mathf.FloorToInt(health.maxHealth * 0.1f);
         health.hp += heal;
+        health.currentHoles--;
 
         gameObject.SetActive(false);
     }

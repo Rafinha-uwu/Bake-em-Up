@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Boom : MonoBehaviour
@@ -9,6 +10,8 @@ public class Boom : MonoBehaviour
     [SerializeField] private float blastRadius = 5f;
     [SerializeField] private float explosionForce = 700f;
     [SerializeField] private GameObject explosionEffect;
+    public float delayBetweenExplosions = 0.1f;
+    public float explosionRadius = 2f;
 
     private float countdown;
     private bool hasExploded = false;
@@ -66,6 +69,12 @@ public class Boom : MonoBehaviour
         if (explosionEffect != null)
         {
             Instantiate(explosionEffect, BombLocation, explosionEffect.transform.rotation);
+
+            if (!cOn)
+            {
+                StartCoroutine(SpawnExplosions());
+                return;
+            }
         }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
@@ -84,5 +93,20 @@ public class Boom : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    IEnumerator SpawnExplosions()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 randomOffset = Random.insideUnitSphere * explosionRadius;
+            randomOffset.y = Mathf.Abs(randomOffset.y) + 1.5f; // Ensure explosions appear above ground
+
+            Vector3 spawnPos = transform.position + randomOffset;
+
+            Instantiate(explosionEffect, spawnPos, explosionEffect.transform.rotation);
+
+            yield return new WaitForSeconds(delayBetweenExplosions);
+        }
     }
 }
