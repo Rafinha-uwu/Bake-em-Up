@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7818204811481743560}
-  m_Father: {fileID: 2209090128622805516}
+  m_Father: {fileID: 932591679852599969}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &5162573361954401662
 ParticleSystem:
@@ -9700,6 +9700,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5480857748421841163}
+  - {fileID: 765818358521163056}
   m_Father: {fileID: 2209090128622805516}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &557454036094982720
@@ -9748,11 +9749,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 15
-  delay: 1.5
-  blastRadius: 5
+  delay: 1
+  blastRadius: 10
   explosionForce: 5000
   explosionEffect: {fileID: 2579326276023195693, guid: 94222a4bf435ede459987c5acce09306, type: 3}
-  delayBetweenExplosions: 0.1
+  delayBetweenExplosions: 0.15
   explosionRadius: 2
   cOn: 0
 --- !u!1 &6987284672836827008
@@ -9786,7 +9787,6 @@ Transform:
   m_Children:
   - {fileID: 932591679852599969}
   - {fileID: 8681095263503301986}
-  - {fileID: 765818358521163056}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7924731396218081383

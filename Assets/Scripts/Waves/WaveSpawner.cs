@@ -60,6 +60,9 @@ public class WaveSpawner : MonoBehaviour
     public bool Military;
     public float ZombieTreshHold;
 
+    [Header("Events to trigger when this wave starts")]
+    public List<WaveEventBase> waveEvents = new List<WaveEventBase>();
+
     private void Awake()
     {
         useEndlessMode = PlayerPrefs.GetInt("IsEndlessMode", 0) == 1;
@@ -77,7 +80,6 @@ public class WaveSpawner : MonoBehaviour
         if (useEndlessMode)
         {
             Debug.Log("Modo Endless ativado!");
-            // Sua lógica para endless mode
         }
         LevelEvents.OnBakedNewRecipe += CheckBakedRecipe;
         LevelManager.Instance.WaveSpawner = this;
@@ -88,6 +90,7 @@ public class WaveSpawner : MonoBehaviour
             waveSet = endlessWaveSet;
             _isEndlessActive = true;
             currentWaveIndex = 0; // Always start from 0 in endless mode
+            TriggerEvents();
         }
         else if (GameManager.Instance != null)
         {
@@ -137,7 +140,13 @@ public class WaveSpawner : MonoBehaviour
             }
         }
     }
-
+    public void TriggerEvents()
+    {
+        foreach (var evt in waveEvents)
+        {
+            evt?.Execute();
+        }
+    }
 
     public void StartWave(WaveData? wavedata = null)
     {

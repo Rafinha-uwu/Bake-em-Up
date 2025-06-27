@@ -12,6 +12,8 @@ public class RecipesManager : MonoBehaviour
 	[SerializeField]
 	private RecipeData _badBread;
 
+	public bool Cure = false;
+
     private void Awake()
 	{
 		if (Instance != null && Instance != this)
@@ -32,6 +34,12 @@ public class RecipesManager : MonoBehaviour
 			if(!item.CheckIfComplete(ingredients)) continue;
 
 			if (recipe != null && recipe.id > item.id) continue;
+
+			if(item.name == "Cure")
+			{
+				if (Cure) { continue; }
+				else { break; }
+			}
 
 			recipe = item;
 		}

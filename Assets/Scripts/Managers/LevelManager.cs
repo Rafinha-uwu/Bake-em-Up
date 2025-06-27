@@ -44,8 +44,11 @@ public class LevelManager : MonoBehaviour
 
 	public GameObject Barrels;
 	public GameObject PasteBag;
+    public GameObject BC;
 
-	public bool SpawnedFirstRecipe = false;
+	public GameObject Recipies;
+
+    public bool SpawnedFirstRecipe = false;
 
 	private void Awake()
     {
@@ -116,7 +119,18 @@ public class LevelManager : MonoBehaviour
         Instance.PasteBag.SetActive(true);
     }
 
-	[YarnCommand("spawn_barrels")]
+    [YarnCommand("spawn_briefcase")]
+    public static void Briefcase()
+    {
+        Instance.BC.SetActive(true);
+    }
+    [YarnCommand("spawn_cure")]
+    public static void Cure()
+    {
+        Instance.Recipies.GetComponent<RecipesManager>().Cure = true;
+    }
+
+    [YarnCommand("spawn_barrels")]
 	public static void SpawnBarrels()
 	{
         Instance.Barrels.SetActive(true);

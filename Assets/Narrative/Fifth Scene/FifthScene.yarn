@@ -36,6 +36,7 @@ title: Scientist_Cure
     Scientist: It will take a long time to mix. #line:S10-12-scientist
     Scientist: So prepare accordingly. #line:S10-13-scientist
     Scientist: Good luck. #line:S10-14-scientist
+     <<spawn_cure>>
     <<hang_up "scientist">>
 <<endonce>>
 ===
@@ -62,6 +63,7 @@ title: MilitarPhone
     Military: We want you to join our forces. #line:S10-07-military
     Military: Together we can save the people, Catility and the world! #line:S10-08-military
     Military: Get ready and stand your ground while we get there! #line:S10-09-military
+    <<spawn_briefcase>>
     <<hang_up "military">>
     <<start_wave>>
 <<else>>
