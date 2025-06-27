@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,7 +38,8 @@ public class EnemyRangedAI : Zombie
 
             if (fireCooldown <= 0f && !death)
             {
-                Shoot();
+                animator.SetBool("isWalking", false);
+                animator.SetBool("isAttacking", true);
                 HitEvent.GetHit(attackDamage, gameObject, roulotte.gameObject);
                 fireCooldown = 1f / fireRate;
             }
@@ -47,11 +49,9 @@ public class EnemyRangedAI : Zombie
         fireCooldown -= Time.deltaTime;
     }
 
-    void Shoot()
+    private IEnumerator Shoot()
     {
         isAttacking = true;
-        animator.SetBool("isWalking", false);
-        animator.SetBool("isAttacking", true);
         if (obstacle != null) obstacle.enabled = true;
         if (agent != null) agent.enabled = false;
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
@@ -61,6 +61,7 @@ public class EnemyRangedAI : Zombie
             rb.linearVelocity = firePoint.forward * projectileSpeed;
         }
         PlayThrowSound();
+        yield return new WaitForSeconds(2.5f);
         animator.SetBool("isAttacking", false);
         isAttacking = false;
 
