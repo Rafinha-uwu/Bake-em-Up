@@ -193,7 +193,7 @@ public class WaveSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(_countTime);
 
-        if (!_isEndlessActive || currentWaveIndex == 1)
+        if (!_isEndlessActive || currentWaveIndex == 0)
         {
             OpenDoor();
         }
