@@ -73,8 +73,10 @@ public class MenuManager : MonoBehaviour
 
     private IEnumerator GoToMain()
     {
+
+        yield return new WaitForSeconds(4f);
         //SceneManager.LoadScene("mathews");
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("mathews");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("mathews");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
