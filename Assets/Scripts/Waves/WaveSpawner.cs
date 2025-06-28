@@ -153,7 +153,7 @@ public class WaveSpawner : MonoBehaviour
         WaveData wave = waveSet.GenerateWave(currentWaveIndex);
         if (!CheckCanStartWave(wave)) return;
 
-		_finishedEnemies = false;
+        _finishedEnemies = false;
 
         if (waveSet.isInfinite)
         {
@@ -193,7 +193,10 @@ public class WaveSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(_countTime);
 
-        OpenDoor();
+        if (!_isEndlessActive || currentWaveIndex == 1)
+        {
+            OpenDoor();
+        }
         StartCoroutine(SpawnEnemy(wave));
     }
 
@@ -286,14 +289,17 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator LoadEndlessGameOver()
     {
-        // Load game over scene or main menu
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameOver");
 
-		while (!asyncLoad.isDone)
-		{
-			yield return null;
-		}
-	}
+        yield return new WaitForSeconds(4f);
+
+        // Load game over scene or main menu
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameOver");
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
 
     private void CheckBakedRecipe(RecipeData recipe)
     {
@@ -301,22 +307,24 @@ public class WaveSpawner : MonoBehaviour
 
         bool ready = false;
 
-		WaveData wave = waveSet.GenerateWave(currentWaveIndex);
-        foreach(var auxRecipe in _bakedRecipeToStart)
+        WaveData wave = waveSet.GenerateWave(currentWaveIndex);
+        foreach (var auxRecipe in _bakedRecipeToStart)
         {
-			if (auxRecipe.id == recipe.id)
+            if (auxRecipe.id == recipe.id)
                 ready = true;
-		}
+        }
 
-		if (ready && !wave.StartsAfterDialogue)
+        if (ready && !wave.StartsAfterDialogue)
         {
-			StartWave();
-			LevelManager.Instance.WaveStarted = true;
-		}
+            StartWave();
+            LevelManager.Instance.WaveStarted = true;
+        }
     }
 
     private IEnumerator LoadScene()
     {
+        yield return new WaitForSeconds(4f);
+
         string scene = waveSet.SceneToLoadWhenFinished;
 
         if (!string.IsNullOrWhiteSpace(scene))
@@ -388,7 +396,7 @@ public class WaveSpawner : MonoBehaviour
         if (waveDisplay != null)
         {
             if (_isEndlessActive)
-            {          
+            {
                 waveDisplay.text = $"Endless Wave {waveNumber}";
             }
             else
@@ -399,19 +407,19 @@ public class WaveSpawner : MonoBehaviour
                         waveDisplay.text = $"Wave {waveNumber}";
                         break;
                     case "3":
-                        waveDisplay.text = $"Wave {waveNumber +2}";
+                        waveDisplay.text = $"Wave {waveNumber + 2}";
                         break;
                     case "4":
-                        waveDisplay.text = $"Wave {waveNumber +4}";
+                        waveDisplay.text = $"Wave {waveNumber + 4}";
                         break;
                     case "5":
-                        waveDisplay.text = $"Wave {waveNumber +6}";
+                        waveDisplay.text = $"Wave {waveNumber + 6}";
                         break;
                     default:
                         waveDisplay.text = $"Wave {waveNumber + 8}";
                         break;
 
-                }               
+                }
             }
         }
     }
@@ -435,7 +443,7 @@ public class WaveSpawner : MonoBehaviour
             else
             {
                 LevelManager.Instance.DialogueRunner.StartDialogue("Scientist_Cure");
-                
+
             }
 
         }
@@ -446,8 +454,10 @@ public class WaveSpawner : MonoBehaviour
         Debug.Log("A tentar abrir a porta da garagem");
         if (!garageDoor.IsUnityNull())
         {
+
             garageDoor.GetComponent<Animator>().SetBool("Open", true);
             audioSource2.Play();
+
             ChangeNarrativeEvent.ChangeNarrator("Gameplay");
             if (currentWaveIndex == 2 && End)
             {

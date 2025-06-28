@@ -68,12 +68,13 @@ public class Boom : MonoBehaviour
 
         if (explosionEffect != null)
         {
-            Instantiate(explosionEffect, BombLocation, explosionEffect.transform.rotation);
-
             if (!cOn)
             {
                 StartCoroutine(SpawnExplosions());
-                return;
+            }
+            else
+            {
+                Instantiate(explosionEffect, BombLocation, explosionEffect.transform.rotation);
             }
         }
 

@@ -61,7 +61,7 @@ public class EnemyRangedAI : Zombie
             rb.linearVelocity = firePoint.forward * projectileSpeed;
         }
         PlayThrowSound();
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1f / fireRate);
         animator.SetBool("isAttacking", false);
         isAttacking = false;
 

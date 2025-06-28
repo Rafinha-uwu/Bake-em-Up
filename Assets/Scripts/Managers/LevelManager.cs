@@ -45,8 +45,9 @@ public class LevelManager : MonoBehaviour
 	public GameObject Barrels;
 	public GameObject PasteBag;
     public GameObject BC;
+	public GameObject SP;
 
-	public GameObject Recipies;
+    public GameObject Recipies;
 
     public bool SpawnedFirstRecipe = false;
 
@@ -123,6 +124,7 @@ public class LevelManager : MonoBehaviour
     public static void Briefcase()
     {
         Instance.BC.SetActive(true);
+        Instance.SP.SetActive(false);
     }
     [YarnCommand("spawn_cure")]
     public static void Cure()

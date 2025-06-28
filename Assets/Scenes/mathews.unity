@@ -6985,7 +6985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4519807298129344, guid: 5599f850a647e0f44ae3575ff0660056, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9385483
       objectReference: {fileID: 0}
     - target: {fileID: 4519807298129344, guid: 5599f850a647e0f44ae3575ff0660056, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6993,7 +6993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4519807298129344, guid: 5599f850a647e0f44ae3575ff0660056, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.34514788
       objectReference: {fileID: 0}
     - target: {fileID: 4519807298129344, guid: 5599f850a647e0f44ae3575ff0660056, type: 3}
       propertyPath: m_LocalRotation.z
@@ -7005,7 +7005,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4519807298129344, guid: 5599f850a647e0f44ae3575ff0660056, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -40.382
       objectReference: {fileID: 0}
     - target: {fileID: 4519807298129344, guid: 5599f850a647e0f44ae3575ff0660056, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -7987,6 +7987,10 @@ MonoBehaviour:
   _recipes:
   - {fileID: 11400000, guid: 3190366478569244baadac612ad0a977, type: 2}
   - {fileID: 11400000, guid: c88f6dd8fd09c8d47a141ca835db5eca, type: 2}
+  - {fileID: 11400000, guid: 349a5e553d2fc8a40b7553ff0c478673, type: 2}
+  - {fileID: 11400000, guid: 9fe05394b1d96514d98c957cc426711b, type: 2}
+  - {fileID: 11400000, guid: a2d34dd8e058d3a469ad279b1b94ba49, type: 2}
+  - {fileID: 11400000, guid: bab8bc5d52ab98641a91db9faec4caa3, type: 2}
   _badBread: {fileID: 11400000, guid: 8eac8344dc289004c85bf716d20ff4cc, type: 2}
   Cure: 0
 --- !u!4 &1084079480
@@ -9493,7 +9497,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -11460,6 +11464,7 @@ MonoBehaviour:
   Barrels: {fileID: 0}
   PasteBag: {fileID: 0}
   BC: {fileID: 0}
+  SP: {fileID: 0}
   Recipies: {fileID: 0}
   SpawnedFirstRecipe: 0
 --- !u!1001 &1456803139
