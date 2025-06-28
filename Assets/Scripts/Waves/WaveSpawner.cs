@@ -293,7 +293,7 @@ public class WaveSpawner : MonoBehaviour
         yield return new WaitForSeconds(4f);
 
         // Load game over scene or main menu
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameOver");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main Menu");
 
         while (!asyncLoad.isDone)
         {

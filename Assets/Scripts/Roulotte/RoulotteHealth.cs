@@ -62,11 +62,6 @@ public class RoulotteHealth : MonoBehaviour
                 // 100% chance to enable a hole
                 TryEnableHole();
             }
-
-            if (hp < 1)
-            {
-                EndGame();
-            }
         }
     }
 
@@ -93,10 +88,5 @@ public class RoulotteHealth : MonoBehaviour
                 break;
             }
         }
-    }
-
-    private void EndGame()
-    {
-        SceneManager.LoadScene("Main Menu");
     }
 }

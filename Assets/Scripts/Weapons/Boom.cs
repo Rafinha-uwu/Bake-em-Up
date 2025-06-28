@@ -75,25 +75,24 @@ public class Boom : MonoBehaviour
             else
             {
                 Instantiate(explosionEffect, BombLocation, explosionEffect.transform.rotation);
+
+                Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
+                foreach (Collider nearbyObject in colliders)
+                {
+                    Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.AddExplosionForce(explosionForce, transform.position, blastRadius);
+                    }
+
+                    if (nearbyObject.gameObject.CompareTag("Zombie"))
+                    {
+                        HitEvent.GetHit(damage, gameObject, nearbyObject.gameObject);
+                    }
+                }
+                Destroy(gameObject);
             }
         }
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
-        foreach (Collider nearbyObject in colliders)
-        {
-            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.AddExplosionForce(explosionForce, transform.position, blastRadius);
-            }
-
-            if (nearbyObject.gameObject.CompareTag("Zombie"))
-            {
-                HitEvent.GetHit(damage, gameObject, nearbyObject.gameObject);
-            }
-        }
-
-        Destroy(gameObject);
     }
 
     IEnumerator SpawnExplosions()
@@ -109,5 +108,6 @@ public class Boom : MonoBehaviour
 
             yield return new WaitForSeconds(delayBetweenExplosions);
         }
+        Destroy(gameObject);
     }
 }
